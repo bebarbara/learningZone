@@ -6,6 +6,7 @@ import fileTextFill from '@iconify/icons-eva/file-text-fill';
 import lockFill from '@iconify/icons-eva/lock-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
+// import family from '@iconify/icons-vaadin/family';
 
 // ----------------------------------------------------------------------
 
@@ -23,12 +24,17 @@ const sidebarConfig = [
     icon: getIcon(peopleFill)
   },
   {
+    title: 'Familia',
+    path: '/dashboard/family',
+    icon: getIcon(peopleFill)
+  },
+  {
     title: 'product',
     path: '/dashboard/products',
     icon: getIcon(shoppingBagFill)
   },
   {
-    title: 'blog',
+    title: 'blog ',
     path: '/dashboard/blog',
     icon: getIcon(fileTextFill)
   },

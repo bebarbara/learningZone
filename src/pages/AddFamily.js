@@ -1,14 +1,14 @@
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@material-ui/core/styles';
-import { Card, Stack, Link, Container, Typography } from '@material-ui/core';
+import { Box, Card, Link, Container, Typography } from '@material-ui/core';
 // layouts
 import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
-import { LoginForm } from '../components/authentication/login';
-import AuthSocial from '../components/authentication/AuthSocial';
+// import { RegisterForm } from '../components/authentication/register';
+import RegisterFormAddFamily from '../components/authentication/RegisterFormAddFamily';
 
 // ----------------------------------------------------------------------
 
@@ -39,42 +39,49 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
+export default function AddFamily() {
   return (
-    <RootStyle title="Login | Learning-Zone">
-      <AuthLayout>
-        Don’t have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
-          Get started
-        </Link>
-      </AuthLayout>
-
+    <RootStyle title="Agregar | Learning-Zone">
+      <AuthLayout />
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Hi, Welcome Back
+            Preparados para ser parte de Zona de aprendizaje b :)
           </Typography>
-          <img src="/static/illustrations/illustration_login.png" alt="login" />
+          <img alt="register" src="/static/illustrations/addfamily.jpg" />
         </SectionStyle>
       </MHidden>
 
-      <Container maxWidth="sm">
+      <Container>
         <ContentStyle>
-          <Stack sx={{ mb: 5 }}>
+          <Box sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Empiece absolutamente gratis.
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
-          </Stack>
-          <AuthSocial />
+            <Typography sx={{ color: 'text.secondary' }}>
+              Siempre libre. No se necesita tarjeta de crédito.
+            </Typography>
+          </Box>
 
-          <LoginForm />
+          <RegisterFormAddFamily />
+
+          <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+            By registering, I agree to Minimal&nbsp;
+            <Link underline="always" sx={{ color: 'text.primary' }}>
+              Terms of Service
+            </Link>
+            &nbsp;and&nbsp;
+            <Link underline="always" sx={{ color: 'text.primary' }}>
+              Privacy Policy
+            </Link>
+            .
+          </Typography>
 
           <MHidden width="smUp">
-            <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              Don’t have an account?&nbsp;
-              <Link variant="subtitle2" component={RouterLink} to="register">
-                Get started
+            <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
+              Already have an account?&nbsp;
+              <Link to="/login" component={RouterLink}>
+                Login
               </Link>
             </Typography>
           </MHidden>

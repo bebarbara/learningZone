@@ -5,7 +5,8 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { styled } from '@material-ui/core/styles';
 import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@material-ui/core';
 // components
-import Logo from '../../components/Logo';
+// import Logo from '../../components/Logo';
+import Logov2 from '../../components/LogoVersion2';
 import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 import { MHidden } from '../../components/@material-extend';
@@ -58,7 +59,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     >
       <Box sx={{ px: 2.5, py: 3 }}>
         <Box component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
-          <Logo />
+          <Logov2 />
         </Box>
       </Box>
 

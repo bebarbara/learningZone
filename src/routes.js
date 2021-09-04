@@ -9,6 +9,8 @@ import DashboardApp from './pages/DashboardApp';
 import Products from './pages/Products';
 import Blog from './pages/Blog';
 import User from './pages/User';
+import Families from './pages/Families';
+import AddFamily from './pages/AddFamily';
 import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -22,6 +24,7 @@ export default function Router() {
         { path: '/', element: <Navigate to="/dashboard/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
+        { path: 'family', element: <Families /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> }
       ]
@@ -34,7 +37,8 @@ export default function Router() {
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/dashboard" /> },
-        { path: '*', element: <Navigate to="/404" /> }
+        { path: '*', element: <Navigate to="/404" /> },
+        { path: 'addfamily', element: <AddFamily /> }
       ]
     },
 
