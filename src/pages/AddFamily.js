@@ -1,7 +1,8 @@
 import { Link as RouterLink } from 'react-router-dom';
+import { useState } from 'react';
 // material
 import { styled } from '@material-ui/core/styles';
-import { Box, Card, Link, Container, Typography } from '@material-ui/core';
+import { Box, Card, Link, Container, Typography, Checkbox, TableCell } from '@material-ui/core';
 // layouts
 import AuthLayout from '../layouts/AuthLayout';
 // components
@@ -9,6 +10,7 @@ import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 // import { RegisterForm } from '../components/authentication/register';
 import RegisterFormAddFamily from '../components/authentication/RegisterFormAddFamily';
+import { FamilyListToolbar } from '../components/_dashboard/families';
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +42,31 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function AddFamily() {
+  const [setFilterName] = useState('');
+  const handleFilterByName = (event) => {
+    setFilterName(event.target.value);
+  };
+  const [selected, setSelected] = useState([]);
+  // const [orderBy, setOrderBy] = useState('name');
+  const [filterName] = useState('');
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+    setSelected(newSelected);
+  };
+
   return (
     <RootStyle title="Agregar | Learning-Zone">
       <AuthLayout />
@@ -62,6 +89,11 @@ export default function AddFamily() {
               Siempre libre. No se necesita tarjeta de crédito.
             </Typography>
           </Box>
+          <FamilyListToolbar
+            numSelected={selected.length}
+            filterName={filterName}
+            onFilterName={handleFilterByName}
+          />
 
           <RegisterFormAddFamily />
 
