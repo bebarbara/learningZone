@@ -72,8 +72,8 @@ export default function AddFamily() {
       <AuthLayout />
       <MHidden width="mdDown">
         <SectionStyle>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Preparados para ser parte de Zona de aprendizaje b :)
+          <Typography variant="h3" sx={{ px: 5, mt: 0, mb: 5 }}>
+            El aprendizaje es experiencia. Todo lo demás es información.
           </Typography>
           <img alt="register" src="/static/illustrations/addfamily.jpg" />
         </SectionStyle>
@@ -81,12 +81,9 @@ export default function AddFamily() {
 
       <Container>
         <ContentStyle>
-          <Box sx={{ mb: 5 }}>
+          <Box sx={{ mb: 0 }}>
             <Typography variant="h4" gutterBottom>
-              Empiece absolutamente gratis.
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              Siempre libre. No se necesita tarjeta de crédito.
+              Busque a su familiar
             </Typography>
           </Box>
           <FamilyListToolbar
@@ -94,17 +91,19 @@ export default function AddFamily() {
             filterName={filterName}
             onFilterName={handleFilterByName}
           />
-
+          <Box sx={{ mb: 0 }}>
+            <Typography sx={{ color: 'text.primary' }}>O siemplemente agreguelo.</Typography>
+          </Box>
           <RegisterFormAddFamily />
 
           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            By registering, I agree to Minimal&nbsp;
+            Al Agregar, acepto&nbsp;
             <Link underline="always" sx={{ color: 'text.primary' }}>
-              Terms of Service
+              Terminos del servicio
             </Link>
-            &nbsp;and&nbsp;
+            &nbsp;y&nbsp;
             <Link underline="always" sx={{ color: 'text.primary' }}>
-              Privacy Policy
+              Políticas de privacidad
             </Link>
             .
           </Typography>
