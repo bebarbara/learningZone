@@ -94,6 +94,7 @@ export default function AddFamily() {
           <Box sx={{ mb: 0 }}>
             <Typography sx={{ color: 'text.primary' }}>O siemplemente agreguelo.</Typography>
           </Box>
+          <br />
           <RegisterFormAddFamily />
 
           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
