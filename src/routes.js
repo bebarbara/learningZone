@@ -11,6 +11,7 @@ import Blog from './pages/Blog';
 import User from './pages/User';
 import Families from './pages/Families';
 import AddFamily from './pages/AddFamily';
+import Account from './pages/Account';
 import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -38,7 +39,8 @@ export default function Router() {
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> },
-        { path: 'addfamily', element: <AddFamily /> }
+        { path: 'addfamily', element: <AddFamily /> },
+        { path: 'account', element: <Account /> }
       ]
     },
 
