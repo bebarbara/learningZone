@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react';
 import pieChart2Fill from '@iconify/icons-eva/pie-chart-2-fill';
 import peopleFill from '@iconify/icons-eva/people-fill';
+import bookOpenOutline from '@iconify/icons-eva/book-open-outline';
 import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill';
 import fileTextFill from '@iconify/icons-eva/file-text-fill';
 import lockFill from '@iconify/icons-eva/lock-fill';
@@ -27,6 +28,16 @@ const sidebarConfig = [
     title: 'Familia',
     path: '/dashboard/family',
     icon: getIcon(peopleFill)
+  },
+  {
+    title: 'Examenes',
+    path: '/dashboard/exam',
+    icon: getIcon(bookOpenOutline)
+  },
+  {
+    title: 'Tests',
+    path: '/dashboard/test',
+    icon: getIcon(bookOpenOutline)
   },
   {
     title: 'product',

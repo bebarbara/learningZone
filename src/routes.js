@@ -10,6 +10,8 @@ import Products from './pages/Products';
 import Blog from './pages/Blog';
 import User from './pages/User';
 import Families from './pages/Families';
+import Exams from './pages/Exam';
+import Tests from './pages/Tests';
 import AddFamily from './pages/AddFamily';
 import Account from './pages/Account';
 import NotFound from './pages/Page404';
@@ -26,6 +28,8 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'family', element: <Families /> },
+        { path: 'exam', element: <Exams /> },
+        { path: 'test', element: <Tests /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> }
       ]
