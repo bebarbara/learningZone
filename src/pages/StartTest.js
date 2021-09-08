@@ -39,6 +39,7 @@ import {
 } from '../components/_dashboard/exam';
 //
 import EXAMLIST from '../_mocks_/tests';
+// import TestQuestion from '../components/_dashboard/sta';
 
 // ----------------------------------------------------------------------
 
@@ -153,11 +154,11 @@ export default function Test() {
   const istestNotFound = filteredtests.length === 0;
 
   return (
-    <Page title="Test | Learning-Zone">
+    <Page title="Iniciar Test | Learning-Zone">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Muy buen trabajo! !Siempre se puede ser mejor¡
+            No te rindas! podes!
           </Typography>
           <Button
             variant="contained"

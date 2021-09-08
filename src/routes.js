@@ -12,6 +12,7 @@ import User from './pages/User';
 import Families from './pages/Families';
 import Exams from './pages/Exam';
 import Tests from './pages/Tests';
+import StartTest from './pages/StartTest';
 import AddFamily from './pages/AddFamily';
 import Account from './pages/Account';
 import NotFound from './pages/Page404';
@@ -44,6 +45,7 @@ export default function Router() {
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> },
         { path: 'addfamily', element: <AddFamily /> },
+        { path: 'starttest', element: <StartTest /> },
         { path: 'account', element: <Account /> }
       ]
     },
