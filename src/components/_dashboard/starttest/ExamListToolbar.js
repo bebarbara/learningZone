@@ -80,7 +80,7 @@ export default function ExamListToolbar({ numSelected, filterName, onFilterName 
           <Button
             variant="contained"
             component={RouterLink}
-            to="/starttest"
+            to="/dashboard/starttest"
             startIcon={<Icon icon={starOutline} />}
           >
             Comenzar

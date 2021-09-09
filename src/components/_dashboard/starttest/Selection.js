@@ -45,7 +45,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 const TOTAL = 714000;
-ExamWeeklySales.propTypes = {
+Selection.propTypes = {
   posts: PropTypes.array.isRequired
 };
 const SectionStyle = styled(Card)(({ theme }) => ({
@@ -57,17 +57,12 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   margin: theme.spacing(2, 0, 2, 2)
 }));
 
-export default function ExamWeeklySales(props) {
+export default function Selection(props) {
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Icon icon={SolutionOutlined} width={24} height={24} />
       </IconWrapperStyle>
-      <SectionStyle>
-        <Typography variant="h3" sx={{ px: 5, mt: 0, mb: 5 }}>
-          {props.question}
-        </Typography>
-      </SectionStyle>
       <Typography variant="h3">{props.answer}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         {props.answer}

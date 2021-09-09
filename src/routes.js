@@ -32,7 +32,8 @@ export default function Router() {
         { path: 'exam', element: <Exams /> },
         { path: 'test', element: <Tests /> },
         { path: 'products', element: <Products /> },
-        { path: 'blog', element: <Blog /> }
+        { path: 'blog', element: <Blog /> },
+        { path: 'starttest', element: <StartTest /> }
       ]
     },
     {
@@ -45,7 +46,6 @@ export default function Router() {
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> },
         { path: 'addfamily', element: <AddFamily /> },
-        { path: 'starttest', element: <StartTest /> },
         { path: 'account', element: <Account /> }
       ]
     },
