@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react';
 import PropTypes from 'prop-types';
 import SolutionOutlined from '@iconify/icons-ant-design/border-outlined';
+import QuestionCircleOutlined from '@iconify/icons-ant-design/question-circle-outlined';
 // material
 import { alpha, styled } from '@material-ui/core/styles';
 import { Card, Typography } from '@material-ui/core';
@@ -30,7 +31,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   margin: 'auto',
   display: 'flex',
   borderRadius: '50%',
-  alignItems: 'stretch',
+  alignItems: 'center',
   width: theme.spacing(8),
   height: theme.spacing(8),
   justifyContent: 'center',
@@ -50,7 +51,7 @@ ExamWeeklySales.propTypes = {
 };
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
-  maxWidth: 950,
+  maxWidth: 900,
   display: 'center',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -61,7 +62,7 @@ export default function ExamWeeklySales(props) {
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Icon icon={SolutionOutlined} width={24} height={24} />
+        <Icon icon={QuestionCircleOutlined} width={24} height={24} />
       </IconWrapperStyle>
       <SectionStyle>
         <Typography variant="h3" sx={{ px: 5, mt: 0, mb: 5 }}>

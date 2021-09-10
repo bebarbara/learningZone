@@ -15,6 +15,7 @@ import Tests from './pages/Tests';
 import StartTest from './pages/StartTest';
 import AddFamily from './pages/AddFamily';
 import Account from './pages/Account';
+import ConfigWebcam from './pages/ConfigWebcam';
 import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -41,6 +42,7 @@ export default function Router() {
       element: <LogoOnlyLayout />,
       children: [
         { path: 'login', element: <Login /> },
+        { path: 'configwebcam', element: <ConfigWebcam /> },
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/dashboard" /> },
