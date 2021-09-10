@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import Webcam from 'react-webcam';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@material-ui/core/styles';
@@ -41,16 +43,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ConfigWebcam() {
-  const formik = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: ''
-    }
-  });
-
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
   const submitForm = () => {
     alert('Form submitted');
   };
@@ -70,10 +62,10 @@ export default function ConfigWebcam() {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Durante el examen se tomar÷an varias fotos para validad la identidad
+              Durante el proceso se autenticara la identidad
             </Typography>
             <Typography variant="h4" gutterBottom>
-              Por favor, prende la camara y asegurate tener buena luz
+              Por favor, asegurate de tener buena luz
             </Typography>
             <Typography variant="h4" gutterBottom>
               <div className="home-container">
@@ -82,7 +74,7 @@ export default function ConfigWebcam() {
                     <form className="form">
                       <WebcamCapture />
                       <button type="submit" id="login-button" onClick={(e) => submitForm(e)}>
-                        Acepto el uso de la camara web
+                        Acepto
                       </button>
                     </form>
                   </div>

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import Webcam from 'react-webcam';
 
@@ -46,6 +47,7 @@ export const WebcamCapture = () => {
           </button>
         ) : (
           <button
+            fullWidth
             onClick={(e) => {
               e.preventDefault();
               capture();
