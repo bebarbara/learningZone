@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react';
 import { useRef, useState } from 'react';
 import layersoutline from '@iconify/icons-eva/layers-outline';
 import { Link as RouterLink } from 'react-router-dom';
-import trash2Outline from '@iconify/icons-eva/trash-2-outline';
+import awardoutline from '@iconify/icons-eva/award-outline';
 import filetextoutline from '@iconify/icons-eva/file-text-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 // material
@@ -42,6 +42,12 @@ export default function ExamMoreMenu() {
             <Icon icon={layersoutline} width={24} height={24} />
           </ListItemIcon>
           <ListItemText primary="Descripción" primaryTypographyProps={{ variant: 'body2' }} />
+        </MenuItem>
+        <MenuItem component={RouterLink} to="#" sx={{ color: 'text.secondary' }}>
+          <ListItemIcon>
+            <Icon icon={awardoutline} width={24} height={24} />
+          </ListItemIcon>
+          <ListItemText primary="Imprimir" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
       </Menu>
     </>

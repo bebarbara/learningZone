@@ -59,8 +59,8 @@ export default function DashboardApp() {
     <RootStyle title="Test | Learning-Zone">
       <MHidden width="mdDown">
         <SectionStyle>
-          <Typography variant="h3" sx={{ px: 3, mt: 5, mb: 5 }}>
-            Juntos formamos Learning Zone
+          <Typography variant="h3" sx={{ px: 3, mt: 0, mb: 0 }}>
+            Hola, hoy es un buen día para seguir aprendiendo.
           </Typography>
           <img src="/static/illustrations/6162.jpg" alt="login" />
         </SectionStyle>

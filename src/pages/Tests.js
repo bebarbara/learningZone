@@ -147,7 +147,7 @@ export default function Test() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Muy buen trabajo! !Siempre se puede ser mejor¡
+            ¡Muy buen trabajo!
           </Typography>
           <Button
             variant="contained"

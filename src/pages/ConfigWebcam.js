@@ -52,7 +52,7 @@ export default function ConfigWebcam() {
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Hola, antes de comenzar tener en cuenta los siguientes item
+            Antes de comenzar, repasemos las indicaciones.
           </Typography>
           <img src="/static/illustrations/11104.jpg" alt="login" />
         </SectionStyle>
@@ -60,12 +60,12 @@ export default function ConfigWebcam() {
 
       <Container maxWidth="sm">
         <ContentStyle>
-          <Stack sx={{ mb: 5 }}>
+          <Stack sx={{ mb: 3 }}>
             <Typography variant="h4" gutterBottom>
-              Durante el proceso se autenticara la identidad
+              • Durante el proceso estaremos verificando la identidad.
             </Typography>
-            <Typography variant="h4" gutterBottom>
-              Por favor, asegurate de tener buena luz
+            <Typography variant="h6" gutterBottom>
+              Por favor, asegurate de prender la camara. Y buscar un lugar con buena luz
             </Typography>
             <Typography variant="h4" gutterBottom>
               <div className="home-container">
@@ -73,9 +73,6 @@ export default function ConfigWebcam() {
                   <div className="text">
                     <form className="form">
                       <WebcamCapture />
-                      <button type="submit" id="login-button" onClick={(e) => submitForm(e)}>
-                        Acepto
-                      </button>
                     </form>
                   </div>
                 </div>
@@ -89,7 +86,7 @@ export default function ConfigWebcam() {
               component={RouterLink}
               to="/dashboard/starttest"
             >
-              Iniciar examen
+              Comenzar test
             </Button>
           </Stack>
         </ContentStyle>

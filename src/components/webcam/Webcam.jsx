@@ -55,7 +55,7 @@ export const WebcamCapture = () => {
             }}
             className="webcam-btn"
           >
-            Volver a tomar
+            Acepte condiciones
           </button>
         ) : (
           <Button
@@ -70,7 +70,7 @@ export const WebcamCapture = () => {
             }}
             className="webcam-btn"
           >
-            Capturar
+            Acepto condiciones
           </Button>
         )}
       </div>

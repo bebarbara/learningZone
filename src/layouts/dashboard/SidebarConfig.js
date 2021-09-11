@@ -2,11 +2,11 @@ import { Icon } from '@iconify/react';
 import pieChart2Fill from '@iconify/icons-eva/pie-chart-2-fill';
 import peopleFill from '@iconify/icons-eva/people-fill';
 import bookOpenOutline from '@iconify/icons-eva/book-open-outline';
-import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill';
+import pinoutline from '@iconify/icons-eva/pin-outline';
 import fileTextFill from '@iconify/icons-eva/file-text-fill';
-import lockFill from '@iconify/icons-eva/lock-fill';
+import clockoutline from '@iconify/icons-eva/clock-outline';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
-import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
+import searchfill from '@iconify/icons-eva/search-fill';
 // import family from '@iconify/icons-vaadin/family';
 
 // ----------------------------------------------------------------------
@@ -15,24 +15,19 @@ const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
 
 const sidebarConfig = [
   {
-    title: 'dashboard',
-    path: '/dashboard/app',
-    icon: getIcon(pieChart2Fill)
+    title: 'buscar',
+    path: '/dashboard/products',
+    icon: getIcon(searchfill)
   },
   {
-    title: 'user',
-    path: '/dashboard/user',
-    icon: getIcon(peopleFill)
+    title: 'Eventos',
+    path: '/dashboard/blog',
+    icon: getIcon(clockoutline)
   },
   {
-    title: 'Familia',
-    path: '/dashboard/family',
-    icon: getIcon(peopleFill)
-  },
-  {
-    title: 'Examenes',
-    path: '/dashboard/exam',
-    icon: getIcon(bookOpenOutline)
+    title: 'Localización',
+    path: '/login',
+    icon: getIcon(pinoutline)
   },
   {
     title: 'Tests',
@@ -40,29 +35,9 @@ const sidebarConfig = [
     icon: getIcon(bookOpenOutline)
   },
   {
-    title: 'product',
-    path: '/dashboard/products',
-    icon: getIcon(shoppingBagFill)
-  },
-  {
-    title: 'blog ',
-    path: '/dashboard/blog',
-    icon: getIcon(fileTextFill)
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: getIcon(lockFill)
-  },
-  {
-    title: 'register',
-    path: '/register',
-    icon: getIcon(personAddFill)
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: getIcon(alertTriangleFill)
+    title: 'Familia',
+    path: '/dashboard/family',
+    icon: getIcon(peopleFill)
   }
 ];
 
