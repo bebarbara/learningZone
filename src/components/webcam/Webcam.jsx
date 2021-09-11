@@ -77,7 +77,6 @@ export const WebcamCapture = () => {
             onClick={(e) => {
               e.preventDefault();
               capture();
-              submitImage(e);
             }}
             className="webcam-btn"
           >
