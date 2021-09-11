@@ -11,7 +11,7 @@ const users = [...Array(24)].map((_, index) => ({
   name: faker.name.findName(),
   company: faker.company.companyName(),
   isVerified: faker.datatype.boolean(),
-  status: sample(['Activo', 'Expirado', 'Pendiente']),
+  status: sample(['Activo', 'Pendiente']),
   role: sample(['Insignia', 'Certificado'])
 }));
 
@@ -53,7 +53,7 @@ const tests = [
     createdBy: 'Lopez, Susana',
     questionnare: 'Pregunta 1 ',
     option: ['Respuesta 1 ', 'Respuesta 2 ', 'Respuesta 3 ', 'Respuesta 4 '],
-    status: 'Activo',
+    status: 'Pendiente',
     date: '2020-01-01'
   },
   {

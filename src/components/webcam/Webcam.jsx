@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import Webcam from 'react-webcam';
+import { Button } from '@material-ui/core';
+import { Form } from 'formik';
 
 const WebcamComponent = () => <Webcam />;
 
@@ -17,6 +19,16 @@ export const WebcamCapture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     setImage(imageSrc);
   });
+  const submitImage = async (e) => {
+    e.preventDefault();
+    const res = await axios.post('http://localhost:400/api/imageReconnection', {
+      idUser: '32',
+      idTest: '45',
+      image: setImage
+    });
+    console.log(res);
+    e.preventDefault();
+  };
 
   return (
     <div className="webcam-container">
@@ -46,16 +58,20 @@ export const WebcamCapture = () => {
             Volver a tomar
           </button>
         ) : (
-          <button
+          <Button
+            type="submit"
             fullWidth
+            size="large"
+            variant="contained"
             onClick={(e) => {
               e.preventDefault();
               capture();
+              submitImage(e);
             }}
             className="webcam-btn"
           >
             Capturar
-          </button>
+          </Button>
         )}
       </div>
     </div>

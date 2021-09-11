@@ -23,6 +23,11 @@ const RootStyle = styled('span')(({ theme, styleProps }) => {
     backgroundColor: alpha(theme.palette[color].main, 0.16)
   });
 
+  const stylePendient = (color) => ({
+    color: theme.palette[color].dark,
+    backgroundColor: alpha(theme.palette[color].main, 0.16)
+  });
+
   return {
     height: 22,
     minWidth: 22,
@@ -44,7 +49,8 @@ const RootStyle = styled('span')(({ theme, styleProps }) => {
       ? {
           ...(variant === 'filled' && { ...styleFilled(color) }),
           ...(variant === 'outlined' && { ...styleOutlined(color) }),
-          ...(variant === 'ghost' && { ...styleGhost(color) })
+          ...(variant === 'ghost' && { ...styleGhost(color) }),
+          ...(variant === 'otro' && { ...stylePendient(color) })
         }
       : {
           ...(variant === 'outlined' && {

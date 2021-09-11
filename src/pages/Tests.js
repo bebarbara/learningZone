@@ -41,16 +41,6 @@ import {
 import EXAMLIST from '../_mocks_/tests';
 
 // ----------------------------------------------------------------------
-
-const TABLE_HEAD2 = [
-  { id: 'name', label: 'Título', alignRight: false },
-  { id: 'company', label: 'Creador', alignRight: false },
-  { id: 'role', label: 'Logro', alignRight: false },
-  { id: 'isVerified', label: 'Fecha', alignRight: false },
-  { id: 'status', label: 'Estado', alignRight: false },
-  { id: '' }
-];
-
 const TABLE_HEAD = [
   { id: 'name', label: 'Título', alignRight: false },
   { id: 'grade', label: 'Grado', alignRight: false },
@@ -237,9 +227,10 @@ export default function Test() {
                             <Label
                               variant="ghost"
                               color={
-                                (status === 'Expirado' && 'error') ||
-                                'success' ||
-                                status === 'Pendiente'
+                                (status === 'Insuficiente' && 'error') ||
+                                (status === 'Suficiente' && 'success') ||
+                                (status === 'Resolver' && 'info') ||
+                                'warning'
                               }
                             >
                               {sentenceCase(status)}
