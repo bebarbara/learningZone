@@ -20,7 +20,7 @@ const RootStyle = styled(Page)(({ theme }) => ({
 
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
-  maxWidth: 900,
+  maxWidth: 1100,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -45,8 +45,8 @@ export default function Entrega() {
       <AuthLayout />
 
       <SectionStyle>
-        <Typography variant="h3" sx={{ px: 20, mt: 10, mb: 5 }}>
-          Felicitaciones haz terminado el examen
+        <Typography variant="h3" sx={{ px: 20, mt: 4, mb: 0 }}>
+          Felicitaciones julia@ejemplo.com. Te hemos identificado con un 94 % de confianza.
         </Typography>
         <img src="/static/illustrations/8601.jpg" alt="login" />
       </SectionStyle>
