@@ -254,7 +254,7 @@ export default function StartTest() {
                     <Button
                       variant="contained"
                       component={RouterLink}
-                      to="#"
+                      to="/entrega"
                       startIcon={<Icon icon={plusFill} />}
                     >
                       Entregar

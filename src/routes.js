@@ -17,6 +17,7 @@ import AddFamily from './pages/AddFamily';
 import Account from './pages/Account';
 import ConfigWebcam from './pages/ConfigWebcam';
 import NotFound from './pages/Page404';
+import Entrega from './pages/Entrega';
 
 // ----------------------------------------------------------------------
 
@@ -42,6 +43,7 @@ export default function Router() {
       element: <LogoOnlyLayout />,
       children: [
         { path: 'login', element: <Login /> },
+        { path: 'entrega', element: <Entrega /> },
         { path: 'configwebcam', element: <ConfigWebcam /> },
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },
