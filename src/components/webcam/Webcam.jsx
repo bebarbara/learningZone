@@ -22,9 +22,9 @@ export const WebcamCapture = () => {
   const submitImage = async (e) => {
     e.preventDefault();
     const res = await axios.post('http://localhost:3001/api/v1/test_image', {
-      idUser: '1',
+      idUser: '2',
       idTest: '2',
-      image: setImage
+      image: capture
     });
     console.log(res);
     e.preventDefault();

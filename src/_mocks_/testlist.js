@@ -8,21 +8,30 @@ import { mockImgAvatar } from '../utils/mockImages';
 const TESTLIST = [
   {
     id: 12,
-    question: 'Pregunta1',
+    question: '¿Qué número es el quinientos veinte?',
     numquestion: '1',
-    answer1: 'Resultadoa1',
-    answer2: 'Resultadoa2',
-    answer3: 'Resultadoa3',
-    answer4: 'Resultadoa4'
+    answer1: '180',
+    answer2: '502',
+    answer3: '520',
+    answer4: '522'
   },
   {
     id: 13,
-    question: 'Pregunta2',
-    numquestion: '2',
-    answer1: 'Resultadob1',
-    answer2: 'Resultadob2',
-    answer3: 'Resultadob3',
-    answer4: 'Resultadob4'
+    question: '¿Qué número es el ciento cincuenta?',
+    numquestion: '1',
+    answer1: '550',
+    answer2: '150',
+    answer3: '50',
+    answer4: '15'
+  },
+  {
+    id: 14,
+    question: '¿Qué número es el doscientos treinta ocho?',
+    numquestion: '1',
+    answer1: '180',
+    answer2: '838',
+    answer3: '238',
+    answer4: '328'
   }
 ];
 
