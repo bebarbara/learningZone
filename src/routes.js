@@ -6,6 +6,7 @@ import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
+import DashboardAppother from './pages/DashboardAppother';
 import Products from './pages/Products';
 import Blog from './pages/Blog';
 import User from './pages/User';
@@ -18,7 +19,9 @@ import Account from './pages/Account';
 import ConfigWebcam from './pages/ConfigWebcam';
 import NotFound from './pages/Page404';
 import Entrega from './pages/Entrega';
-
+import Addphoto from './pages/Addphoto';
+import ToAssignTest from './pages/ToAssignTests';
+import ProfileOther from './pages/ProfileOther';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -29,12 +32,15 @@ export default function Router() {
       children: [
         { path: '/', element: <Navigate to="/dashboard/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
+        { path: 'other', element: <DashboardAppother /> },
         { path: 'user', element: <User /> },
         { path: 'family', element: <Families /> },
         { path: 'exam', element: <Exams /> },
         { path: 'test', element: <Tests /> },
+        { path: 'toassingtest', element: <ToAssignTest /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
+        { path: 'profileOther', element: <ProfileOther /> },
         { path: 'starttest', element: <StartTest /> }
       ]
     },
@@ -50,6 +56,7 @@ export default function Router() {
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> },
         { path: 'addfamily', element: <AddFamily /> },
+        { path: 'addphoto', element: <Addphoto /> },
         { path: 'account', element: <Account /> }
       ]
     },

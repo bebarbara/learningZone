@@ -7,11 +7,9 @@ import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
   Card,
-  Box,
   Grid,
   Table,
   Stack,
-  Avatar,
   Button,
   Checkbox,
   TableRow,
@@ -152,7 +150,7 @@ export default function Test() {
           <Button
             variant="contained"
             component={RouterLink}
-            to="#"
+            to="/dashboard/toassingtest"
             startIcon={<Icon icon={plusFill} />}
           >
             Asignar Examen

@@ -20,6 +20,11 @@ const sidebarConfig = [
     icon: getIcon(searchfill)
   },
   {
+    title: 'other',
+    path: '/dashboard/other',
+    icon: getIcon(searchfill)
+  },
+  {
     title: 'Eventos',
     path: '/dashboard/blog',
     icon: getIcon(clockoutline)
