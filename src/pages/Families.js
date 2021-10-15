@@ -33,8 +33,8 @@ import FAMILIESLIST from '../_mocks_/families';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Nombre', alignRight: false },
-  { id: 'company', label: 'Cerificados', alignRight: false },
-  { id: 'role', label: 'Insignia', alignRight: false },
+  { id: 'certificates', label: 'Cerificados', alignRight: false },
+  { id: 'insignia', label: 'Insignia', alignRight: false },
   { id: 'isVerified', label: 'Verificado', alignRight: false },
   { id: 'status', label: 'Estado', alignRight: false },
   { id: '' }
@@ -160,7 +160,8 @@ export default function User() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                      const { id, name, insignia, status, certificates, avatarUrl, isVerified } =
+                        row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
@@ -168,7 +169,7 @@ export default function User() {
                           hover
                           key={id}
                           tabIndex={-1}
-                          role="checkbox"
+                          insignia="checkbox"
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
                         >
@@ -186,8 +187,8 @@ export default function User() {
                               </Typography>
                             </Stack>
                           </TableCell>
-                          <TableCell align="left">{company}</TableCell>
-                          <TableCell align="left">{role}</TableCell>
+                          <TableCell align="left">{certificates}</TableCell>
+                          <TableCell align="left">{insignia}</TableCell>
                           <TableCell align="left">{isVerified ? 'Si' : 'No'}</TableCell>
                           <TableCell align="left">
                             <Label

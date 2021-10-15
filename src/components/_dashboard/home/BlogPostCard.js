@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import { Link as RouterLink } from 'react-router-dom';
 import shareFill from '@iconify/icons-eva/share-fill';
+import heartFill from '@iconify/icons-eva/heart-fill';
 import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
 // material
 import { alpha, styled } from '@material-ui/core/styles';
@@ -59,16 +60,15 @@ BlogPostCard.propTypes = {
   post: PropTypes.object.isRequired,
   index: PropTypes.number
 };
-
+// -- cambiar posicines 0 1 y2
 export default function BlogPostCard({ post, index }) {
-  const { cover, title, view, comment, share, author, createdAt } = post;
-  const latestPostLarge = index === 0;
-  const latestPost = index === 1 || index === 2;
+  const { cover, title, view, comment, author, createdAt } = post;
+  const latestPostLarge = index === 8;
+  const latestPost = index === 9 || index === 10;
 
   const POST_INFO = [
     { number: comment, icon: messageCircleFill },
-    { number: view, icon: eyeFill },
-    { number: share, icon: shareFill }
+    { number: view, icon: heartFill }
   ];
 
   return (

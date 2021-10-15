@@ -50,7 +50,7 @@ const sidebarConfig = [
   },
   {
     title: 'Usuarios',
-    path: '/dashboard/family',
+    path: '/dashboard/user',
     icon: getIcon(peopleFill)
   },
   {
