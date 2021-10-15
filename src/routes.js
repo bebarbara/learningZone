@@ -9,6 +9,7 @@ import DashboardApp from './pages/DashboardApp';
 import DashboardAppother from './pages/DashboardAppother';
 import Products from './pages/Products';
 import Blog from './pages/Blog';
+import Home from './pages/Home';
 import User from './pages/User';
 import Families from './pages/Families';
 import Exams from './pages/Exam';
@@ -30,6 +31,7 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
+        { path: 'home', element: <Home /> },
         { path: '/', element: <Navigate to="/dashboard/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
         { path: 'other', element: <DashboardAppother /> },

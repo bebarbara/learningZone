@@ -92,7 +92,7 @@ export default function AddFamily() {
             onFilterName={handleFilterByName}
           />
           <Box sx={{ mb: 0 }}>
-            <Typography sx={{ color: 'text.primary' }}>O siemplemente agreguelo.</Typography>
+            <Typography sx={{ color: 'text.primary' }}>O agregue al menos de edad</Typography>
           </Box>
           <br />
           <RegisterFormAddFamily />

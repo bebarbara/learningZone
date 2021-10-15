@@ -7,6 +7,10 @@ import fileTextFill from '@iconify/icons-eva/file-text-fill';
 import clockoutline from '@iconify/icons-eva/clock-outline';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
 import searchfill from '@iconify/icons-eva/search-fill';
+import heartFill from '@iconify/icons-eva/heart-fill';
+import layersFill from '@iconify/icons-eva/layers-fill';
+import globe2Outline from '@iconify/icons-eva/globe-2-outline';
+import homeFill from '@iconify/icons-eva/home-fill';
 // import family from '@iconify/icons-vaadin/family';
 
 // ----------------------------------------------------------------------
@@ -15,14 +19,19 @@ const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
 
 const sidebarConfig = [
   {
-    title: 'buscar',
-    path: '/dashboard/products',
-    icon: getIcon(searchfill)
+    title: 'Inicio',
+    path: '/dashboard/home',
+    icon: getIcon(homeFill)
   },
   {
-    title: 'other',
+    title: 'Comunidad',
+    path: '/dashboard/blog',
+    icon: getIcon(globe2Outline)
+  },
+  {
+    title: 'Material',
     path: '/dashboard/other',
-    icon: getIcon(searchfill)
+    icon: getIcon(fileTextFill)
   },
   {
     title: 'Eventos',
@@ -30,9 +39,9 @@ const sidebarConfig = [
     icon: getIcon(clockoutline)
   },
   {
-    title: 'Localización',
-    path: '/login',
-    icon: getIcon(pinoutline)
+    title: 'Clases',
+    path: '/dashboard/blog',
+    icon: getIcon(layersFill)
   },
   {
     title: 'Tests',
@@ -40,9 +49,19 @@ const sidebarConfig = [
     icon: getIcon(bookOpenOutline)
   },
   {
-    title: 'Familia',
+    title: 'Usuarios',
     path: '/dashboard/family',
     icon: getIcon(peopleFill)
+  },
+  {
+    title: 'Familia',
+    path: '/dashboard/family',
+    icon: getIcon(heartFill)
+  },
+  {
+    title: 'buscar',
+    path: '/dashboard/products',
+    icon: getIcon(searchfill)
   }
 ];
 
