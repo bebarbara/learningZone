@@ -33,7 +33,7 @@ import FAMILIESLIST from '../_mocks_/families';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Nombre', alignRight: false },
-  { id: 'certificates', label: 'Cerificados', alignRight: false },
+  { id: 'certificates', label: 'Certificados', alignRight: false },
   { id: 'insignia', label: 'Insignia', alignRight: false },
   { id: 'isVerified', label: 'Verificado', alignRight: false },
   { id: 'status', label: 'Estado', alignRight: false },
