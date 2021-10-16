@@ -33,7 +33,7 @@ const posts = [...Array(6)].map((_, index) => ({
   favorite: faker.datatype.number(),
   author: {
     name: faker.name.findName(),
-    avatarUrl: `/static/mock-images/avatars/IMG_3746.jpg`
+    avatarUrl: `/static/mock-images/avatars/ju_espinoza.jpg`
   }
 }));
 

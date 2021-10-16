@@ -1,9 +1,9 @@
 // ----------------------------------------------------------------------
 
 const account = {
-  displayName: 'Juli Espinoza',
-  email: 'jespinoza@uade.edu.ar',
-  photoURL: '/static/mock-images/avatars/ju_espinoza.jpg'
+  displayName: 'Barbara Cerezo',
+  email: 'bcerezo@uade.edu.ar',
+  photoURL: '/static/mock-images/avatars/barbi_cerezo.jpg'
 };
 
 export default account;
