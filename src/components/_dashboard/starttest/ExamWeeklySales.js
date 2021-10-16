@@ -51,7 +51,7 @@ ExamWeeklySales.propTypes = {
 };
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
-  maxWidth: 900,
+  maxWidth: 750,
   display: 'center',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -65,7 +65,7 @@ export default function ExamWeeklySales(props) {
         <Icon icon={QuestionCircleOutlined} width={24} height={24} />
       </IconWrapperStyle>
       <SectionStyle>
-        <Typography variant="h1" sx={{ px: 5, mt: 0, mb: 5 }}>
+        <Typography variant="h3" sx={{ px: 5, mt: 0, mb: 5 }}>
           {props.question}
         </Typography>
       </SectionStyle>
