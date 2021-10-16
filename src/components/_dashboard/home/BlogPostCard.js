@@ -72,7 +72,7 @@ export default function BlogPostCard({ post, index }) {
   ];
 
   return (
-    <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
+    <Grid item xs={12} sm={8} md={6} spacing={3}>
       <Card sx={{ position: 'relative' }}>
         <CardMediaStyle
           sx={{

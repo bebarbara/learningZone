@@ -12,29 +12,21 @@ import POSTS from '../_mocks_/blog';
 // ----------------------------------------------------------------------
 
 const SORT_OPTIONS = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'popular', label: 'Popular' },
-  { value: 'oldest', label: 'Oldest' }
+  { value: 'latest', label: 'Popular' },
+  { value: 'popular', label: 'Reciente' },
+  { value: 'oldest', label: 'Antiguo' }
 ];
 
 // ----------------------------------------------------------------------
 
 export default function Blog() {
   return (
-    <Page title="Dashboard: Blog | Learning-Zone">
+    <Page title="Blog | Learning-Zone">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Blog
+            Comunidad Homeschooling
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            startIcon={<Icon icon={plusFill} />}
-          >
-            New Post
-          </Button>
         </Stack>
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">

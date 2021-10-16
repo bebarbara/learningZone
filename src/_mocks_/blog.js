@@ -1,16 +1,16 @@
 import faker from 'faker';
 // utils
-import { mockImgCover } from '../utils/mockImages';
+import { mockImgComun } from '../utils/mockImages';
 
 // ----------------------------------------------------------------------
 
 const POST_TITLES = [
-  'Whiteboard Templates By Industry Leaders',
-  'Tesla Cybertruck-inspired camper trailer for Tesla fans who can’t just wait for the truck!',
-  'Designify Agency Landing Page Design',
-  '✨What is Done is Done ✨',
-  'Fresh Prince',
-  'Six Socks Studio',
+  'Educar jugando',
+  'Educar Jugando',
+  'Aprendizaje grupal',
+  'Madres homeschollers',
+  'Mi experiencia HM',
+  'Aprendisaje sin fronteras',
   'vincenzo de cotiis’ crossing over showcases a research on contamination',
   'Simple, Great Looking Animations in Your Project | Video Tutorial',
   '40 Free Serif Fonts for Digital Designers',
@@ -31,9 +31,9 @@ const POST_TITLES = [
   'How to Animate a SVG with border-image'
 ];
 
-const posts = [...Array(23)].map((_, index) => ({
+const posts = [...Array(5)].map((_, index) => ({
   id: faker.datatype.uuid(),
-  cover: mockImgCover(index + 1),
+  cover: mockImgComun(index + 1),
   title: POST_TITLES[index + 1],
   createdAt: faker.date.past(),
   view: faker.datatype.number(),

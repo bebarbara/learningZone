@@ -62,8 +62,8 @@ BlogPostCard.propTypes = {
 
 export default function BlogPostCard({ post, index }) {
   const { cover, title, view, comment, share, author, createdAt } = post;
-  const latestPostLarge = index === 0;
-  const latestPost = index === 1 || index === 2;
+  const latestPostLarge = index === 100;
+  const latestPost = index === 10 || index === 20;
 
   const POST_INFO = [
     { number: comment, icon: messageCircleFill },
@@ -72,21 +72,10 @@ export default function BlogPostCard({ post, index }) {
   ];
 
   return (
-    <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
+    <Grid item xs={12} sm={4}>
       <Card sx={{ position: 'relative' }}>
         <CardMediaStyle
           sx={{
-            ...((latestPostLarge || latestPost) && {
-              pt: 'calc(100% * 4 / 3)',
-              '&:after': {
-                top: 0,
-                content: "''",
-                width: '100%',
-                height: '100%',
-                position: 'absolute',
-                bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72)
-              }
-            }),
             ...(latestPostLarge && {
               pt: {
                 xs: 'calc(100% * 4 / 3)',

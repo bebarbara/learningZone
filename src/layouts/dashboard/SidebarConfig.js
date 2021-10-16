@@ -29,39 +29,19 @@ const sidebarConfig = [
     icon: getIcon(globe2Outline)
   },
   {
-    title: 'Material',
-    path: '/dashboard/other',
-    icon: getIcon(fileTextFill)
-  },
-  {
     title: 'Eventos',
-    path: '/dashboard/blog',
+    path: '/dashboard/products',
     icon: getIcon(clockoutline)
   },
   {
-    title: 'Clases',
-    path: '/dashboard/blog',
-    icon: getIcon(layersFill)
-  },
-  {
-    title: 'Tests',
+    title: 'Examen',
     path: '/dashboard/test',
     icon: getIcon(bookOpenOutline)
-  },
-  {
-    title: 'Usuarios',
-    path: '/dashboard/user',
-    icon: getIcon(peopleFill)
   },
   {
     title: 'Familia',
     path: '/dashboard/family',
     icon: getIcon(heartFill)
-  },
-  {
-    title: 'buscar',
-    path: '/dashboard/products',
-    icon: getIcon(searchfill)
   }
 ];
 
