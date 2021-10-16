@@ -28,12 +28,12 @@ import ColorManyPicker from '../../ColorManyPicker';
 
 export const SORT_BY_OPTIONS = [
   { value: 'featured', label: 'Featured' },
-  { value: 'newest', label: 'Newest' },
-  { value: 'priceDesc', label: 'Price: High-Low' },
-  { value: 'priceAsc', label: 'Price: Low-High' }
+  { value: 'newest', label: 'Nuevo' },
+  { value: 'priceDesc', label: 'Precio: Alto' },
+  { value: 'priceAsc', label: 'Precio: Bajo' }
 ];
-export const FILTER_GENDER_OPTIONS = ['Men', 'Women', 'Kids'];
-export const FILTER_CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories'];
+export const FILTER_GENDER_OPTIONS = ['Jardín', 'Primaria', 'Secundaria'];
+export const FILTER_CATEGORY_OPTIONS = ['De Padres', 'De profesores'];
 export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
 export const FILTER_PRICE_OPTIONS = [
   { value: 'below', label: 'Below $25' },
@@ -78,7 +78,7 @@ export default function ShopFilterSidebar({
         endIcon={<Icon icon={roundFilterList} />}
         onClick={onOpenFilter}
       >
-        Filters&nbsp;
+        Filtro&nbsp;
       </Button>
 
       <FormikProvider value={formik}>
@@ -98,7 +98,7 @@ export default function ShopFilterSidebar({
               sx={{ px: 1, py: 2 }}
             >
               <Typography variant="subtitle1" sx={{ ml: 1 }}>
-                Filters
+                Filtro
               </Typography>
               <IconButton onClick={onCloseFilter}>
                 <Icon icon={closeFill} width={20} height={20} />
@@ -111,7 +111,7 @@ export default function ShopFilterSidebar({
               <Stack spacing={3} sx={{ p: 3 }}>
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Gender
+                    Ciclo
                   </Typography>
                   <FormGroup>
                     {FILTER_GENDER_OPTIONS.map((item) => (
@@ -132,7 +132,7 @@ export default function ShopFilterSidebar({
 
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Category
+                    Categoria
                   </Typography>
                   <RadioGroup {...getFieldProps('category')}>
                     {FILTER_CATEGORY_OPTIONS.map((item) => (
@@ -143,36 +143,7 @@ export default function ShopFilterSidebar({
 
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Colour
-                  </Typography>
-                  <ColorManyPicker
-                    name="colors"
-                    colors={FILTER_COLOR_OPTIONS}
-                    onChange={handleChange}
-                    onChecked={(color) => values.colors.includes(color)}
-                    sx={{ maxWidth: 36 * 4 }}
-                  />
-                </div>
-
-                <div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Price
-                  </Typography>
-                  <RadioGroup {...getFieldProps('priceRange')}>
-                    {FILTER_PRICE_OPTIONS.map((item) => (
-                      <FormControlLabel
-                        key={item.value}
-                        value={item.value}
-                        control={<Radio />}
-                        label={item.label}
-                      />
-                    ))}
-                  </RadioGroup>
-                </div>
-
-                <div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Rating
+                    Calificación
                   </Typography>
                   <RadioGroup {...getFieldProps('rating')}>
                     {FILTER_RATING_OPTIONS.map((item, index) => (
@@ -187,7 +158,7 @@ export default function ShopFilterSidebar({
                             checkedIcon={<Rating readOnly value={4 - index} />}
                           />
                         }
-                        label="& Up"
+                        label="o más"
                         sx={{
                           my: 0.5,
                           borderRadius: 1,
@@ -217,7 +188,7 @@ export default function ShopFilterSidebar({
                 onClick={onResetFilter}
                 startIcon={<Icon icon={roundClearAll} />}
               >
-                Clear All
+                Limpiar filtro
               </Button>
             </Box>
           </Drawer>

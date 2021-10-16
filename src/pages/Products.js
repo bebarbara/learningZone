@@ -47,10 +47,10 @@ export default function EcommerceShop() {
   };
 
   return (
-    <Page title="Dashboard: Products | Learning-Zone">
+    <Page title="Eventos | Learning-Zone">
       <Container>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Products
+          Eventos
         </Typography>
 
         <Stack
@@ -58,9 +58,9 @@ export default function EcommerceShop() {
           flexWrap="wrap-reverse"
           alignItems="center"
           justifyContent="flex-end"
-          sx={{ mb: 5 }}
+          sx={{ mb: 3 }}
         >
-          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
+          <Stack direction="row" spacing={4} flexShrink={0} sx={{ my: 1 }}>
             <ProductFilterSidebar
               formik={formik}
               isOpenFilter={openFilter}
@@ -73,7 +73,6 @@ export default function EcommerceShop() {
         </Stack>
 
         <ProductList products={PRODUCTS} />
-        <ProductCartWidget />
       </Container>
     </Page>
   );
