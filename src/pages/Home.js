@@ -5,7 +5,12 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Grid, Button, Container, Stack, Typography } from '@material-ui/core';
 // components
 import Page from '../components/Page';
-import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../components/_dashboard/home';
+import {
+  BlogPostCard,
+  BlogPostsSort,
+  BlogPostsSearch,
+  PostsListToolbar
+} from '../components/_dashboard/home';
 //
 import POSTS from '../_mocks_/home';
 
@@ -24,9 +29,6 @@ export default function Home() {
     <Page title="Home | Learning-Zone">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            Home
-          </Typography>
           <Button
             variant="contained"
             component={RouterLink}
@@ -36,17 +38,9 @@ export default function Home() {
             Nuevo Post
           </Button>
         </Stack>
-
-        <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          <BlogPostsSearch posts={POSTS} />
-          <BlogPostsSort options={SORT_OPTIONS} />
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+          <PostsListToolbar />
         </Stack>
-
-        <Grid container spacing={3}>
-          {POSTS.map((post, index) => (
-            <BlogPostCard key={post.id} post={post} index={index} />
-          ))}
-        </Grid>
       </Container>
     </Page>
   );
