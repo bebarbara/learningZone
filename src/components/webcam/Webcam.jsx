@@ -1,8 +1,8 @@
-import axios from 'axios';
 import React, { useState, Component } from 'react';
 import Webcam from 'react-webcam';
 import { Button } from '@material-ui/core';
 import { Form } from 'formik';
+import { b64toBlob } from './ConvertToBlob';
 
 const WebcamComponent = () => <Webcam />;
 
@@ -14,31 +14,48 @@ const videoConstraints = {
 
 export const WebcamCapture = () => {
   const [image, setImage] = useState('');
-  const im = 'b';
+  const [imgbb, setImgbb] = useState('');
   const webcamRef = React.useRef(null);
   const capture = React.useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
-    const im = webcamRef.current.getScreenshot();
     setImage(imageSrc);
-    submitImage(im);
+    uploadImageToImgbb(imageSrc);
   });
-  const submitImage = async (img) => {
-    console.log(img);
-    const formData = new FormData();
-    formData.append('imageTest', img);
-    formData.append('idUser', '2');
-    formData.append('idTest', '2');
-    formData.append('content', '');
-    const res = await axios
-      .post('http://localhost:3001/api/v1/test_image', formData, {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
+  const uploadImageToImgbb = (image) => {
+    const data = new FormData();
+    const key = 'c684741b642adfc0ca6fbe105f6de776';
+    data.append('image', b64toBlob(image.split(',')[1], 'image/jpeg'));
+    return fetch(`https://api.imgbb.com/1/upload?key=${key}&expiration=600`, {
+      method: 'POST',
+      body: data
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log('Imgbb response', json);
+        setImgbb(json.data);
+        uploadImageToBackend(image, json.data.display_url);
       })
-      .then((res) => {
-        console.log(res.data);
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  const uploadImageToBackend = (image, displayUrl) => {
+    const dataBack = new FormData();
+    dataBack.append('recognitionPicture[assignmentId]', 1);
+    dataBack.append('recognitionPicture[subject]', displayUrl);
+    dataBack.append('recognitionPicture[image]', b64toBlob(image.split(',')[1], 'image/jpeg'));
+    return fetch('http://localhost:3001/api/v1/recognition_pictures', {
+      method: 'POST',
+      body: dataBack
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log('LZ API response', json);
+        return json;
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
