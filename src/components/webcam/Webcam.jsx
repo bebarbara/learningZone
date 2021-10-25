@@ -44,7 +44,7 @@ export const WebcamCapture = () => {
     dataBack.append('recognitionPicture[assignmentId]', 1);
     dataBack.append('recognitionPicture[subject]', displayUrl);
     dataBack.append('recognitionPicture[image]', b64toBlob(image.split(',')[1], 'image/jpeg'));
-    return fetch('http://localhost:3001/api/v1/recognition_pictures', {
+    return fetch('https://learning-zone-poc.herokuapp.com/api/v1/recognition_pictures', {
       method: 'POST',
       body: dataBack
     })
