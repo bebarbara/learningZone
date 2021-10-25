@@ -75,7 +75,7 @@ export default function AddFamily() {
           <Typography variant="h3" sx={{ px: 5, mt: 0, mb: 5 }}>
             El aprendizaje es experiencia. Todo lo demás es información.
           </Typography>
-          <img alt="register" src="/static/illustrations/addfamily.jpg" />
+          <img alt="register" src="/static/illustrations/virtualClass.jpg" />
         </SectionStyle>
       </MHidden>
 
