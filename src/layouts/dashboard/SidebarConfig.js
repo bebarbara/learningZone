@@ -30,7 +30,7 @@ const sidebarConfig = [
   },
   {
     title: 'Eventos',
-    path: '/dashboard/products',
+    path: '/dashboard/events',
     icon: getIcon(clockoutline)
   },
   {

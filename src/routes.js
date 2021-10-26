@@ -24,6 +24,7 @@ import Addphoto from './pages/Addphoto';
 import Profile from './pages/Profile';
 import ToAssignTest from './pages/ToAssignTests';
 import ProfileOther from './pages/ProfileOther';
+import Events from './pages/Events';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -46,6 +47,7 @@ export default function Router() {
         { path: 'profileOther', element: <ProfileOther /> },
         { path: 'starttest', element: <StartTest /> },
         { path: 'profile', element: <Profile /> }
+        { path: 'events', element: <Events /> }
       ]
     },
     {
