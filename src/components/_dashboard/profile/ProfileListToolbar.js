@@ -85,7 +85,7 @@ export default function BasicTabs() {
         <Tabs value={value} onChange={handleChange}>
           <Tab label="Seguidos" {...a11yProps(0)} />
           <Tab label="Comunidad" {...a11yProps(1)} />
-          <Tab label="Mis post" {...a11yProps(2)} />
+          <Tab label="Usuarios" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
