@@ -54,7 +54,7 @@ export default function Login() {
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
             Bienvenido de nuevo
           </Typography>
-          <img src="/static/illustrations/6583.jpg" alt="login" />
+          <img src="/static/illustrations/gathering.jpg" alt="login" />
         </SectionStyle>
       </MHidden>
 
