@@ -29,17 +29,20 @@ export default function Home() {
     <Page title="Home | Learning-Zone">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+          <Typography variant="h4" gutterBottom>
+            ¡Bienvenido!
+          </Typography>
           <Button
             variant="contained"
             component={RouterLink}
-            to="#"
+            to="/dashboard/toassingtest"
             startIcon={<Icon icon={plusFill} />}
           >
             Nuevo Post
           </Button>
         </Stack>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <PostsListToolbar />
+          <PostsListToolbar key="lista-posts" />
         </Stack>
       </Container>
     </Page>

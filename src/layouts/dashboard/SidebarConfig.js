@@ -19,12 +19,12 @@ const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
 
 const sidebarConfig = [
   {
-    title: 'Inicio',
+    title: 'Comunidad',
     path: '/dashboard/home',
     icon: getIcon(homeFill)
   },
   {
-    title: 'Comunidad',
+    title: 'Mi perfil',
     path: '/dashboard/blog',
     icon: getIcon(globe2Outline)
   },

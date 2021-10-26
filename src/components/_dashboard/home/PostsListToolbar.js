@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
@@ -13,6 +14,14 @@ const SORT_OPTIONS = [
   { value: 'popular', label: 'Popular' },
   { value: 'oldest', label: 'Antiguo' }
 ];
+
+const getPostsFollowed = async () => {
+  const res = await axios.get('https://learning-zone-poc.herokuapp.com/api/v1/posts');
+  console.log('https://learning-zone-poc.herokuapp.com/api/v1/posts');
+  console.log(res);
+  console.log('barbara');
+  return res;
+};
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,8 +57,24 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs() {
-  const [value, setValue] = React.useState(0);
-
+  const [value, setValue] = useState(0);
+  console.log('Useeffect 1');
+  const [postsFollowed, setPostsFollowed] = useState([]);
+  console.log('Useeffect 2');
+  useEffect(() => {
+    console.log('Useeffect');
+    getPostsFollowed()
+      .then((response) => response.json())
+      .then((json) => {
+        console.log('LZ API response', json.data);
+        console.log('LZ API response Juli1', postsFollowed);
+        setPostsFollowed(json.data.postsposts);
+        console.log('LZ API response Juli2', postsFollowed);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -79,7 +104,9 @@ export default function BasicTabs() {
           <BlogPostsSort options={SORT_OPTIONS} />
         </Stack>
         <Grid container spacing={3}>
-          {POSTS.map((post, index) => (
+          {console.log('postsFollowed?', postsFollowed)}
+          {postsFollowed.lenght === 0 && <Box>No hay posts.</Box>}
+          {postsFollowed.map((post, index) => (
             <BlogPostCard key={post.id} post={post} index={index} />
           ))}
         </Grid>
