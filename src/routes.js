@@ -23,6 +23,7 @@ import Entrega from './pages/Entrega';
 import Addphoto from './pages/Addphoto';
 import ToAssignTest from './pages/ToAssignTests';
 import ProfileOther from './pages/ProfileOther';
+import Events from './pages/Events';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -43,7 +44,8 @@ export default function Router() {
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
         { path: 'profileOther', element: <ProfileOther /> },
-        { path: 'starttest', element: <StartTest /> }
+        { path: 'starttest', element: <StartTest /> },
+        { path: 'events', element: <Events /> }
       ]
     },
     {
