@@ -48,7 +48,7 @@ export default function Entrega() {
         <Typography variant="h3" sx={{ px: 20, mt: 4, mb: 0 }}>
           Felicitaciones Pilar@ejemplo.com. Te hemos identificado con un 94 % de confianza.
         </Typography>
-        <img src="/static/illustrations/8601.jpg" alt="login" />
+        <img src="/static/illustrations/celebration.jpg" alt="login" />
       </SectionStyle>
     </RootStyle>
   );
