@@ -46,7 +46,7 @@ export default function Router() {
         { path: 'blog', element: <Blog /> },
         { path: 'profileOther', element: <ProfileOther /> },
         { path: 'starttest', element: <StartTest /> },
-        { path: 'profile', element: <Profile /> }
+        { path: 'profile', element: <Profile /> },
         { path: 'events', element: <Events /> }
       ]
     },
@@ -66,7 +66,6 @@ export default function Router() {
         { path: 'account', element: <Account /> }
       ]
     },
-
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }
