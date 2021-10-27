@@ -7,9 +7,9 @@ import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
   Card,
+  Grid,
   Table,
   Stack,
-  Avatar,
   Button,
   Checkbox,
   TableRow,
@@ -25,20 +25,30 @@ import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
-import { TestListHead, TestListToolbar, TestMoreMenu } from '../components/tests';
+// import { ExamListHead, ExamListToolbar, ExamMoreMenu } from '../components/_dashboard/exam';
+import {
+  ExamListHead,
+  ExamListToolbar,
+  ExamMoreMenu,
+  ExamNewTests,
+  ExamBugReports,
+  ExamItemOrders,
+  ExamWeeklySales
+} from '../components/_dashboard/exam';
 //
 import EXAMLIST from '../_mocks_/tests';
 
 // ----------------------------------------------------------------------
 const TABLE_HEAD = [
-  { id: 'name', label: 'Materia', alignRight: false },
+  { id: 'name', label: 'Título', alignRight: false },
   { id: 'grade', label: 'Grado', alignRight: false },
-  { id: 'createdBy', label: 'Creado por', alignRight: false },
+  { id: 'createdBy', label: 'Creador', alignRight: false },
   { id: 'accomplishment', label: 'Logro', alignRight: false },
   { id: 'date', label: 'Fecha', alignRight: false },
   { id: 'status', label: 'Estado', alignRight: false },
   { id: '' }
 ];
+
 // ----------------------------------------------------------------------
 
 function descendingComparator(a, b, orderBy) {
@@ -65,19 +75,18 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(array, (_test) => _test.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function Tests() {
+export default function Test() {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [showFilter, setShowFilter] = useState(false);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -125,35 +134,49 @@ export default function Tests() {
     setFilterName(event.target.value);
   };
 
-  const handleShowFilter = (value) => {
-    setShowFilter(value);
-  };
-
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - EXAMLIST.length) : 0;
 
-  const filteredTests = applySortFilter(EXAMLIST, getComparator(order, orderBy), filterName);
+  const filteredtests = applySortFilter(EXAMLIST, getComparator(order, orderBy), filterName);
 
-  const isTestNotFound = filteredTests.length === 0;
+  const istestNotFound = filteredtests.length === 0;
 
   return (
-    <Page title="Exámenes | Learning Zone Argentina">
+    <Page title="Test | Learning-Zone">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Exámenes
+            ¡Muy buen trabajo!
           </Typography>
           <Button
             variant="contained"
             component={RouterLink}
-            to="#"
+            to="/dashboard/toassingtest"
             startIcon={<Icon icon={plusFill} />}
           >
-            Crear un examen
+            Asignar Examen
           </Button>
+        </Stack>
+        <Stack>
+          <Container maxWidth="xl">
+            <Grid container spacing={1}>
+              <Grid item xs={12} sm={6} md={3}>
+                <ExamWeeklySales />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <ExamNewTests />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <ExamItemOrders />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <ExamBugReports />
+              </Grid>
+            </Grid>
+          </Container>
         </Stack>
 
         <Card>
-          <TestListToolbar
+          <ExamListToolbar
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
@@ -162,7 +185,7 @@ export default function Tests() {
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <TestListHead
+                <ExamListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
@@ -172,19 +195,10 @@ export default function Tests() {
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredTests
+                  {filteredtests
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const {
-                        id,
-                        name,
-                        grade,
-                        status,
-                        createdBy,
-                        avatarUrl,
-                        accomplishment,
-                        date
-                      } = row;
+                      const { id, name, grade, status, createdBy, accomplishment, date } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
@@ -202,14 +216,7 @@ export default function Tests() {
                               onChange={(event) => handleClick(event, name)}
                             />
                           </TableCell>
-                          <TableCell component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="center" spacing={2}>
-                              <Avatar alt={name} src={avatarUrl} />
-                              <Typography variant="subtitle2" noWrap>
-                                {name}
-                              </Typography>
-                            </Stack>
-                          </TableCell>
+                          <TableCell align="left">{name}</TableCell>
                           <TableCell align="left">{grade}</TableCell>
                           <TableCell align="left">{createdBy}</TableCell>
                           <TableCell align="left">{accomplishment}</TableCell>
@@ -227,8 +234,9 @@ export default function Tests() {
                               {sentenceCase(status)}
                             </Label>
                           </TableCell>
+
                           <TableCell align="right">
-                            <TestMoreMenu />
+                            <ExamMoreMenu />
                           </TableCell>
                         </TableRow>
                       );
@@ -239,7 +247,7 @@ export default function Tests() {
                     </TableRow>
                   )}
                 </TableBody>
-                {isTestNotFound && (
+                {istestNotFound && (
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
@@ -251,12 +259,9 @@ export default function Tests() {
               </Table>
             </TableContainer>
           </Scrollbar>
+
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
-            labelRowsPerPage="Exámenes por página:"
-            labelDisplayedRows={({ from, to, count }) =>
-              `Mostrando ${from}-${to} de ${count} exámenes`
-            }
             component="div"
             count={EXAMLIST.length}
             rowsPerPage={rowsPerPage}

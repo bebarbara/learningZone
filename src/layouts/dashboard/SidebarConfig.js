@@ -24,24 +24,24 @@ const sidebarConfig = [
     icon: getIcon(homeFill)
   },
   {
-    title: 'Mi perfil',
-    path: '/dashboard/blog',
-    icon: getIcon(globe2Outline)
+    title: 'Mi Familia',
+    path: '/dashboard/family',
+    icon: getIcon(heartFill)
   },
   {
     title: 'Eventos',
-    path: '/dashboard/events',
+    path: '/homeschooling/events',
     icon: getIcon(clockoutline)
   },
   {
-    title: 'Examen',
-    path: '/dashboard/test',
+    title: 'Exámenes',
+    path: '/homeschooling/test',
     icon: getIcon(bookOpenOutline)
   },
   {
-    title: 'Familia',
-    path: '/dashboard/family',
-    icon: getIcon(heartFill)
+    title: 'Mi perfil',
+    path: '/dashboard/blog',
+    icon: getIcon(globe2Outline)
   }
 ];
 
