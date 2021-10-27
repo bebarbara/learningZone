@@ -24,12 +24,12 @@ import { TestListHead, TestListToolbar, TestMoreMenu } from '.';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Materia', alignRight: false },
+  { id: 'subject', label: 'Materia', alignRight: false },
   { id: 'grade', label: 'Grado', alignRight: false },
-  { id: 'createdBy', label: 'Creado por', alignRight: false },
-  { id: 'accomplishment', label: 'Logro', alignRight: false },
-  { id: 'date', label: 'Fecha', alignRight: false },
-  { id: 'status', label: 'Estado', alignRight: false },
+  { id: 'authorFullName', label: 'Creado por', alignRight: false },
+  { id: 'price', label: 'Precio', alignRight: false },
+  { id: 'isPublic', label: 'Es público', alignRight: false },
+  { id: 'done', label: 'Resuelto', alignRight: false },
   { id: '' }
 ];
 
@@ -59,16 +59,19 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(
+      array,
+      (_test) => _test.subject.toLowerCase().indexOf(query.toLowerCase()) !== -1
+    );
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function TestCard({ tests }) {
+export default function TestCard({ tests, managedByMe }) {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('subject');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [showFilter, setShowFilter] = useState(false);
@@ -81,18 +84,18 @@ export default function TestCard({ tests }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = tests.map((n) => n.name);
+      const newSelecteds = tests.map((n) => n.subject);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, subject) => {
+    const selectedIndex = selected.indexOf(subject);
     let newSelected = [];
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, subject);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -148,14 +151,15 @@ export default function TestCard({ tests }) {
               numSelected={selected.length}
               onRequestSort={handleRequestSort}
               onSelectAllClick={handleSelectAllClick}
+              manageable={managedByMe}
             />
+
             <TableBody>
               {filteredTests
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
-                  const { id, name, grade, status, createdBy, avatarUrl, accomplishment, date } =
-                    row;
-                  const isItemSelected = selected.indexOf(name) !== -1;
+                  const { id, subject, grade, authorFullName, price, isPublic, done } = row;
+                  const isItemSelected = selected.indexOf(subject) !== -1;
 
                   return (
                     <TableRow
@@ -167,25 +171,27 @@ export default function TestCard({ tests }) {
                       aria-checked={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          onChange={(event) => handleClick(event, name)}
-                        />
+                        {managedByMe && (
+                          <Checkbox
+                            checked={isItemSelected}
+                            onChange={(event) => handleClick(event, subject)}
+                          />
+                        )}
                       </TableCell>
                       <TableCell component="th" scope="row" padding="none">
                         <Stack direction="row" alignItems="center" spacing={2}>
-                          <Avatar alt={name} src={avatarUrl} />
+                          {/* <Avatar alt={subject} src={avatarUrl} /> */}
                           <Typography variant="subtitle2" noWrap>
-                            {name}
+                            {subject}
                           </Typography>
                         </Stack>
                       </TableCell>
                       <TableCell align="left">{grade}</TableCell>
-                      <TableCell align="left">{createdBy}</TableCell>
-                      <TableCell align="left">{accomplishment}</TableCell>
-                      <TableCell align="left">{date}</TableCell>
+                      <TableCell align="left">{authorFullName}</TableCell>
+                      <TableCell align="left">{price}</TableCell>
+                      <TableCell align="left">{isPublic}</TableCell>
                       <TableCell align="left">
-                        <Label
+                        {/* <Label
                           variant="ghost"
                           color={
                             (status === 'Insuficiente' && 'error') ||
@@ -195,7 +201,8 @@ export default function TestCard({ tests }) {
                           }
                         >
                           {sentenceCase(status)}
-                        </Label>
+                        </Label> */}
+                        {done}
                       </TableCell>
                       <TableCell align="right">
                         <TestMoreMenu />

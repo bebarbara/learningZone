@@ -27,7 +27,7 @@ const getAllEvents = (setEvents) =>
     });
 
 const getAllMyAttendings = (setAttendings) =>
-  fetch('http://localhost:3001/api/v1/users/1/assignments')
+  fetch('http://localhost:3001/api/v1/users/1/attendings')
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Attendings response json', json);

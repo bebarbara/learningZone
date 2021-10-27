@@ -22,7 +22,8 @@ export default function TestListHead({
   headLabel,
   numSelected,
   onRequestSort,
-  onSelectAllClick
+  onSelectAllClick,
+  manageable
 }) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -32,12 +33,15 @@ export default function TestListHead({
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-          />
+          {manageable && (
+            <Checkbox
+              indeterminate={numSelected > 0 && numSelected < rowCount}
+              checked={rowCount > 0 && numSelected === rowCount}
+              onChange={onSelectAllClick}
+            />
+          )}
         </TableCell>
+
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}
