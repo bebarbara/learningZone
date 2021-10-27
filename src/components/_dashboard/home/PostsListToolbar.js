@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useFormik } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
@@ -15,13 +15,36 @@ const SORT_OPTIONS = [
   { value: 'oldest', label: 'Antiguo' }
 ];
 
-const getPostsFollowed = async () => {
-  const res = await axios.get('https://learning-zone-poc.herokuapp.com/api/v1/posts');
-  console.log('https://learning-zone-poc.herokuapp.com/api/v1/posts');
-  console.log(res);
-  console.log('barbara');
-  return res;
-};
+const getPostsFollowed = (setPosts) =>
+  fetch('https://learning-zone-poc.herokuapp.com/api/v1/posts')
+    .then((response) => response.json())
+    .then((json) => {
+      console.log('LZ Events response json', json);
+      setPosts(json);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+const getAllPosts = (setPosts) =>
+  fetch('https://learning-zone-poc.herokuapp.com/api/v1/posts')
+    .then((response) => response.json())
+    .then((json) => {
+      console.log('LZ Events response json', json);
+      setPosts(json);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+const getMyPosts = (setPosts) =>
+  fetch('https://learning-zone-poc.herokuapp.com/api/v1/posts')
+    .then((response) => response.json())
+    .then((json) => {
+      console.log('LZ Events response json', json);
+      setPosts(json);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -57,38 +80,80 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs() {
-  const [value, setValue] = useState(0);
-  console.log('Useeffect 1');
+  const [openFilter, setOpenFilter] = useState(false);
+  const [tabValue, setTabValue] = useState('one');
   const [postsFollowed, setPostsFollowed] = useState([]);
-  console.log('Useeffect 2');
+  const [AllPosts, setAllPosts] = useState([]);
+  const [MyPosts, setMyPosts] = useState([]);
+
   useEffect(() => {
-    console.log('Useeffect');
-    getPostsFollowed()
-      .then((response) => response.json())
-      .then((json) => {
-        console.log('LZ API response', json.data);
-        console.log('LZ API response Juli1', postsFollowed);
-        setPostsFollowed(json.data.postsposts);
-        console.log('LZ API response Juli2', postsFollowed);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    console.log('useEffect', postsFollowed);
+    getPostsFollowed(handlePostsFollowed);
   }, []);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+
+  const handlePostsFollowed = (response) => {
+    console.log('set PostsFollowed', response);
+    setPostsFollowed(response.postsFollowed);
+  };
+  const handleAllPosts = (response) => {
+    console.log('set All Posts', response);
+    setAllPosts(response.events);
+  };
+  const handleMyPosts = (response) => {
+    console.log('set My Posts', response);
+    setMyPosts(response.events);
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      gender: '',
+      category: '',
+      colors: '',
+      priceRange: '',
+      rating: ''
+    },
+    onSubmit: () => {
+      setOpenFilter(false);
+    }
+  });
+  const { resetForm, handleSubmit } = formik;
+
+  const handleOpenFilter = () => {
+    setOpenFilter(true);
+  };
+
+  const handleCloseFilter = () => {
+    setOpenFilter(false);
+  };
+
+  const handleResetFilter = () => {
+    handleSubmit();
+    resetForm();
+  };
+
+  const handleTabChange = (event, newValue) => {
+    if (newValue === 'one') {
+      getPostsFollowed(handlePostsFollowed);
+    }
+    if (newValue === 'two') {
+      getAllPosts(handleAllPosts);
+    }
+    if (newValue === 'three') {
+      getMyPosts(handleMyPosts);
+    }
+    setTabValue(newValue);
   };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 0, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange}>
-          <Tab label="Seguidos" {...a11yProps(0)} />
-          <Tab label="Comunidad" {...a11yProps(1)} />
-          <Tab label="Mis post" {...a11yProps(2)} />
+        <Tabs value={tabValue} onChange={handleTabChange} aria-label="tab de posts">
+          <Tab value="one" label="Seguidos" />
+          <Tab value="two" label="Comunidad" />
+          <Tab value="three" label="Mis post" />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
+      <TabPanel tabValue="one">
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
           <BlogPostsSearch posts={POSTS} />
           <BlogPostsSort options={SORT_OPTIONS} />
@@ -99,20 +164,19 @@ export default function BasicTabs() {
           ))}
         </Grid>
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel tabValue="two">
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
           <BlogPostsSearch posts={POSTS} />
           <BlogPostsSort options={SORT_OPTIONS} />
         </Stack>
         <Grid container spacing={3}>
           {console.log('postsFollowed?', postsFollowed)}
-          {postsFollowed.lenght === 0 && <Box>No hay posts.</Box>}
           {postsFollowed.map((post, index) => (
             <BlogPostCard key={post.id} post={post} index={index} />
           ))}
         </Grid>
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel tabValue="three">
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
           <BlogPostsSearch posts={POSTS} />
           <BlogPostsSort options={SORT_OPTIONS} />

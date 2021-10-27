@@ -21,10 +21,10 @@ import ConfigWebcam from './pages/ConfigWebcam';
 import NotFound from './pages/Page404';
 import Entrega from './pages/Entrega';
 import Addphoto from './pages/Addphoto';
-import Profile from './pages/Profile';
 import ToAssignTest from './pages/ToAssignTests';
 import ProfileOther from './pages/ProfileOther';
 import Events from './pages/Events';
+import Profile from './pages/Profile';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -46,7 +46,7 @@ export default function Router() {
         { path: 'blog', element: <Blog /> },
         { path: 'profileOther', element: <ProfileOther /> },
         { path: 'starttest', element: <StartTest /> },
-        { path: 'profile', element: <Profile /> }
+        { path: 'profile', element: <Profile /> },
         { path: 'events', element: <Events /> }
       ]
     },
