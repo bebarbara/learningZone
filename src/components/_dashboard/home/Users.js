@@ -33,8 +33,8 @@ import USERLIST from '../../../_mocks_/user';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
+  { id: 'name', label: 'Nombre', alignRight: false },
+  { id: 'role', label: 'Perfil', alignRight: false },
   { id: '' }
 ];
 
@@ -160,8 +160,8 @@ export default function Users() {
 
                       return (
                         <TableRow hover key={id} tabIndex={-1}>
-                          <TableCell component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="center" spacing={2}>
+                          <TableCell component="th" scope="row" padding="normal">
+                            <Stack direction="row" alignItems="center" spacing={3}>
                               <Avatar alt={name} src={avatarUrl} />
                               <Typography variant="subtitle2" noWrap>
                                 {name}
