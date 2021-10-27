@@ -5,3 +5,6 @@ export { default as BlogPostsSort } from './BlogPostsSort';
 export { default as PostsListToolbar } from './PostsListToolbar';
 export { default as PostsList } from './PostsList';
 export { default as MyPostsList } from './MyPostsList';
+export { default as Users } from './Users';
+export { default as UserListToolbar } from './UserListToolbar';
+export { default as UserListHead } from './UserListHead';

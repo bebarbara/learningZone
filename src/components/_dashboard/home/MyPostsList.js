@@ -24,7 +24,7 @@ export default function MyPostsList({ posts, wxs, wmd, ...other }) {
       <Grid container spacing={3} {...other}>
         {posts.length === 0 && (
           <Box sx={{ marginLeft: 5 }}>
-            Aun no has subido ninguna publicacion. Empieza a compartir tu experiencia con otros.
+            Aun no has subido ninguna publicación. Empieza a compartir tu experiencia con otros.
           </Box>
         )}
         {posts.length > 0 &&

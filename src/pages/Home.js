@@ -6,7 +6,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Button, Container, Stack, Typography, Tabs, Tab, Box } from '@material-ui/core';
 // components
 import Page from '../components/Page';
-import { MyPostsList, PostsList } from '../components/_dashboard/home';
+import { MyPostsList, PostsList, Users } from '../components/_dashboard/home';
 //
 // ----------------------------------------------------------------------
 
@@ -100,11 +100,13 @@ export default function Home() {
                 <Tab value="one" label="Seguidos" />
                 <Tab value="two" label="Comunidad" />
                 <Tab value="three" label="Mis post" />
+                <Tab value="four" label="Usuarios" />
               </Tabs>
             </Box>
             {tabValue === 'one' && <PostsList posts={postsFollowed} wxs={12} wmd={6} />}
             {tabValue === 'two' && <PostsList posts={allPosts} wxs={12} wmd={4} />}
             {tabValue === 'three' && <MyPostsList posts={myPosts} wxs={12} wmd={4} />}
+            {tabValue === 'four' && <Users posts={myPosts} wxs={12} wmd={4} />}
           </Box>
         </Stack>
       </Container>
