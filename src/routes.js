@@ -51,6 +51,18 @@ export default function Router() {
       ]
     },
     {
+      path: '/homeschooling',
+      element: <DashboardLayout />,
+      children: [
+        { path: '/', element: <Navigate to="/dashboard/app" replace /> },
+        { path: 'app', element: <DashboardApp /> },
+        { path: 'family', element: <Families /> },
+        { path: 'home', element: <Home /> },
+        { path: 'events', element: <Events /> },
+        { path: 'test', element: <Tests /> }
+      ]
+    },
+    {
       path: '/',
       element: <LogoOnlyLayout />,
       children: [
