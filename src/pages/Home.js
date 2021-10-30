@@ -74,6 +74,9 @@ export default function Home() {
     if (newValue === 'three') {
       getMyPosts(handleMyPosts);
     }
+    if (newValue === 'four') {
+      getMyPosts(handleMyPosts);
+    }
     setTabValue(newValue);
   };
 
