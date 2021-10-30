@@ -1,5 +1,5 @@
 import { Box } from '@material-ui/system';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import { useParams, useLocation } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
@@ -16,8 +16,14 @@ export default function PaymentRegistration() {
   /* eslint-enable camelcase */
   const [dataResponse, setDataResponse] = useState([]);
   const redirectionPath = resource === 'assignments' ? 'tests' : 'events';
+  const localUrl = 'http://localhost:3001';
+  const prodUrl = 'https://learning-zone-poc.herokuapp.com';
 
-  const handleUpdatePayment = (price) => {
+  useEffect(() => {
+    handleUpdatePayment();
+  }, []);
+
+  const handleUpdatePayment = () => {
     console.log('Updatting payment');
     const data = {
       payment: {
@@ -35,7 +41,7 @@ export default function PaymentRegistration() {
         paymentAccepted: paymentStatus === 'success'
       };
     }
-    const url = `http://localhost:3001/api/v1/${resource}/${resourceId}`;
+    const url = `${prodUrl}/api/v1/${resource}/${resourceId}`;
     const params = {
       method: 'PUT',
       headers: {

@@ -27,8 +27,11 @@ import Page from '../components/Page';
 // ----------------------------------------------------------------------
 // Controller functions
 
+const localUrl = 'http://localhost:3001';
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
+
 const getEventDetails = (eventId, setEvent) =>
-  fetch(`http://localhost:3001/api/v1/events/${eventId}`)
+  fetch(`${prodUrl}/api/v1/events/${eventId}`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Event response json', json);
@@ -39,7 +42,7 @@ const getEventDetails = (eventId, setEvent) =>
     });
 
 const getFamily = (userId, setFamily) =>
-  fetch(`http://localhost:3001/api/v1/users/family?user_id=${userId}`, {
+  fetch(`${prodUrl}/api/v1/users/family?user_id=${userId}`, {
     headers: new Headers({
       Authorization:
         'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjM1NTgwOTUyfQ.Z7UIBr8A6BsAYVY5ciE_y1HbHnmFCvh-VZeC-blB93I'
@@ -151,7 +154,7 @@ export default function EventDetails() {
       },
       body: JSON.stringify(data)
     };
-    fetch(`http://localhost:3001/api/v1/attendances`, params)
+    fetch(`${prodUrl}/api/v1/attendances`, params)
       .then((response) => response.json())
       .then((json) => {
         console.log('Created attendance', json);

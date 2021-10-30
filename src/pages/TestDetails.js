@@ -27,8 +27,11 @@ import Page from '../components/Page';
 // ----------------------------------------------------------------------
 // Controller functions
 
+const localUrl = 'http://localhost:3001';
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
+
 const getTestDetails = (testId, setTest) =>
-  fetch(`http://localhost:3001/api/v1/tests/${testId}`)
+  fetch(`${prodUrl}/api/v1/tests/${testId}`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Test response json', json);
@@ -39,7 +42,7 @@ const getTestDetails = (testId, setTest) =>
     });
 
 const getFamily = (userId, setFamily) =>
-  fetch(`http://localhost:3001/api/v1/users/family?user_id=${userId}`, {
+  fetch(`${prodUrl}/api/v1/users/family?user_id=${userId}`, {
     headers: new Headers({
       Authorization:
         'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjM1NTUyMTg4fQ.R_0bCJk-yievGvViNIZIIqWsj34kVLZpKar-JmBInSE'
@@ -151,7 +154,7 @@ export default function TestDetails() {
       },
       body: JSON.stringify(data)
     };
-    fetch(`http://localhost:3001/api/v1/assignments`, params)
+    fetch(`${prodUrl}/api/v1/assignments`, params)
       .then((response) => response.json())
       .then((json) => {
         console.log('Created assignment', json);
