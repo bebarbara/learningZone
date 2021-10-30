@@ -83,7 +83,7 @@ export default function ExamListToolbar({ numSelected, filterName, onFilterName 
             to="/configwebcam"
             startIcon={<Icon icon={starOutline} />}
           >
-            Comenzar
+            Comenzar el examen
           </Button>
         </Tooltip>
       ) : (

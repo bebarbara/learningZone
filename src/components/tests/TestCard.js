@@ -1,12 +1,14 @@
 import { filter } from 'lodash';
-import { sentenceCase } from 'change-case';
 import { useState } from 'react';
+import { Icon } from '@iconify/react';
+import eyeOutline from '@iconify/icons-eva/eye-outline';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import {
+  Button,
   Card,
   Table,
   Stack,
-  Avatar,
   Checkbox,
   TableRow,
   TableBody,
@@ -16,7 +18,6 @@ import {
   TablePagination
 } from '@material-ui/core';
 // components
-import Label from '../Label';
 import Scrollbar from '../Scrollbar';
 import SearchNotFound from '../SearchNotFound';
 import { TestListHead, TestListToolbar, TestMoreMenu } from '.';
@@ -66,6 +67,8 @@ function applySortFilter(array, comparator, query) {
   }
   return stabilizedThis.map((el) => el[0]);
 }
+
+// ----------------------------------------------------------------------
 
 export default function TestCard({ tests, managedByMe }) {
   const [page, setPage] = useState(0);
@@ -131,6 +134,8 @@ export default function TestCard({ tests, managedByMe }) {
   const filteredTests = applySortFilter(tests, getComparator(order, orderBy), filterName);
 
   const isTestNotFound = filteredTests.length === 0;
+
+  const { pathname } = useLocation();
 
   return (
     <Card>
@@ -205,6 +210,14 @@ export default function TestCard({ tests, managedByMe }) {
                         {done}
                       </TableCell>
                       <TableCell align="right">
+                        <Button
+                          variant="outlined"
+                          component={RouterLink}
+                          to={`${pathname}/${id}`}
+                          startIcon={<Icon icon={eyeOutline} />}
+                        >
+                          Detalles
+                        </Button>
                         <TestMoreMenu />
                       </TableCell>
                     </TableRow>

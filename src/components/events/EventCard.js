@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { Box, Card, Link, Typography, Stack } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
@@ -7,7 +7,7 @@ import { styled } from '@material-ui/core/styles';
 import { fCurrency } from '../../utils/formatNumber';
 //
 import Label from '../Label';
-import ColorPreview from '../ColorPreview';
+// import ColorPreview from '../ColorPreview';
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +26,8 @@ ShopEventCard.propTypes = {
 };
 
 export default function ShopEventCard({ event }) {
-  const { name, cover, price, colors, status, priceSale } = event;
+  const { title, cover, price, status, priceSale } = event;
+  const { pathname } = useLocation();
 
   return (
     <Card>
@@ -46,18 +47,23 @@ export default function ShopEventCard({ event }) {
             {status}
           </Label>
         )}
-        <EventImgStyle alt={name} src={cover} />
+        <EventImgStyle alt={title} src={cover} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Link to="#" color="inherit" underline="hover" component={RouterLink}>
+        <Link
+          to={`${pathname}/${event.id}`}
+          color="inherit"
+          underline="hover"
+          component={RouterLink}
+        >
           <Typography variant="subtitle2" noWrap>
-            {name}
+            {title}
           </Typography>
         </Link>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
+          {/* <ColorPreview colors={colors} /> */}
           <Typography variant="subtitle1">
             <Typography
               component="span"

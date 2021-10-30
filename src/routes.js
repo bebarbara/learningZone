@@ -25,6 +25,8 @@ import ToAssignTest from './pages/ToAssignTests';
 import ProfileOther from './pages/ProfileOther';
 import Events from './pages/Events';
 import Profile from './pages/Profile';
+import TestDetails from './pages/TestDetails';
+import EventDetails from './pages/EventDetails';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -59,7 +61,9 @@ export default function Router() {
         { path: 'family', element: <Families /> },
         { path: 'home', element: <Home /> },
         { path: 'events', element: <Events /> },
-        { path: 'test', element: <Tests /> }
+        { path: 'test', element: <Tests /> },
+        { path: 'test/:id', element: <TestDetails /> },
+        { path: 'events/:id', element: <EventDetails /> }
       ]
     },
     {
