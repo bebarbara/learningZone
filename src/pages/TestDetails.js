@@ -69,26 +69,28 @@ function FlashMessage({ res: status, message }) {
 }
 
 function UserItem({ user }) {
-  const { avatarUrl, fullName, followersCount } = user;
-
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
-      <Box
-        component="img"
-        alt={fullName}
-        src={avatarUrl}
-        sx={{ width: 48, height: 48, borderRadius: 1.5 }}
-      />
-      <Box sx={{ minWidth: 240 }}>
-        <RouterLink to="#" color="inherit" underline="hover" component={RouterLink}>
-          <Typography variant="subtitle2" noWrap>
-            {fullName}
+      {user && (
+        <Box
+          component="img"
+          alt={user.fullName}
+          src={user.avatarUrl}
+          sx={{ width: 48, height: 48, borderRadius: 1.5 }}
+        />
+      )}
+      {user && (
+        <Box sx={{ minWidth: 240 }}>
+          <RouterLink to="#" color="inherit" underline="hover" component={RouterLink}>
+            <Typography variant="subtitle2" noWrap>
+              {user.fullName}
+            </Typography>
+          </RouterLink>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+            {`Tiene ${user.followersCount} seguidores`}
           </Typography>
-        </RouterLink>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-          {`Tiene ${followersCount} seguidores`}
-        </Typography>
-      </Box>
+        </Box>
+      )}
       <Typography variant="caption" sx={{ pr: 3, flexShrink: 0, color: 'text.secondary' }}>
         Creador
       </Typography>
@@ -101,7 +103,7 @@ function AssignmentButton(props) {
   const priceText = `($ ${price})`;
   return (
     <Button variant="contained" startIcon={<Icon icon={plusFill} />} sx={{ mr: 3 }} {...props}>
-      {`Asignar ${price === 0 ? '' : priceText}`}
+      {`Asignar ${!price || price === 0 ? '' : priceText}`}
     </Button>
   );
 }
@@ -188,7 +190,7 @@ export default function TestDetails() {
               </Typography>
 
               {/* Actions  */}
-              <Box sx={{ minWidth: 120 }}>
+              <Box sx={{ minWidth: 120, mt: 5 }}>
                 <FormControl fullWidth>
                   <InputLabel id="child-id-selector">Hijo</InputLabel>
                   <Select
