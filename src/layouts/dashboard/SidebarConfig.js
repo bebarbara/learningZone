@@ -35,7 +35,7 @@ const sidebarConfig = [
   },
   {
     title: 'Exámenes',
-    path: '/homeschooling/test',
+    path: '/homeschooling/tests',
     icon: getIcon(bookOpenOutline)
   },
   {

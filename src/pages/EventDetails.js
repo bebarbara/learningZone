@@ -21,17 +21,11 @@ import {
   MenuItem
 } from '@material-ui/core';
 // components
+import { redirectToMercadoPago } from '../utils/redirectToMercadoPago';
 import Page from '../components/Page';
 
 // ----------------------------------------------------------------------
-
-const RootStyle = styled(Page)(({ theme }) => ({
-  display: 'flex',
-  minHeight: '100%',
-  alignItems: 'center',
-  paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(10)
-}));
+// Controller functions
 
 const getEventDetails = (eventId, setEvent) =>
   fetch(`http://localhost:3001/api/v1/events/${eventId}`)
@@ -61,7 +55,15 @@ const getFamily = (userId, setFamily) =>
     });
 
 // ----------------------------------------------------------------------
-// Aux components
+// Helper Components
+
+const RootStyle = styled(Page)(({ theme }) => ({
+  display: 'flex',
+  minHeight: '100%',
+  alignItems: 'center',
+  paddingTop: theme.spacing(15),
+  paddingBottom: theme.spacing(10)
+}));
 
 function FlashMessage({ res: status, message }) {
   // TODO: add a flash message styles
@@ -110,7 +112,7 @@ function AttendanceButton(props) {
 }
 
 // ----------------------------------------------------------------------
-// exported component
+// Main component
 
 export default function EventDetails() {
   const { id } = useParams();
@@ -118,6 +120,7 @@ export default function EventDetails() {
   const [hijos, setHijos] = useState([]);
   const [flashMsg, setFlashMsg] = useState('');
   const [childId, setChildId] = useState('');
+  const [preferenceId, setPreferenceId] = useState('');
 
   useEffect(() => {
     console.log('event details', id);
@@ -131,13 +134,14 @@ export default function EventDetails() {
     setEvent(response);
   };
 
-  const handleCreateAttendance = () => {
+  const handleCreateAttendance = (price) => {
     console.log('Creating attendance');
     const data = {
       attendance: {
         userId: childId,
-        EventId: event.id,
-        createdBy: 1 // TODO: change for current_user id
+        eventId: event.id,
+        createdBy: 1, // TODO: change for current_user id
+        paymentAccepted: price === 0
       }
     };
     const params = {
@@ -151,6 +155,11 @@ export default function EventDetails() {
       .then((response) => response.json())
       .then((json) => {
         console.log('Created attendance', json);
+        if (json.status === 'ok') {
+          const { assignment } = json;
+          setPreferenceId(assignment.preferenceId);
+          redirectToMercadoPago(preferenceId);
+        }
         // TODO: redirect to attendances page
         setFlashMsg(json);
       })
@@ -222,16 +231,13 @@ export default function EventDetails() {
                 </Box>
                 <Box sx={{ pt: 2 }}>
                   {childId && (
-                    <AttendanceButton to="#" onClick={handleCreateAttendance} price={event.price} />
-                  )}
-                  {!childId && (
                     <AttendanceButton
                       to="#"
-                      onClick={handleCreateAttendance}
+                      onClick={handleCreateAttendance(event.price)}
                       price={event.price}
-                      disabled
                     />
                   )}
+                  {!childId && <AttendanceButton to="#" price={event.price} disabled />}
                 </Box>
               </Box>
             </Card>

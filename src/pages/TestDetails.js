@@ -21,17 +21,11 @@ import {
   MenuItem
 } from '@material-ui/core';
 // components
+import { redirectToMercadoPago } from '../utils/redirectToMercadoPago';
 import Page from '../components/Page';
 
 // ----------------------------------------------------------------------
-
-const RootStyle = styled(Page)(({ theme }) => ({
-  display: 'flex',
-  minHeight: '100%',
-  alignItems: 'center',
-  paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(10)
-}));
+// Controller functions
 
 const getTestDetails = (testId, setTest) =>
   fetch(`http://localhost:3001/api/v1/tests/${testId}`)
@@ -61,6 +55,15 @@ const getFamily = (userId, setFamily) =>
     });
 
 // ----------------------------------------------------------------------
+// Helper Components
+
+const RootStyle = styled(Page)(({ theme }) => ({
+  display: 'flex',
+  minHeight: '100%',
+  alignItems: 'center',
+  paddingTop: theme.spacing(15),
+  paddingBottom: theme.spacing(10)
+}));
 
 function FlashMessage({ res: status, message }) {
   // TODO: add a flash message styles
@@ -108,12 +111,16 @@ function AssignmentButton(props) {
   );
 }
 
+// ----------------------------------------------------------------------
+// Main component
+
 export default function TestDetails() {
   const { id } = useParams();
   const [test, setTest] = useState([]);
   const [children, setChildren] = useState([]);
   const [flashMsg, setFlashMsg] = useState('');
   const [childId, setChildId] = useState('');
+  const [preferenceId, setPreferenceId] = useState('');
 
   useEffect(() => {
     console.log('test details', id);
@@ -127,13 +134,14 @@ export default function TestDetails() {
     setTest(response.test);
   };
 
-  const handleCreateAssignment = () => {
+  const handleCreateAssignment = (price) => {
     console.log('Creating assignment');
     const data = {
       assignment: {
         userId: childId,
         testId: test.id,
-        createdBy: 1 // TODO: change for current_user id
+        createdBy: 1, // TODO: change for current_user id
+        paymentAccepted: price === 0
       }
     };
     const params = {
@@ -147,6 +155,11 @@ export default function TestDetails() {
       .then((response) => response.json())
       .then((json) => {
         console.log('Created assignment', json);
+        if (json.status === 'ok') {
+          const { assignment } = json;
+          setPreferenceId(assignment.preferenceId);
+          redirectToMercadoPago(preferenceId);
+        }
         // TODO: redirect to assignments page
         setFlashMsg(json);
       })
@@ -211,16 +224,13 @@ export default function TestDetails() {
               </Box>
               <Box sx={{ pt: 2 }}>
                 {childId && (
-                  <AssignmentButton to="#" onClick={handleCreateAssignment} price={test.price} />
-                )}
-                {!childId && (
                   <AssignmentButton
                     to="#"
-                    onClick={handleCreateAssignment}
+                    onClick={handleCreateAssignment(test.price)}
                     price={test.price}
-                    disabled
                   />
                 )}
+                {!childId && <AssignmentButton to="#" price={test.price} disabled />}
               </Box>
             </Box>
           </Card>
