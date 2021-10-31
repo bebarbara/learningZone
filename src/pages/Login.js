@@ -8,7 +8,7 @@ import AuthLayout from '../layouts/AuthLayout';
 import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 import { LoginForm } from '../components/authentication/login';
-import AuthSocial from '../components/authentication/AuthSocial';
+// import AuthSocial from '../components/authentication/AuthSocial';
 
 // ----------------------------------------------------------------------
 
@@ -39,13 +39,13 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
+export default function Login({ setCurrentUser }) {
   return (
     <RootStyle title="Login | Learning-Zone">
       <AuthLayout>
-        Don’t have an account? &nbsp;
+        ¿Querés create una cuenta? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
-          Get started
+          Quiero registrarme
         </Link>
       </AuthLayout>
 
@@ -62,19 +62,19 @@ export default function Login() {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Inicio de sesión
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>Ingresá tus datos aquí.</Typography>
           </Stack>
-          <AuthSocial />
+          {/* <AuthSocial /> */}
 
-          <LoginForm />
+          <LoginForm setCurrentUser={setCurrentUser} />
 
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              Don’t have an account?&nbsp;
+              ¿No tenés una cuenta?&nbsp;
               <Link variant="subtitle2" component={RouterLink} to="register">
-                Get started
+                Creala aquí
               </Link>
             </Typography>
           </MHidden>
