@@ -40,7 +40,7 @@ const TABLE_HEAD = [
 
 // ----------------------------------------------------------------------
 const getAllUsers = (setUsers) =>
-  fetch('https://learning-zone-poc.herokuapp.com/api/v1/users/following?id=5')
+  fetch('https://learning-zone-poc.herokuapp.com/api/v1/users/')
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ ALL USERS response json', json);
@@ -94,7 +94,7 @@ export default function Users() {
   }, []);
   const handleAllUsers = (response) => {
     console.log('set PostsFollowed', response);
-    setAllUsers(response.followers);
+    setAllUsers(response.users);
   };
 
   const handleRequestSort = (event, property) => {
@@ -157,20 +157,25 @@ export default function Users() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, role, avatarUrl } = row;
-                      const isItemSelected = selected.indexOf(name) !== -1;
+                      const { id, fullName, type, avatarUrl } = row;
+                      const isItemSelected = selected.indexOf(fullName) !== -1;
 
                       return (
                         <TableRow hover key={id} tabIndex={-1}>
                           <TableCell component="th" scope="row" padding="normal">
                             <Stack direction="row" alignItems="center" spacing={3}>
-                              <Avatar alt={name} src={avatarUrl} />
+                              <Avatar alt={fullName} src={avatarUrl} />
                               <Typography variant="subtitle2" noWrap>
-                                {name}
+                                {fullName}
                               </Typography>
                             </Stack>
                           </TableCell>
-                          <TableCell align="left">{role}</TableCell>
+                          <TableCell align="left">
+                            {type === 'parent' && 'Padre'}
+                            {type === 'student' && 'Alumno'}
+                            {type === 'institute' && 'Institucion'}
+                            {type === 'educator' && 'Profesor'}
+                          </TableCell>
                           <TableCell align="left">
                             <Button
                               variant="contained"

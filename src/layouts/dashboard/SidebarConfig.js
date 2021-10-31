@@ -37,11 +37,6 @@ const sidebarConfig = [
     title: 'Exámenes',
     path: '/homeschooling/test',
     icon: getIcon(bookOpenOutline)
-  },
-  {
-    title: 'Mi perfil',
-    path: '/dashboard/blog',
-    icon: getIcon(globe2Outline)
   }
 ];
 
