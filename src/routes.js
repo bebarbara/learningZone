@@ -28,6 +28,8 @@ import Profile from './pages/Profile';
 import TestDetails from './pages/TestDetails';
 import EventDetails from './pages/EventDetails';
 import PaymentRegistration from './pages/PaymentRegistration';
+import CreateEvent from './pages/CreateEvent';
+import CreateTest from './pages/CreateTest';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -62,9 +64,11 @@ export default function Router() {
         { path: 'family', element: <Families /> },
         { path: 'home', element: <Home /> },
         { path: 'events', element: <Events /> },
+        { path: 'events/:id', element: <EventDetails /> },
+        { path: 'events/create', element: <CreateEvent /> },
         { path: 'tests', element: <Tests /> },
         { path: 'tests/:id', element: <TestDetails /> },
-        { path: 'events/:id', element: <EventDetails /> },
+        { path: 'tests/create', element: <CreateTest /> },
         { path: ':resouce/:resourceId/:paymentStatus', element: <PaymentRegistration /> }
       ]
     },

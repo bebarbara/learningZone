@@ -1,7 +1,10 @@
 import { useFormik } from 'formik';
 import { useState, useEffect } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { Icon } from '@iconify/react';
+import plusFill from '@iconify/icons-eva/plus-fill';
 // material
-import { Container, Stack, Typography, Tabs, Tab, Box } from '@material-ui/core';
+import { Button, Container, Stack, Typography, Tabs, Tab, Box } from '@material-ui/core';
 // components
 import Page from '../components/Page';
 import {
@@ -124,9 +127,21 @@ export default function EcommerceShop() {
   return (
     <Page title="Learningz Zone - Eventos">
       <Container>
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          ¡Los eventos de Learning Zone a tu alcance!
-        </Typography>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+          <Typography variant="h4" sx={{ mb: 5 }}>
+            ¡Los eventos de Learning Zone a tu alcance!
+          </Typography>
+          {tabValue === 'three' && (
+            <Button
+              variant="contained"
+              component={RouterLink}
+              to="create"
+              startIcon={<Icon icon={plusFill} />}
+            >
+              Crear un evento
+            </Button>
+          )}
+        </Stack>
 
         <Stack
           direction="row"
@@ -154,8 +169,8 @@ export default function EcommerceShop() {
               label="Todos los eventos"
               // wrapped
             />
-            <Tab value="two" label="Mis próximos eventos" />
             <Tab value="three" label="Eventos creados por mí" />
+            <Tab value="two" label="Mis próximos eventos" />
           </Tabs>
         </Box>
 

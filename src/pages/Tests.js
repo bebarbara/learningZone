@@ -92,14 +92,16 @@ export default function Tests() {
           <Typography variant="h4" gutterBottom>
             ¡En Learning Zone tenés a disposición tus exámenes y los de la comunidad!
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            startIcon={<Icon icon={plusFill} />}
-          >
-            Crear un examen
-          </Button>
+          {tabValue === 'three' && (
+            <Button
+              variant="contained"
+              component={RouterLink}
+              to="create"
+              startIcon={<Icon icon={plusFill} />}
+            >
+              Crear un examen
+            </Button>
+          )}
         </Stack>
 
         <Box sx={{ width: '100%', marginBottom: 2 }}>
@@ -109,8 +111,8 @@ export default function Tests() {
               label="Todos los exámenes"
               // wrapped
             />
-            <Tab value="two" label="Exámenes asignados por mí" />
             <Tab value="three" label="Exámenes creados por mí" />
+            <Tab value="two" label="Exámenes asignados por mí" />
           </Tabs>
         </Box>
 
