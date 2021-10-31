@@ -6,6 +6,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import arrowIosBackOutline from '@iconify/icons-eva/arrow-ios-back-outline';
 
+// Ref: https://gist.github.com/muZk/e11931b3df6aab7c7dd6dd53058c3e41
 export default function PaymentRegistration() {
   const { resource, resourceId, paymentStatus } = useParams();
   /* eslint-disable camelcase */
