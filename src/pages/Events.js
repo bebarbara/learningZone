@@ -162,15 +162,15 @@ export default function EcommerceShop() {
           </Stack>
         </Stack>
 
-        <Box sx={{ width: '100%', marginBottom: 5 }}>
+        <Box sx={{ width: '100%', marginBottom: 8 }}>
           <Tabs value={tabValue} onChange={handleTabChange} aria-label="tab de eventos">
             <Tab
               value="one"
-              label="Todos los eventos"
+              label="Todos"
               // wrapped
             />
-            <Tab value="three" label="Eventos creados por mí" />
-            <Tab value="two" label="Mis próximos eventos" />
+            <Tab value="three" label="Creados por mí" />
+            <Tab value="two" label="Próximos eventos" />
           </Tabs>
         </Box>
 

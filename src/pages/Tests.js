@@ -108,11 +108,11 @@ export default function Tests() {
           <Tabs value={tabValue} onChange={handleTabChange} aria-label="tab de exámenes">
             <Tab
               value="one"
-              label="Todos los exámenes"
+              label="Todos"
               // wrapped
             />
-            <Tab value="three" label="Exámenes creados por mí" />
-            <Tab value="two" label="Exámenes asignados por mí" />
+            <Tab value="three" label="Creados por mí" />
+            <Tab value="two" label="Asignados por mí" />
           </Tabs>
         </Box>
 
