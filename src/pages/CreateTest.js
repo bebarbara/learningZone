@@ -52,6 +52,28 @@ const defaultValues = {
 };
 
 // ---------------------------------------------------------------------
+// Helper components
+
+// TODO: create questions to add into the tests
+function QuestionForm() {
+  return (
+    // <form onSubmit={handleAddQuestion}>
+    <FormControl style={{ margin: 10 }}>
+      <FormLabel htmlFor="label">Pregunta</FormLabel>
+      <TextField
+        name="label"
+        type="text"
+        // defaultValue={formValues.subject}
+        helperText="Ingresá una pregunta."
+        //   onChange={handleInputChange}
+        required
+      />
+    </FormControl>
+    // </form>
+  );
+}
+
+// ---------------------------------------------------------------------
 // Main component
 
 export default function CreateTest() {
