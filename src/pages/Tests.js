@@ -10,8 +10,11 @@ import { TestCard } from '../components/tests';
 
 // ----------------------------------------------------------------------
 
+const localUrl = 'http://localhost:3001';
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
+
 const getAllTests = (setTests) =>
-  fetch('http://localhost:3001/api/v1/tests')
+  fetch(`${prodUrl}/api/v1/tests`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Tests response json', json);
@@ -22,7 +25,7 @@ const getAllTests = (setTests) =>
     });
 
 const getAllMyAssignments = (setAssignments) =>
-  fetch('http://localhost:3001/api/v1/users/1/assignments')
+  fetch(`${prodUrl}/api/v1/users/1/assignments`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Assignments response json', json);
@@ -33,7 +36,7 @@ const getAllMyAssignments = (setAssignments) =>
     });
 
 const getAllMyTests = (setMyTests) =>
-  fetch('http://localhost:3001/api/v1/users/1/tests')
+  fetch(`${prodUrl}/api/v1/users/1/tests`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ My Tests response json', json);
@@ -89,25 +92,27 @@ export default function Tests() {
           <Typography variant="h4" gutterBottom>
             ¡En Learning Zone tenés a disposición tus exámenes y los de la comunidad!
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            startIcon={<Icon icon={plusFill} />}
-          >
-            Crear un examen
-          </Button>
+          {tabValue === 'three' && (
+            <Button
+              variant="contained"
+              component={RouterLink}
+              to="create"
+              startIcon={<Icon icon={plusFill} />}
+            >
+              Crear un examen
+            </Button>
+          )}
         </Stack>
 
         <Box sx={{ width: '100%', marginBottom: 2 }}>
           <Tabs value={tabValue} onChange={handleTabChange} aria-label="tab de exámenes">
             <Tab
               value="one"
-              label="Todos los exámenes"
+              label="Todos"
               // wrapped
             />
-            <Tab value="two" label="Exámenes asignados por mí" />
-            <Tab value="three" label="Exámenes creados por mí" />
+            <Tab value="three" label="Creados por mí" />
+            <Tab value="two" label="Asignados por mí" />
           </Tabs>
         </Box>
 

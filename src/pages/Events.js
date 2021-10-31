@@ -1,7 +1,10 @@
 import { useFormik } from 'formik';
 import { useState, useEffect } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { Icon } from '@iconify/react';
+import plusFill from '@iconify/icons-eva/plus-fill';
 // material
-import { Container, Stack, Typography, Tabs, Tab, Box } from '@material-ui/core';
+import { Button, Container, Stack, Typography, Tabs, Tab, Box } from '@material-ui/core';
 // components
 import Page from '../components/Page';
 import {
@@ -15,8 +18,11 @@ import {
 
 // ---------------------------------------------------------------------
 
+const localUrl = 'http://localhost:3001';
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
+
 const getAllEvents = (setEvents) =>
-  fetch('http://localhost:3001/api/v1/events')
+  fetch(`${prodUrl}/api/v1/events`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Events response json', json);
@@ -27,7 +33,7 @@ const getAllEvents = (setEvents) =>
     });
 
 const getAllMyAttendings = (setAttendings) =>
-  fetch('http://localhost:3001/api/v1/users/1/attendings')
+  fetch(`${prodUrl}/api/v1/users/1/attendances`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Attendings response json', json);
@@ -38,7 +44,7 @@ const getAllMyAttendings = (setAttendings) =>
     });
 
 const getAllMyEvents = (setMyEvents) =>
-  fetch('http://localhost:3001/api/v1/users/1/events')
+  fetch(`${prodUrl}/api/v1/users/1/events`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ My Events response json', json);
@@ -121,9 +127,21 @@ export default function EcommerceShop() {
   return (
     <Page title="Learningz Zone - Eventos">
       <Container>
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          ¡Los eventos de Learning Zone a tu alcance!
-        </Typography>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+          <Typography variant="h4" sx={{ mb: 5 }}>
+            ¡Los eventos de Learning Zone a tu alcance!
+          </Typography>
+          {tabValue === 'three' && (
+            <Button
+              variant="contained"
+              component={RouterLink}
+              to="create"
+              startIcon={<Icon icon={plusFill} />}
+            >
+              Crear un evento
+            </Button>
+          )}
+        </Stack>
 
         <Stack
           direction="row"
@@ -144,15 +162,15 @@ export default function EcommerceShop() {
           </Stack>
         </Stack>
 
-        <Box sx={{ width: '100%', marginBottom: 5 }}>
+        <Box sx={{ width: '100%', marginBottom: 8 }}>
           <Tabs value={tabValue} onChange={handleTabChange} aria-label="tab de eventos">
             <Tab
               value="one"
-              label="Todos los eventos"
+              label="Todos"
               // wrapped
             />
-            <Tab value="two" label="Mis próximos eventos" />
-            <Tab value="three" label="Eventos creados por mí" />
+            <Tab value="three" label="Creados por mí" />
+            <Tab value="two" label="Próximos eventos" />
           </Tabs>
         </Box>
 
