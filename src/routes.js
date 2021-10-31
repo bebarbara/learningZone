@@ -27,6 +27,7 @@ import Events from './pages/Events';
 import Profile from './pages/Profile';
 import TestDetails from './pages/TestDetails';
 import EventDetails from './pages/EventDetails';
+import PaymentRegistration from './pages/PaymentRegistration';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -61,9 +62,10 @@ export default function Router() {
         { path: 'family', element: <Families /> },
         { path: 'home', element: <Home /> },
         { path: 'events', element: <Events /> },
-        { path: 'test', element: <Tests /> },
-        { path: 'test/:id', element: <TestDetails /> },
-        { path: 'events/:id', element: <EventDetails /> }
+        { path: 'tests', element: <Tests /> },
+        { path: 'tests/:id', element: <TestDetails /> },
+        { path: 'events/:id', element: <EventDetails /> },
+        { path: ':resouce/:resourceId/:paymentStatus', element: <PaymentRegistration /> }
       ]
     },
     {

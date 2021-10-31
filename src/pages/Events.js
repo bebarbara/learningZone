@@ -15,8 +15,11 @@ import {
 
 // ---------------------------------------------------------------------
 
+const localUrl = 'http://localhost:3001';
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
+
 const getAllEvents = (setEvents) =>
-  fetch('http://localhost:3001/api/v1/events')
+  fetch(`${prodUrl}/api/v1/events`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Events response json', json);
@@ -27,7 +30,7 @@ const getAllEvents = (setEvents) =>
     });
 
 const getAllMyAttendings = (setAttendings) =>
-  fetch('http://localhost:3001/api/v1/users/1/attendings')
+  fetch(`${prodUrl}/api/v1/users/1/attendances`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Attendings response json', json);
@@ -38,7 +41,7 @@ const getAllMyAttendings = (setAttendings) =>
     });
 
 const getAllMyEvents = (setMyEvents) =>
-  fetch('http://localhost:3001/api/v1/users/1/events')
+  fetch(`${prodUrl}/api/v1/users/1/events`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ My Events response json', json);

@@ -21,20 +21,17 @@ import {
   MenuItem
 } from '@material-ui/core';
 // components
+import { redirectToMercadoPago } from '../utils/redirectToMercadoPago';
 import Page from '../components/Page';
 
 // ----------------------------------------------------------------------
+// Controller functions
 
-const RootStyle = styled(Page)(({ theme }) => ({
-  display: 'flex',
-  minHeight: '100%',
-  alignItems: 'center',
-  paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(10)
-}));
+const localUrl = 'http://localhost:3001';
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
 
 const getEventDetails = (eventId, setEvent) =>
-  fetch(`http://localhost:3001/api/v1/events/${eventId}`)
+  fetch(`${prodUrl}/api/v1/events/${eventId}`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Event response json', json);
@@ -45,7 +42,7 @@ const getEventDetails = (eventId, setEvent) =>
     });
 
 const getFamily = (userId, setFamily) =>
-  fetch(`http://localhost:3001/api/v1/users/family?user_id=${userId}`, {
+  fetch(`${prodUrl}/api/v1/users/family?user_id=${userId}`, {
     headers: new Headers({
       Authorization:
         'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjM1NTgwOTUyfQ.Z7UIBr8A6BsAYVY5ciE_y1HbHnmFCvh-VZeC-blB93I'
@@ -61,7 +58,15 @@ const getFamily = (userId, setFamily) =>
     });
 
 // ----------------------------------------------------------------------
-// Aux components
+// Helper Components
+
+const RootStyle = styled(Page)(({ theme }) => ({
+  display: 'flex',
+  minHeight: '100%',
+  alignItems: 'center',
+  paddingTop: theme.spacing(15),
+  paddingBottom: theme.spacing(10)
+}));
 
 function FlashMessage({ res: status, message }) {
   // TODO: add a flash message styles
@@ -110,7 +115,7 @@ function AttendanceButton(props) {
 }
 
 // ----------------------------------------------------------------------
-// exported component
+// Main component
 
 export default function EventDetails() {
   const { id } = useParams();
@@ -118,6 +123,7 @@ export default function EventDetails() {
   const [hijos, setHijos] = useState([]);
   const [flashMsg, setFlashMsg] = useState('');
   const [childId, setChildId] = useState('');
+  const [preferenceId, setPreferenceId] = useState('');
 
   useEffect(() => {
     console.log('event details', id);
@@ -131,13 +137,14 @@ export default function EventDetails() {
     setEvent(response);
   };
 
-  const handleCreateAttendance = () => {
+  const handleCreateAttendance = (price) => {
     console.log('Creating attendance');
     const data = {
       attendance: {
         userId: childId,
-        EventId: event.id,
-        createdBy: 1 // TODO: change for current_user id
+        eventId: event.id,
+        createdBy: 1, // TODO: change for current_user id
+        paymentAccepted: price === 0
       }
     };
     const params = {
@@ -147,10 +154,15 @@ export default function EventDetails() {
       },
       body: JSON.stringify(data)
     };
-    fetch(`http://localhost:3001/api/v1/attendances`, params)
+    fetch(`${prodUrl}/api/v1/attendances`, params)
       .then((response) => response.json())
       .then((json) => {
         console.log('Created attendance', json);
+        if (json.status === 'ok') {
+          const { assignment } = json;
+          setPreferenceId(assignment.preferenceId);
+          redirectToMercadoPago(preferenceId);
+        }
         // TODO: redirect to attendances page
         setFlashMsg(json);
       })
@@ -222,16 +234,13 @@ export default function EventDetails() {
                 </Box>
                 <Box sx={{ pt: 2 }}>
                   {childId && (
-                    <AttendanceButton to="#" onClick={handleCreateAttendance} price={event.price} />
-                  )}
-                  {!childId && (
                     <AttendanceButton
                       to="#"
-                      onClick={handleCreateAttendance}
+                      onClick={handleCreateAttendance(event.price)}
                       price={event.price}
-                      disabled
                     />
                   )}
+                  {!childId && <AttendanceButton to="#" price={event.price} disabled />}
                 </Box>
               </Box>
             </Card>

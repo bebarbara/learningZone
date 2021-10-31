@@ -10,8 +10,11 @@ import { TestCard } from '../components/tests';
 
 // ----------------------------------------------------------------------
 
+const localUrl = 'http://localhost:3001';
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
+
 const getAllTests = (setTests) =>
-  fetch('http://localhost:3001/api/v1/tests')
+  fetch(`${prodUrl}/api/v1/tests`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Tests response json', json);
@@ -22,7 +25,7 @@ const getAllTests = (setTests) =>
     });
 
 const getAllMyAssignments = (setAssignments) =>
-  fetch('http://localhost:3001/api/v1/users/1/assignments')
+  fetch(`${prodUrl}/api/v1/users/1/assignments`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Assignments response json', json);
@@ -33,7 +36,7 @@ const getAllMyAssignments = (setAssignments) =>
     });
 
 const getAllMyTests = (setMyTests) =>
-  fetch('http://localhost:3001/api/v1/users/1/tests')
+  fetch(`${prodUrl}/api/v1/users/1/tests`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ My Tests response json', json);
