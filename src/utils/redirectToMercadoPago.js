@@ -1,3 +1,4 @@
+// Ref: https://gist.github.com/muZk/e11931b3df6aab7c7dd6dd53058c3e41
 export const redirectToMercadoPago = (preferenceId) => {
   const loadScript = (url, callback) => {
     const script = document.createElement('script');
