@@ -2,8 +2,10 @@ import { useState } from 'react';
 import {
   Button,
   Container,
+  Checkbox,
   FormControl,
   FormLabel,
+  FormControlLabel,
   Grid,
   Stack,
   TextField,
@@ -16,9 +18,9 @@ import Page from '../components/Page';
 const localUrl = 'http://localhost:3001';
 const prodUrl = 'https://learning-zone-poc.herokuapp.com';
 
-const createEvent = async (dataContent, handleResponse) => {
+const createTest = async (dataContent, handleResponse) => {
   const data = {
-    event: dataContent
+    test: dataContent
   };
   const params = {
     method: 'POST',
@@ -27,10 +29,10 @@ const createEvent = async (dataContent, handleResponse) => {
     },
     body: JSON.stringify(data)
   };
-  return fetch(`${prodUrl}/api/v1/events`, params)
+  return fetch(`${prodUrl}/api/v1/tests`, params)
     .then((response) => response.json())
     .then((json) => {
-      console.log('LZ Events creation json', json);
+      console.log('LZ Tests creation json', json);
       handleResponse(json);
     })
     .catch((error) => {
@@ -39,10 +41,12 @@ const createEvent = async (dataContent, handleResponse) => {
 };
 
 const defaultValues = {
-  title: '',
+  subject: '',
+  grade: 1,
   description: '',
-  time: '',
-  address: '',
+  program: '',
+  questions: [],
+  public: true,
   userId: 1, // TODO: update for current_user id
   price: 0
 };
@@ -50,17 +54,17 @@ const defaultValues = {
 // ---------------------------------------------------------------------
 // Main component
 
-export default function CreateEvent() {
+export default function CreateTest() {
   const [formValues, setFormValues] = useState(defaultValues);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(formValues);
-    createEvent(formValues, handleResponse);
+  const handleSubmit = (test) => {
+    test.preventDefault();
+    console.log('sending test', formValues);
+    createTest(formValues, handleResponse);
   };
 
   const handleResponse = (response) => {
-    console.log('Created event response', response);
+    console.log('Created test response', response);
   };
 
   const handleInputChange = (e) => {
@@ -72,24 +76,46 @@ export default function CreateEvent() {
     });
   };
 
+  const handleCheckChange = (e) => {
+    const { name, checked } = e.target;
+    // console.log('name and value', { name, checked });
+    setFormValues({
+      ...formValues,
+      [name]: checked
+    });
+  };
+
   return (
-    <Page title="Crear un evento | Learning Zone">
+    <Page title="Crear un examen | Learning Zone">
       <Container sx={{ width: '100%' }}>
         <Stack direction="column" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" align="center" gutterBottom>
-            Crear eventos
+            Crear exámenes
           </Typography>
         </Stack>
         <form onSubmit={handleSubmit}>
           <Grid container direction="column" justifyContent="space-between">
             <FormControl style={{ margin: 10 }}>
-              <FormLabel htmlFor="title">Título</FormLabel>
+              <FormLabel htmlFor="subject">Materia</FormLabel>
               <TextField
-                name="title"
+                name="subject"
                 type="text"
-                defaultValue={formValues.title}
-                helperText="Hacé que el título de tu evento sea divertido."
+                defaultValue={formValues.subject}
+                helperText="El nombre de la materia."
                 onChange={handleInputChange}
+                required
+              />
+            </FormControl>
+            <FormControl style={{ margin: 10 }}>
+              <FormLabel htmlFor="grade">Edad recomendada</FormLabel>
+              <TextField
+                name="grade"
+                type="number"
+                defaultValue={formValues.grade}
+                helperText="Este edad servirá de referencia para saber el nivel del examen."
+                onChange={handleInputChange}
+                min={0}
+                max={18}
                 required
               />
             </FormControl>
@@ -99,24 +125,15 @@ export default function CreateEvent() {
                 name="description"
                 defaultValue={formValues.description}
                 onChange={handleInputChange}
-              />
-            </FormControl>
-            <FormControl style={{ margin: 10 }}>
-              <FormLabel htmlFor="time">Fecha y hora del evento</FormLabel>
-              <TextField
-                name="time"
-                type="datetime-local"
-                defaultValue={formValues.time}
-                onChange={handleInputChange}
                 required
               />
             </FormControl>
             <FormControl style={{ margin: 10 }}>
-              <FormLabel htmlFor="address">Lugar del encuentro</FormLabel>
+              <FormLabel htmlFor="program">Programa cubierto</FormLabel>
               <TextField
-                name="address"
-                defaultValue={formValues.address}
-                helperText="Recordá que el lugar puede ser físico o virtual, así que puedes dejar aquí el link a tu evento."
+                name="program"
+                defaultValue={formValues.program}
+                helperText="Aquí puedes listar todos los temas cubiertos por el examen."
                 onChange={handleInputChange}
                 required
               />
@@ -127,12 +144,17 @@ export default function CreateEvent() {
                 name="price"
                 type="number"
                 defaultValue={formValues.price}
-                helperText="Si tu evento es gratuito el valor es 0 (cero)."
+                helperText="Si tu examen es gratuito el valor es 0 (cero)."
                 min="0"
                 onChange={handleInputChange}
                 required
               />
             </FormControl>
+            <FormControlLabel
+              style={{ margin: 15 }}
+              control={<Checkbox name="public" defaultChecked onChange={handleCheckChange} />}
+              label="Examen público"
+            />
           </Grid>
           <Button
             style={{ margin: 10 }}
@@ -141,7 +163,7 @@ export default function CreateEvent() {
             type="submit"
             // onClick={handleSubmit}
           >
-            Crear evento
+            Crear examen
           </Button>
         </form>
       </Container>

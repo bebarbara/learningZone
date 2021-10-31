@@ -131,14 +131,16 @@ export default function EcommerceShop() {
           <Typography variant="h4" sx={{ mb: 5 }}>
             ¡Los eventos de Learning Zone a tu alcance!
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="create"
-            startIcon={<Icon icon={plusFill} />}
-          >
-            Crear un evento
-          </Button>
+          {tabValue === 'three' && (
+            <Button
+              variant="contained"
+              component={RouterLink}
+              to="create"
+              startIcon={<Icon icon={plusFill} />}
+            >
+              Crear un evento
+            </Button>
+          )}
         </Stack>
 
         <Stack
@@ -167,8 +169,8 @@ export default function EcommerceShop() {
               label="Todos los eventos"
               // wrapped
             />
-            <Tab value="two" label="Mis próximos eventos" />
             <Tab value="three" label="Eventos creados por mí" />
+            <Tab value="two" label="Mis próximos eventos" />
           </Tabs>
         </Box>
 
