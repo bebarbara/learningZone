@@ -38,7 +38,7 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard/app" replace /> },
+        { path: '/', element: <Navigate to="/homeschooling/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
         { path: 'other', element: <DashboardAppother /> },
         { path: 'user', element: <User /> },
