@@ -20,12 +20,12 @@ const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
 const sidebarConfig = [
   {
     title: 'Comunidad',
-    path: '/dashboard/home',
+    path: '/homeschooling/home',
     icon: getIcon(homeFill)
   },
   {
     title: 'Mi Familia',
-    path: '/dashboard/family',
+    path: '/homeschooling/family',
     icon: getIcon(heartFill)
   },
   {

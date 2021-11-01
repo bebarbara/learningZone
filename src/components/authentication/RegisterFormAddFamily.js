@@ -79,7 +79,7 @@ export default function RegisterFormAddFamily({ setCurrentUser }) {
     onSubmit: (values) => {
       console.log('call handle user', values);
       handleSetUser(values);
-      // navigate('/dashboard/home', { replace: true });
+      // navigate('/homeschooling/home', { replace: true });
     }
   });
 
