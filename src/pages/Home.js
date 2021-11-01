@@ -87,6 +87,7 @@ export default function Home() {
           <Typography variant="h4" gutterBottom>
             ¡Bienvenido!
           </Typography>
+
           <Button
             variant="contained"
             component={RouterLink}
@@ -100,8 +101,8 @@ export default function Home() {
           <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 0, borderColor: 'divider' }}>
               <Tabs value={tabValue} onChange={handleTabChange} aria-label="tab de posts">
-                <Tab value="one" label="Seguidos" />
-                <Tab value="two" label="Comunidad" />
+                <Tab value="one" label="Post de mis seguidos" />
+                <Tab value="two" label="Post de la comunidad" />
                 <Tab value="three" label="Mis post" />
                 <Tab value="four" label="Usuarios" />
               </Tabs>

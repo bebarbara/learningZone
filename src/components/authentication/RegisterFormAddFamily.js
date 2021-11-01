@@ -6,87 +6,119 @@ import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { useNavigate } from 'react-router-dom';
 // material
-import { Stack, TextField, IconButton, InputAdornment } from '@material-ui/core';
+import {
+  Stack,
+  TextField,
+  IconButton,
+  InputAdornment,
+  Checkbox,
+  FormControlLabel
+} from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 import { styled } from '@material-ui/system';
 
 // ----------------------------------------------------------------------
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
 
-export default function RegisterFormAddFamily() {
+async function addfamily(credentials) {
+  return fetch(`${prodUrl}/api/v1/users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  }).then((data) => data.json());
+}
+
+const defaultValues = {
+  name: '',
+  surname: '',
+  userType: '2',
+  email: '',
+  password: '',
+  birthday: '',
+  username: '',
+  gender: '',
+  parentId: 5
+};
+
+export default function RegisterFormAddFamily({ setCurrentUser }) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
+    userName: Yup.string()
+      .min(2, 'Muy corto!')
+      .max(50, 'Muy Largo')
+      .required('Nombre de Usuario es requerido'),
     firstName: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('First name required'),
-    lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
+      .min(2, 'Muy corto!')
+      .max(50, 'Muy largo!')
+      .required('Nombre es requerido'),
+    lastName: Yup.string()
+      .min(2, 'Muy corto!')
+      .max(50, 'Muy largo!')
+      .required('Apellido es requerido'),
+    email: Yup.string().email('Email must be a valid email address').required('Email es requerido'),
+    password: Yup.string().required('Password es requerida')
   });
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
+      name: '',
+      surname: '',
+      userType: '2',
       email: '',
       password: '',
-      accept: ''
+      birthday: '',
+      username: '',
+      gender: '',
+      parentId: 5
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+    onSubmit: (values) => {
+      console.log('call handle user', values);
+      handleSetUser(values);
+      // navigate('/dashboard/home', { replace: true });
     }
   });
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
-  //   const MyCheckbox = ({ children, ...props }) => {
-  //     const [field, meta] = useField({ ...props, type: 'checkbox' });
-  //     return (
-  //       <>
-  //         <label className="checkbox">
-  //           <input {...field} {...props} type="checkbox" />
-  //           {children}
-  //         </label>
-  //         {meta.touched && meta.error ? <div className="error">{meta.error}</div> : null}
-  //       </>
-  //     );
-  //   };
+  const { errors, touched, values, handleSubmit, isSubmitting, getFieldProps } = formik;
+  const [formValues, setFormValues] = useState(defaultValues);
 
-  // Styled components ....
-  //  const StyledSelect = styled.select`
-  //   color: var(--blue);
-  // `;
+  const handleSetUser = async (values) => {
+    // console.log('llega handler user', values);
+    const response = await addfamily({
+      user: {
+        userName: values.userName,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        password: values.password,
+        accept: values.accept
+      }
+    });
+    // console.log('LZ Login response json', response);
+    setCurrentUser(response.user);
+  };
 
-  // const StyledErrorMessage = styled.div`
-  // font-size: 12px;
-  // color: var(--red-600);
-  // width: 10px;
-  // margin-top_ 0.105rem;
-  // &:befre {
-  //   content: "❌ ";
-  //   font-size: 10px;
-  // }
-  // @media (prefers-color-scheme: dark) {
-  //   color: var(--red-300);
-  // }
-  // `;
-  // const StyledLabel = styled.label`
-  //   margin-top: 2rem;
-  // `;
-
-  const MySelect = ({ label, ...props }) => {
-    // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-    // which we can spread on <input> and alse replace ErrorMessage entirely.
-    const [field, meta] = useField(props);
-    return <></>;
+  const handleResponse = (response) => {
+    console.log('Addfamilies response', response);
   };
 
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={2}>
+          <TextField
+            fullWidth
+            autoComplete="username"
+            type="username"
+            label="Nombre de usuario"
+            {...getFieldProps('username')}
+            error={Boolean(touched.username && errors.username)}
+            helperText={touched.username && errors.username}
+          />
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
@@ -106,20 +138,13 @@ export default function RegisterFormAddFamily() {
           </Stack>
           <TextField
             fullWidth
-            autoComplete="username"
+            autoComplete="email"
             type="email"
             label="Email"
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
-          <MySelect label="Job Type" name="jobType">
-            <option value="">Select a job type</option>
-            <option value="designer">Designer</option>
-            <option value="development">Developer</option>
-            <option value="product">Product Manager</option>
-            <option value="other">Other</option>
-          </MySelect>
           <TextField
             fullWidth
             autoComplete="current-password"
@@ -138,17 +163,12 @@ export default function RegisterFormAddFamily() {
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
           />
-          <TextField
-            fullWidth
-            label="Apellido"
-            {...getFieldProps('lastName')}
-            error={Boolean(touched.lastName && errors.lastName)}
-            helperText={touched.lastName && errors.lastName}
-          />
-          <div>
-            <input type="checkbox" />
-            Acepto los terminos y condiciones
-          </div>
+          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+            <FormControlLabel
+              control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
+              label="Acepto los terminos y condiciones"
+            />
+          </Stack>
 
           <LoadingButton
             fullWidth

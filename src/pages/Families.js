@@ -1,7 +1,7 @@
+import React, { useState, useEffect } from 'react';
 import { filter } from 'lodash';
 import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink } from 'react-router-dom';
 // material
@@ -39,7 +39,16 @@ const TABLE_HEAD = [
   { id: 'status', label: 'Estado', alignRight: false },
   { id: '' }
 ];
-
+const getAllFamilies = (setFamilies) =>
+  fetch('https://learning-zone-poc.herokuapp.com/api/v1/users/family?user_id=5')
+    .then((response) => response.json())
+    .then((json) => {
+      console.log('LZ families USERS response json', json.user.family);
+      setFamilies(json);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 // ----------------------------------------------------------------------
 
 function descendingComparator(a, b, orderBy) {
@@ -78,6 +87,16 @@ export default function User() {
   const [orderBy, setOrderBy] = useState('name');
   const [filterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [allFamilies, setAllFamilies] = useState([]);
+
+  useEffect(() => {
+    console.log('useEffect', allFamilies);
+    getAllFamilies(handleAllFamilies);
+  }, []);
+  const handleAllFamilies = (response) => {
+    console.log('set families', response);
+    setAllFamilies(response.family);
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -87,7 +106,7 @@ export default function User() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = FAMILIESLIST.map((n) => n.name);
+      const newSelecteds = allFamilies.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -120,9 +139,9 @@ export default function User() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - FAMILIESLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - allFamilies.length) : 0;
 
-  const filteredUsers = applySortFilter(FAMILIESLIST, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(allFamilies, getComparator(order, orderBy), filterName);
 
   const isUserNotFound = filteredUsers.length === 0;
 
@@ -151,7 +170,7 @@ export default function User() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={FAMILIESLIST.length}
+                  rowCount={allFamilies.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
@@ -160,9 +179,16 @@ export default function User() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, insignia, status, certificates, avatarUrl, isVerified } =
-                        row;
-                      const isItemSelected = selected.indexOf(name) !== -1;
+                      const {
+                        id,
+                        username,
+                        insignia,
+                        status,
+                        certificates,
+                        avatarUrl,
+                        isVerified
+                      } = row;
+                      const isItemSelected = selected.indexOf(username) !== -1;
 
                       return (
                         <TableRow
@@ -176,14 +202,14 @@ export default function User() {
                           <TableCell padding="checkbox">
                             <Checkbox
                               checked={isItemSelected}
-                              onChange={(event) => handleClick(event, name)}
+                              onChange={(event) => handleClick(event, username)}
                             />
                           </TableCell>
                           <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>
-                              <Avatar alt={name} src={avatarUrl} />
+                              <Avatar alt={username} src={avatarUrl} />
                               <Typography variant="subtitle2" noWrap>
-                                {name}
+                                {username}
                               </Typography>
                             </Stack>
                           </TableCell>
@@ -227,7 +253,7 @@ export default function User() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={FAMILIESLIST.length}
+            count={allFamilies.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

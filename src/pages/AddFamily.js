@@ -82,17 +82,7 @@ export default function AddFamily() {
       <Container>
         <ContentStyle>
           <Box sx={{ mb: 0 }}>
-            <Typography variant="h4" gutterBottom>
-              Busque a su familiar
-            </Typography>
-          </Box>
-          <FamilyListToolbar
-            numSelected={selected.length}
-            filterName={filterName}
-            onFilterName={handleFilterByName}
-          />
-          <Box sx={{ mb: 0 }}>
-            <Typography sx={{ color: 'text.primary' }}>O agregue al menos de edad</Typography>
+            <Typography sx={{ color: 'text.primary' }}>Ingrese los datos del estudiante</Typography>
           </Box>
           <br />
           <RegisterFormAddFamily />
