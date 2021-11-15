@@ -1,6 +1,7 @@
 ## Descripción
 
 Applicación web de Learning Zone. Es una aplicación para familias homeschoolers desarrollada con ReactJS y la plantilla Minimal.
+La aplicación se conecta al backend a través de llamadas a las APIs expuestas, las APIs se encuentran en un servidor de heroku.
 
 ## Pasos para la implementación 
 
