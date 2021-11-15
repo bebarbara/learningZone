@@ -62,7 +62,7 @@ export default function Addphoto() {
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
             Preparados para ser parte de Zona de aprendizaje :)
           </Typography>
-          <img alt="register" src="/static/illustrations/illustration_register.png" />
+          <img alt="register" src="https://i.ibb.co/2qqPCnL/illustration-register.png" />
         </SectionStyle>
       </MHidden>
 

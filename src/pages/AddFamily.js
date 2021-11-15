@@ -75,7 +75,10 @@ export default function AddFamily() {
           <Typography variant="h3" sx={{ px: 5, mt: 0, mb: 5 }}>
             El aprendizaje es experiencia. Todo lo demás es información.
           </Typography>
-          <img alt="register" src="/static/illustrations/virtualClass.jpg" />
+          <img
+            alt="register"
+            src="https://i.ibb.co/5vFNWhd/Students-watching-webinar-on-computer-studying-online-Teacher-giving-video-lecture-to-audience-Vecto.jpg"
+          />
         </SectionStyle>
       </MHidden>
 

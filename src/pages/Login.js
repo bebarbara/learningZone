@@ -54,7 +54,10 @@ export default function Login({ setCurrentUser }) {
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
             Bienvenido de nuevo
           </Typography>
-          <img src="/static/illustrations/gathering.jpg" alt="login" />
+          <img
+            src="https://i.ibb.co/k27L307/Multicultural-people-standing-together-isolated-flat-vector-illustration-Cartoon-diverse-characters.jpg"
+            alt="login"
+          />
         </SectionStyle>
       </MHidden>
 

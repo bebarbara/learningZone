@@ -146,7 +146,10 @@ export default function DashboardApp() {
             <Typography variant="h3" sx={{ px: 3, mt: 0, mb: 0 }}>
               Hola, hoy es un buen día para seguir aprendiendo :).
             </Typography>
-            <img src="/static/illustrations/class.jpg" alt="login" />
+            <img
+              src="https://i.ibb.co/z46zppv/Young-teacher-with-joyful-kids-isolated-flat-vector-illustration-Cartoon-happy-children-in-kindergar.jpg"
+              alt="login"
+            />
           </SectionStyle>
         </Box>
       </Stack>
