@@ -54,7 +54,10 @@ export default function ConfigWebcam() {
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
             Antes de comenzar, repasemos las indicaciones.
           </Typography>
-          <img src="/static/illustrations/analyzing.jpg" alt="login" />
+          <img
+            src="https://i.ibb.co/gd6vsGP/Tiny-people-examining-operating-system-error-warning-on-web-page-isolated-flat-vector-illustration-C.jpg"
+            alt="login"
+          />
         </SectionStyle>
       </MHidden>
 
