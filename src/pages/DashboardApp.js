@@ -142,12 +142,6 @@ export default function DashboardApp() {
               {tabValue === 'two' && <Users users={usersFollers} wxs={12} wmd={4} />}
             </Box>
           </Stack>
-          <SectionStyle>
-            <Typography variant="h3" sx={{ px: 3, mt: 0, mb: 0 }}>
-              Hola, hoy es un buen día para seguir aprendiendo :).
-            </Typography>
-            <img src="/static/illustrations/class.jpg" alt="login" />
-          </SectionStyle>
         </Box>
       </Stack>
     </Page>
