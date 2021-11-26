@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
-import { useFormik, Form, FormikProvider, useField } from 'formik';
+import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { useNavigate } from 'react-router-dom';
@@ -16,12 +16,13 @@ import {
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 import { styled } from '@material-ui/system';
+import useCurrentUser from '../../utils/useCurrentUser';
 
 // ----------------------------------------------------------------------
 const prodUrl = 'https://learning-zone-poc.herokuapp.com';
 
 async function addfamily(credentials) {
-  return fetch(`${prodUrl}/api/v1/users`, {
+  return fetch(`${prodUrl}/users`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -39,12 +40,13 @@ const defaultValues = {
   birthday: '',
   username: '',
   gender: '',
-  parentId: 5
+  parentId: ''
 };
 
 export default function RegisterFormAddFamily({ setCurrentUser }) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const { currentUser } = useCurrentUser();
 
   const RegisterSchema = Yup.object().shape({
     userName: Yup.string()
@@ -73,7 +75,7 @@ export default function RegisterFormAddFamily({ setCurrentUser }) {
       birthday: '',
       username: '',
       gender: '',
-      parentId: 5
+      parentId: currentUser.id
     },
     validationSchema: RegisterSchema,
     onSubmit: (values) => {
@@ -83,11 +85,11 @@ export default function RegisterFormAddFamily({ setCurrentUser }) {
     }
   });
 
-  const { errors, touched, values, handleSubmit, isSubmitting, getFieldProps } = formik;
+  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
   const [formValues, setFormValues] = useState(defaultValues);
 
   const handleSetUser = async (values) => {
-    // console.log('llega handler user', values);
+    console.log('llega handler user', values);
     const response = await addfamily({
       user: {
         userName: values.userName,
@@ -98,13 +100,14 @@ export default function RegisterFormAddFamily({ setCurrentUser }) {
         accept: values.accept
       }
     });
-    // console.log('LZ Login response json', response);
+    console.log('LZ Login response json', response);
     setCurrentUser(response.user);
   };
-
+  console.log('IDuser5', currentUser.id);
   const handleResponse = (response) => {
     console.log('Addfamilies response', response);
   };
+  console.log('IDuser6', currentUser.id);
 
   return (
     <FormikProvider value={formik}>
@@ -163,12 +166,6 @@ export default function RegisterFormAddFamily({ setCurrentUser }) {
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
           />
-          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-            <FormControlLabel
-              control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
-              label="Acepto los terminos y condiciones"
-            />
-          </Stack>
 
           <LoadingButton
             fullWidth

@@ -10,6 +10,7 @@ import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 // import { RegisterForm } from '../components/authentication/register';
 import RegisterFormAddFamily from '../components/authentication/RegisterFormAddFamily';
+import useCurrentUser from '../utils/useCurrentUser';
 import { FamilyListToolbar } from '../components/_dashboard/families';
 
 // ----------------------------------------------------------------------
@@ -42,10 +43,12 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function AddFamily() {
+  const { currentUser } = useCurrentUser();
   const [setFilterName] = useState('');
   const handleFilterByName = (event) => {
     setFilterName(event.target.value);
   };
+  console.log('IDuser', currentUser.id);
   const [selected, setSelected] = useState([]);
   // const [orderBy, setOrderBy] = useState('name');
   const [filterName] = useState('');

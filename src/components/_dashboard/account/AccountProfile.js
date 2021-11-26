@@ -13,14 +13,20 @@ import {
 } from '@material-ui/core';
 // Components
 import Page from '../../Page';
+import useCurrentUser from '../../../utils/useCurrentUser';
 
 //
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
 
-const getUser = (setUser) =>
-  fetch('https://learning-zone-poc.herokuapp.com/api/v1/users/5')
+const getUser = (setUser, userId, token) =>
+  fetch(`${prodUrl}/api/v1/users/${userId}`, {
+    headers: new Headers({
+      Authorization: `Bearer ${token}`
+    })
+  })
     .then((response) => response.json())
     .then((json) => {
-      console.log('LZ ALL USERS response json', json);
+      console.log('LZ one USERS response json', json);
       setUser(json);
     })
     .catch((error) => {
@@ -29,10 +35,12 @@ const getUser = (setUser) =>
 
 export default function AccountProfile() {
   const [user, setUser] = useState([]);
+  const { currentUser } = useCurrentUser();
 
   useEffect(() => {
     console.log('useEffect', user);
-    getUser(handleUser);
+    console.log('LZ Token ', currentUser.token);
+    getUser(handleUser, currentUser.id, currentUser.token);
   }, []);
   const handleUser = (response) => {
     console.log('set user', response);
@@ -58,10 +66,10 @@ export default function AccountProfile() {
                 }}
               />
               <Typography color="textPrimary" gutterBottom variant="h3">
-                {user.name}
+                {user.username}
               </Typography>
               <Typography color="textSecondary" variant="body1">
-                {`${user.city} ${user.country}`}
+                {`${user.type} ${user.fullName}`}
               </Typography>
               <Typography color="textSecondary" variant="body1">
                 {`${moment().format('hh:mm A')} ${user.timezone}`}

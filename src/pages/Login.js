@@ -44,7 +44,7 @@ export default function Login({ setCurrentUser }) {
     <RootStyle title="Login | Learning-Zone">
       <AuthLayout>
         ¿Querés create una cuenta? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
+        <Link underline="none" variant="subtitle2" component={RouterLink} to="register">
           Quiero registrarme
         </Link>
       </AuthLayout>

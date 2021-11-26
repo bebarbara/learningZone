@@ -7,8 +7,10 @@ import { Button, Container, Stack, Typography, Tabs, Tab, Box } from '@material-
 // components
 import Page from '../components/Page';
 import { MyPostsList, PostsList, Users } from '../components/_dashboard/home';
+import useCurrentUser from '../utils/useCurrentUser';
 //
 // ----------------------------------------------------------------------
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
 
 const getPostsFollowed = (setPosts) =>
   fetch('https://learning-zone-poc.herokuapp.com/api/v1/posts')
@@ -30,8 +32,8 @@ const getAllPosts = (setPosts) =>
     .catch((error) => {
       console.error(error);
     });
-const getMyPosts = (setPosts) =>
-  fetch('https://learning-zone-poc.herokuapp.com/api/v1/users/1/posts')
+const getMyPosts = (setPosts, userId) =>
+  fetch(`${prodUrl}/api/v1/users/${userId}/posts`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Posts3 response json', json);
@@ -42,6 +44,7 @@ const getMyPosts = (setPosts) =>
     });
 
 export default function Home() {
+  const { currentUser } = useCurrentUser();
   const [tabValue, setTabValue] = useState('one');
   const [postsFollowed, setPostsFollowed] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
@@ -62,7 +65,7 @@ export default function Home() {
   };
   const handleMyPosts = (response) => {
     console.log('set My Posts', response);
-    setMyPosts([]);
+    setMyPosts(response.posts);
   };
   const handleTabChange = (post, newValue) => {
     if (newValue === 'one') {
@@ -72,10 +75,10 @@ export default function Home() {
       getAllPosts(handleAllPosts);
     }
     if (newValue === 'three') {
-      getMyPosts(handleMyPosts);
+      getMyPosts(handleMyPosts, currentUser.id);
     }
     if (newValue === 'four') {
-      getMyPosts(handleMyPosts);
+      getMyPosts(handleMyPosts, currentUser.id);
     }
     setTabValue(newValue);
   };

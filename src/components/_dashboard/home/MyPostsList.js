@@ -15,6 +15,7 @@ MyPostsList.propTypes = {
 };
 
 export default function MyPostsList({ posts, wxs, wmd, ...other }) {
+  console.log('barbara', posts);
   return (
     <Box sx={{ width: '100%' }} m={3}>
       <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between" spacing={3}>
