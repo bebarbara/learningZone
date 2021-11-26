@@ -42,11 +42,10 @@ const getEventDetails = (eventId, setEvent) =>
       console.error(error);
     });
 
-const getFamily = (userId, setFamily) =>
+const getFamily = (userId, token, setFamily) =>
   fetch(`${prodUrl}/api/v1/users/family?user_id=${userId}`, {
     headers: new Headers({
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjM1NTgwOTUyfQ.Z7UIBr8A6BsAYVY5ciE_y1HbHnmFCvh-VZeC-blB93I'
+      Authorization: `Bearer ${token}`
     })
   })
     .then((response) => response.json())
@@ -130,7 +129,7 @@ export default function EventDetails() {
   useEffect(() => {
     console.log('event details', id);
     getEventDetails(id, handleSetEvent);
-    getFamily(id, setHijos);
+    getFamily(id, currentUser.token, setHijos);
     console.log('hijos?', hijos);
   }, []);
 
