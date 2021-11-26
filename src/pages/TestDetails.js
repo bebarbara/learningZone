@@ -42,11 +42,10 @@ const getTestDetails = (testId, setTest) =>
       console.error(error);
     });
 
-const getFamily = (userId, setFamily) =>
+const getFamily = (userId, token, setFamily) =>
   fetch(`${prodUrl}/api/v1/users/family?user_id=${userId}`, {
     headers: new Headers({
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjM1NTUyMTg4fQ.R_0bCJk-yievGvViNIZIIqWsj34kVLZpKar-JmBInSE'
+      Authorization: `Bearer ${token}`
     })
   })
     .then((response) => response.json())
