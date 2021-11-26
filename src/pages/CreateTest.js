@@ -11,10 +11,15 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
+import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
+import useCurrentUser from '../utils/useCurrentUser';
 import Page from '../components/Page';
 
 // ---------------------------------------------------------------------
-
 const localUrl = 'http://localhost:3001';
 const prodUrl = 'https://learning-zone-poc.herokuapp.com';
 
@@ -40,53 +45,42 @@ const createTest = async (dataContent, handleResponse) => {
     });
 };
 
-const defaultValues = {
-  subject: '',
-  grade: 1,
-  description: '',
-  program: '',
-  questions: [],
-  public: true,
-  userId: 1, // TODO: update for current_user id
-  price: 0
-};
-
-// ---------------------------------------------------------------------
-// Helper components
-
-// TODO: create questions to add into the tests
-function QuestionForm() {
-  return (
-    // <form onSubmit={handleAddQuestion}>
-    <FormControl style={{ margin: 10 }}>
-      <FormLabel htmlFor="label">Pregunta</FormLabel>
-      <TextField
-        name="label"
-        type="text"
-        // defaultValue={formValues.subject}
-        helperText="Ingresá una pregunta."
-        //   onChange={handleInputChange}
-        required
-      />
-    </FormControl>
-    // </form>
-  );
-}
-
 // ---------------------------------------------------------------------
 // Main component
 
 export default function CreateTest() {
-  const [formValues, setFormValues] = useState(defaultValues);
+  const navigate = useNavigate();
+  const { currentUser } = useCurrentUser();
+  const [formValues, setFormValues] = useState({
+    subject: '',
+    grade: 1,
+    description: '',
+    program: '',
+    questions: [],
+    public: true,
+    userId: currentUser.id,
+    price: 0
+  });
+  const [questionsFields, setQuestionsFields] = useState([
+    { name: uuidv4(), label: '', type: '', options: [], value: [], answers: [] }
+  ]);
+  const questionsTypes = [
+    { option: 'radio-group', description: 'Una respuesta' },
+    { option: 'checkbox-group', description: 'Selección múltiple' },
+    { option: 'text', description: 'Texto' }
+  ];
 
-  const handleSubmit = (test) => {
-    test.preventDefault();
-    console.log('sending test', formValues);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    formValues.questions = questionsFields;
+    // console.log('sending test', formValues);
+    // console.log('InputFields', questionsFields);
     createTest(formValues, handleResponse);
   };
 
   const handleResponse = (response) => {
     console.log('Created test response', response);
+    navigate('/homeschooling/tests', { replace: true });
   };
 
   const handleInputChange = (e) => {
@@ -105,6 +99,39 @@ export default function CreateTest() {
       ...formValues,
       [name]: checked
     });
+  };
+
+  const handleChangeQuestions = (event) => {
+    const { name, value, id } = event.target;
+    // console.log('lala questions', name, value, id);
+
+    const newInputFields = questionsFields.map((i) => {
+      if (id === i.name) {
+        if (i.name === 'options' || i.name === 'answers') {
+          i[name] = value.split(',').map((val) => val.trim());
+        } else {
+          i[name] = value;
+        }
+      }
+      return i;
+    });
+    setQuestionsFields(newInputFields);
+  };
+
+  const handleAddFields = () => {
+    setQuestionsFields([
+      ...questionsFields,
+      { name: uuidv4(), label: '', type: '', options: [], value: '', answers: [] }
+    ]);
+  };
+
+  const handleRemoveFields = (id, event) => {
+    const values = [...questionsFields];
+    values.splice(
+      values.findIndex((value) => value.name === id),
+      1
+    );
+    setQuestionsFields(values);
   };
 
   return (
@@ -177,6 +204,78 @@ export default function CreateTest() {
               control={<Checkbox name="public" defaultChecked onChange={handleCheckChange} />}
               label="Examen público"
             />
+            {questionsFields.map((inputField) => (
+              // label: '', type: '', options: [], value: '', answers: []
+              // <FormControl style={{ margin: 15 }}>
+              <div key={inputField.name}>
+                <FormControl style={{ margin: 5 }}>
+                  <TextField
+                    name="type"
+                    label="Tipo de respuesta"
+                    id={inputField.name}
+                    // variant="filled"
+                    value={inputField.type}
+                    select
+                    SelectProps={{ native: true }}
+                    onChange={handleChangeQuestions}
+                  >
+                    {questionsTypes.map((type) => (
+                      <option key={type.option} name={type.option} value={type.option}>
+                        {type.description}
+                      </option>
+                    ))}
+                  </TextField>
+                </FormControl>
+                <FormControl style={{ margin: 5 }}>
+                  <TextField
+                    name="label"
+                    label="Pregunta"
+                    id={inputField.name}
+                    // variant="filled"
+                    value={inputField.label}
+                    onChange={handleChangeQuestions}
+                  />
+                </FormControl>
+                {inputField.type !== 'text' && (
+                  <FormControl style={{ margin: 5, width: '230px' }}>
+                    <TextField
+                      name="options"
+                      label="Opciones de respuesta entre comas."
+                      id={inputField.name}
+                      // variant="filled"
+                      value={inputField.options}
+                      onChange={handleChangeQuestions}
+                    />
+                  </FormControl>
+                )}
+                {inputField.type !== 'text' && (
+                  <FormControl style={{ margin: 5, width: '301px' }}>
+                    <TextField
+                      name="answers"
+                      label="Respuestas correctas. Entre comas si son 2+ correctas"
+                      id={inputField.name}
+                      // variant="filled"
+                      value={inputField.answers}
+                      onChange={handleChangeQuestions}
+                    />
+                  </FormControl>
+                )}
+                <FormControl style={{ margin: 5 }}>
+                  <IconButton
+                    disabled={questionsFields.length === 1}
+                    onClick={() => handleRemoveFields(inputField.name)}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                </FormControl>
+                <FormControl style={{ margin: 5 }}>
+                  <IconButton onClick={handleAddFields}>
+                    <AddIcon />
+                  </IconButton>
+                </FormControl>
+              </div>
+              // </FormControl>
+            ))}
           </Grid>
           <Button
             style={{ margin: 10 }}

@@ -21,6 +21,7 @@ import {
   MenuItem
 } from '@material-ui/core';
 // components
+import useCurrentUser from '../utils/useCurrentUser';
 import { redirectToMercadoPago } from '../utils/redirectToMercadoPago';
 import Page from '../components/Page';
 
@@ -118,6 +119,7 @@ function AssignmentButton(props) {
 // Main component
 
 export default function TestDetails() {
+  const { currentUser } = useCurrentUser();
   const { id } = useParams();
   const [test, setTest] = useState([]);
   const [children, setChildren] = useState([]);
@@ -143,7 +145,7 @@ export default function TestDetails() {
       assignment: {
         userId: childId,
         testId: test.id,
-        createdBy: 1, // TODO: change for current_user id
+        createdBy: currentUser.id,
         paymentAccepted: price === 0
       }
     };

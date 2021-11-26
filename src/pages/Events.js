@@ -6,6 +6,7 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 // material
 import { Button, Container, Stack, Typography, Tabs, Tab, Box } from '@material-ui/core';
 // components
+import useCurrentUser from '../utils/useCurrentUser';
 import Page from '../components/Page';
 import {
   EventSort,
@@ -32,8 +33,8 @@ const getAllEvents = (setEvents) =>
       console.error(error);
     });
 
-const getAllMyAttendings = (setAttendings) =>
-  fetch(`${prodUrl}/api/v1/users/1/attendances`)
+const getAllMyAttendings = (userId, setAttendings) =>
+  fetch(`${prodUrl}/api/v1/users/${userId}/attendances`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Attendings response json', json);
@@ -43,8 +44,8 @@ const getAllMyAttendings = (setAttendings) =>
       console.error(error);
     });
 
-const getAllMyEvents = (setMyEvents) =>
-  fetch(`${prodUrl}/api/v1/users/1/events`)
+const getAllMyEvents = (userId, setMyEvents) =>
+  fetch(`${prodUrl}/api/v1/users/${userId}/events`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ My Events response json', json);
@@ -57,6 +58,7 @@ const getAllMyEvents = (setMyEvents) =>
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
+  const { currentUser } = useCurrentUser();
   const [openFilter, setOpenFilter] = useState(false);
   const [tabValue, setTabValue] = useState('one');
   const [events, setEvents] = useState([]);
@@ -116,10 +118,10 @@ export default function EcommerceShop() {
       getAllEvents(handleSetEvents);
     }
     if (newValue === 'two') {
-      getAllMyAttendings(handleSetAttendings);
+      getAllMyAttendings(currentUser.id, handleSetAttendings);
     }
     if (newValue === 'three') {
-      getAllMyEvents(handleSetMyEvents);
+      getAllMyEvents(currentUser.id, handleSetMyEvents);
     }
     setTabValue(newValue);
   };
