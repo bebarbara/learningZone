@@ -5,6 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 // material
 import { Stack, Button, Container, Typography, Box, Tabs, Tab } from '@material-ui/core';
 // components
+import useCurrentUser from '../utils/useCurrentUser';
 import Page from '../components/Page';
 import { TestCard } from '../components/tests';
 
@@ -24,8 +25,8 @@ const getAllTests = (setTests) =>
       console.error(error);
     });
 
-const getAllMyAssignments = (setAssignments) =>
-  fetch(`${prodUrl}/api/v1/users/1/assignments`)
+const getAllMyAssignments = (userId, setAssignments) =>
+  fetch(`${prodUrl}/api/v1/users/${userId}/assignments`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Assignments response json', json);
@@ -35,8 +36,8 @@ const getAllMyAssignments = (setAssignments) =>
       console.error(error);
     });
 
-const getAllMyTests = (setMyTests) =>
-  fetch(`${prodUrl}/api/v1/users/1/tests`)
+const getAllMyTests = (userId, setMyTests) =>
+  fetch(`${prodUrl}/api/v1/users/${userId}/tests`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ My Tests response json', json);
@@ -49,6 +50,7 @@ const getAllMyTests = (setMyTests) =>
 // ----------------------------------------------------------------------
 
 export default function Tests() {
+  const { currentUser } = useCurrentUser();
   const [tabValue, setTabValue] = useState('one');
   const [tests, setTests] = useState([]);
 
@@ -77,10 +79,10 @@ export default function Tests() {
       getAllTests(handleSetTests);
     }
     if (newValue === 'two') {
-      getAllMyAssignments(handleSetAssignments);
+      getAllMyAssignments(currentUser.id, handleSetAssignments);
     }
     if (newValue === 'three') {
-      getAllMyTests(handleSetMyTests);
+      getAllMyTests(currentUser.id, handleSetMyTests);
     }
     setTabValue(newValue);
   };
