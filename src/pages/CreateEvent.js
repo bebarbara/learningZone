@@ -9,6 +9,7 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import useCurrentUser from '../utils/useCurrentUser';
 import Page from '../components/Page';
 
 // ---------------------------------------------------------------------
@@ -38,20 +39,20 @@ const createEvent = async (dataContent, handleResponse) => {
     });
 };
 
-const defaultValues = {
-  title: '',
-  description: '',
-  time: '',
-  address: '',
-  userId: 1, // TODO: update for current_user id
-  price: 0
-};
-
 // ---------------------------------------------------------------------
 // Main component
 
 export default function CreateEvent() {
-  const [formValues, setFormValues] = useState(defaultValues);
+  const { currentUser } = useCurrentUser();
+  const [formValues, setFormValues] = useState({
+    title: '',
+    description: '',
+    time: '',
+    address: '',
+    userId: currentUser.id,
+    // TODO: add image
+    price: 0
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
