@@ -19,18 +19,19 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import { WebcamCapture } from '../components/webcam/Webcam';
 import AccountProfile from '../components/_dashboard/account/AccountProfile';
 import AccountProfileDetails from '../components/_dashboard/account/AccountProfileDetails';
+import useCurrentUser from '../utils/useCurrentUser';
 
 // layouts
 import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
-import { MyPostsList, PostsList, Users } from '../components/_dashboard/home';
+import { UsersFollowing, UsersFollowers } from '../components/_dashboard/user';
 
 // ----------------------------------------------------------------------
-
-const getUsersFollowing = (setPosts) =>
-  fetch('https://learning-zone-poc.herokuapp.com/api/v1/users/following?id=5')
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
+const getUsersFollowing = (setPosts, id) =>
+  fetch(`${prodUrl}/api/v1/users/following?id=${id}`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Posts1 response json', json);
@@ -89,6 +90,7 @@ export default function DashboardApp() {
   const [tabValue, setTabValue] = useState('one');
   const [usersFollowing, setUsersFollowing] = useState([]);
   const [usersFollers, setUsersFollers] = useState([]);
+  const { currentUser } = useCurrentUser();
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
   const submitForm = () => {
@@ -96,7 +98,7 @@ export default function DashboardApp() {
   };
   useEffect(() => {
     console.log('useEffect', usersFollowing);
-    getUsersFollowing(handleUsersFollowing);
+    getUsersFollowing(handleUsersFollowing, currentUser.id);
   }, []);
 
   const handleUsersFollowing = (response) => {
@@ -138,8 +140,8 @@ export default function DashboardApp() {
                   <Tab value="two" label="Seguidores" />
                 </Tabs>
               </Box>
-              {tabValue === 'one' && <Users users={usersFollowing} wxs={12} wmd={4} />}
-              {tabValue === 'two' && <Users users={usersFollers} wxs={12} wmd={4} />}
+              {tabValue === 'one' && <UsersFollowing users={usersFollowing} wxs={12} wmd={4} />}
+              {tabValue === 'two' && <UsersFollowers users={usersFollers} wxs={12} wmd={4} />}
             </Box>
           </Stack>
         </Box>
