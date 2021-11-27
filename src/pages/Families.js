@@ -21,6 +21,7 @@ import {
   TablePagination
 } from '@material-ui/core';
 // components
+import useCurrentUser from '../utils/useCurrentUser';
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
@@ -30,21 +31,29 @@ import { FamilyListHead, FamilyMoreMenu } from '../components/_dashboard/familie
 import FAMILIESLIST from '../_mocks_/families';
 
 // ----------------------------------------------------------------------
-
+const localUrl = 'http://localhost:3001';
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
 const TABLE_HEAD = [
-  { id: 'name', label: 'Nombre', alignRight: false },
+  { id: 'fullName', label: 'Nombre', alignRight: false },
   { id: 'certificates', label: 'Certificados', alignRight: false },
-  { id: 'insignia', label: 'Insignia', alignRight: false },
-  { id: 'isVerified', label: 'Verificado', alignRight: false },
-  { id: 'status', label: 'Estado', alignRight: false },
+  { id: 'badges', label: 'Insignia', alignRight: false },
+  { id: 'assignments', label: 'Exámenes', alignRight: false },
+  { id: 'attendances', label: 'Eventos', alignRight: false },
+  // { id: 'isVerified', label: 'Verificado', alignRight: false },
+  // { id: 'status', label: 'Estado', alignRight: false },
   { id: '' }
 ];
-const getAllFamilies = (setFamilies) =>
-  fetch('https://learning-zone-poc.herokuapp.com/api/v1/users/family?user_id=5')
+
+const getAllFamilies = (userId, token, setFamily) =>
+  fetch(`${prodUrl}/api/v1/users/family?user_id=${userId}`, {
+    headers: new Headers({
+      Authorization: `Bearer ${token}`
+    })
+  })
     .then((response) => response.json())
     .then((json) => {
-      console.log('LZ families USERS response json', json.user.family);
-      setFamilies(json);
+      console.log('LZ families USERS response json', json);
+      setFamily(json.family);
     })
     .catch((error) => {
       console.error(error);
@@ -81,6 +90,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function User() {
+  const { currentUser } = useCurrentUser();
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
@@ -91,11 +101,12 @@ export default function User() {
 
   useEffect(() => {
     console.log('useEffect', allFamilies);
-    getAllFamilies(handleAllFamilies);
+    getAllFamilies(currentUser.id, currentUser.token, handleAllFamilies);
   }, []);
+
   const handleAllFamilies = (response) => {
     console.log('set families', response);
-    setAllFamilies(response.family);
+    setAllFamilies(response);
   };
 
   const handleRequestSort = (event, property) => {
@@ -161,7 +172,6 @@ export default function User() {
             Agregar
           </Button>
         </Stack>
-
         <Card>
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -181,14 +191,16 @@ export default function User() {
                     .map((row) => {
                       const {
                         id,
-                        username,
-                        insignia,
-                        status,
+                        fullName,
                         certificates,
-                        avatarUrl,
-                        isVerified
+                        badges,
+                        assignments,
+                        attendances,
+                        avatarUrl
+                        // status
+                        // isVerified
                       } = row;
-                      const isItemSelected = selected.indexOf(username) !== -1;
+                      const isItemSelected = selected.indexOf(fullName) !== -1;
 
                       return (
                         <TableRow
@@ -202,29 +214,30 @@ export default function User() {
                           <TableCell padding="checkbox">
                             <Checkbox
                               checked={isItemSelected}
-                              onChange={(event) => handleClick(event, username)}
+                              onChange={(event) => handleClick(event, fullName)}
                             />
                           </TableCell>
                           <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>
-                              <Avatar alt={username} src={avatarUrl} />
+                              <Avatar alt={fullName} src={avatarUrl} />
                               <Typography variant="subtitle2" noWrap>
-                                {username}
+                                {fullName}
                               </Typography>
                             </Stack>
                           </TableCell>
                           <TableCell align="left">{certificates}</TableCell>
-                          <TableCell align="left">{insignia}</TableCell>
-                          <TableCell align="left">{isVerified ? 'Si' : 'No'}</TableCell>
-                          <TableCell align="left">
+                          <TableCell align="left">{badges}</TableCell>
+                          <TableCell align="left">{assignments}</TableCell>
+                          <TableCell align="left">{attendances}</TableCell>
+                          {/* <TableCell align="left">{isVerified ? 'Si' : 'No'}</TableCell> */}
+                          {/* <TableCell align="left">
                             <Label
                               variant="ghost"
                               color={(status === 'Inactivo' && 'error') || 'success'}
                             >
                               {sentenceCase(status)}
                             </Label>
-                          </TableCell>
-
+                          </TableCell> */}
                           <TableCell align="right">
                             <FamilyMoreMenu />
                           </TableCell>
@@ -252,6 +265,10 @@ export default function User() {
 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
+            labelRowsPerPage="Miembros de familia por página:"
+            labelDisplayedRows={({ from, to, count }) =>
+              `Mostrando ${from}-${to} de ${count} miembros de familia`
+            }
             component="div"
             count={allFamilies.length}
             rowsPerPage={rowsPerPage}
