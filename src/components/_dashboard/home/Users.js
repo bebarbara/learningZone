@@ -26,6 +26,7 @@ import Label from '../../Label';
 import Scrollbar from '../../Scrollbar';
 import SearchNotFound from '../../SearchNotFound';
 import { UserListHead, UserListToolbar } from '.';
+import useCurrentUser from '../../../utils/useCurrentUser';
 
 //
 import USERLIST from '../../../_mocks_/user';
@@ -39,8 +40,29 @@ const TABLE_HEAD = [
 ];
 
 // ----------------------------------------------------------------------
-const getAllUsers = (setUsers) =>
-  fetch('https://learning-zone-poc.herokuapp.com/api/v1/users/')
+const prodUrl = 'https://learning-zone-poc.herokuapp.com';
+
+const getUser = (setUser, userId, token) =>
+  fetch(`${prodUrl}/api/v1/users/${userId}`, {
+    headers: new Headers({
+      Authorization: `Bearer ${token}`
+    })
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      console.log('LZ one USERS response json', json);
+      setUser(json);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+const getAllUsers = (setUsers, token) =>
+  fetch(`${prodUrl}/api/v1/users/`, {
+    headers: new Headers({
+      Authorization: `Bearer ${token}`
+    })
+  })
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ ALL USERS response json', json);
@@ -87,10 +109,11 @@ export default function Users() {
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [allUsers, setAllUsers] = useState([]);
+  const { currentUser } = useCurrentUser();
 
   useEffect(() => {
     console.log('useEffect', allUsers);
-    getAllUsers(handleAllUsers);
+    getAllUsers(handleAllUsers, currentUser.token);
   }, []);
   const handleAllUsers = (response) => {
     console.log('set PostsFollowed', response);
