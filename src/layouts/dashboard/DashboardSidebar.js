@@ -97,12 +97,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
                 {currentUser.type === 'institute' && 'Instituto'}
               </Typography>
             </Box>
-            <IconButton to="/login" replace style={{ marginLeft: '10px' }}>
-              <Icon
-                style={{ flex: 1, alignSelf: 'end', color: 'red' }}
-                icon={logOutOutline}
-                onClick={handleLogout}
-              />
+            <IconButton style={{ marginLeft: '10px' }} onClick={handleLogout}>
+              <Icon style={{ flex: 1, alignSelf: 'end', color: 'red' }} icon={logOutOutline} />
             </IconButton>
           </AccountStyle>
         </Link>

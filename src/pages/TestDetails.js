@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 // material
@@ -118,6 +118,7 @@ function AssignmentButton(props) {
 // Main component
 
 export default function TestDetails() {
+  const navigate = useNavigate();
   const { currentUser } = useCurrentUser();
   const { id } = useParams();
   const [test, setTest] = useState([]);
@@ -127,10 +128,10 @@ export default function TestDetails() {
   const [preferenceId, setPreferenceId] = useState('');
 
   useEffect(() => {
-    console.log('test details', id);
+    // console.log('test details', id);
     getTestDetails(id, handleSetTest);
-    getFamily(currentUser.id, setChildren);
-    console.log('hijos?', children);
+    getFamily(currentUser.id, currentUser.token, setChildren);
+    // console.log('hijos?', children);
   }, []);
 
   const handleSetTest = (response) => {
@@ -138,14 +139,14 @@ export default function TestDetails() {
     setTest(response.test);
   };
 
-  const handleCreateAssignment = (price) => {
-    console.log('Creating assignment');
+  const handleCreateAssignment = () => {
+    // console.log('Creating assignment. price:', test.price);
     const data = {
       assignment: {
         userId: childId,
         testId: test.id,
         createdBy: currentUser.id,
-        paymentAccepted: price === 0
+        paymentAccepted: test.price === 0 || test.price === null || test.price === 0.0
       }
     };
     const params = {
@@ -161,20 +162,26 @@ export default function TestDetails() {
         console.log('Created assignment', json);
         if (json.status === 'ok') {
           const { assignment } = json;
-          setPreferenceId(assignment.preferenceId);
-          redirectToMercadoPago(preferenceId);
+          if (assignment.preferenceId) {
+            setPreferenceId(assignment.preferenceId);
+            return redirectToMercadoPago(preferenceId);
+          }
+          return navigate('/homeschooling/tests', { replace: true });
         }
-        // TODO: redirect to assignments page
-        setFlashMsg(json);
+        // setFlashMsg(json);
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
-  const handleChildSelect = (event) => {
-    setChildId(event.target.value);
-  };
+  // const handleChildSelect = (event) => {
+  //   // event.preventDefault();
+  //   const { value } = event.target;
+  //   console.log('select', value);
+  //   setChildId(value);
+  //   // event.stopPropagation();
+  // };
 
   return (
     <Page title="Detalles de examen | Learning Zone">
@@ -214,8 +221,10 @@ export default function TestDetails() {
                     labelId="child-id-selector"
                     id="child-id-select"
                     value={childId}
+                    defaultValue=""
+                    displayEmpty
                     label="Seleccionar hijo"
-                    onChange={handleChildSelect}
+                    onChange={(e) => setChildId(e.target.value)}
                   >
                     {children &&
                       children.map((child) => (
@@ -228,11 +237,7 @@ export default function TestDetails() {
               </Box>
               <Box sx={{ pt: 2 }}>
                 {childId && (
-                  <AssignmentButton
-                    to="#"
-                    onClick={handleCreateAssignment(test.price)}
-                    price={test.price}
-                  />
+                  <AssignmentButton to="#" onClick={handleCreateAssignment} price={test.price} />
                 )}
                 {!childId && <AssignmentButton to="#" price={test.price} disabled />}
               </Box>

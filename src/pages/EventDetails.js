@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 // material
@@ -118,6 +118,7 @@ function AttendanceButton(props) {
 // Main component
 
 export default function EventDetails() {
+  const navigate = useNavigate();
   const { currentUser } = useCurrentUser();
   const { id } = useParams();
   const [event, setEvent] = useState([]);
@@ -127,10 +128,10 @@ export default function EventDetails() {
   const [preferenceId, setPreferenceId] = useState('');
 
   useEffect(() => {
-    console.log('event details', id);
+    // console.log('event details', id);
     getEventDetails(id, handleSetEvent);
     getFamily(currentUser.id, currentUser.token, setHijos);
-    console.log('hijos?', hijos);
+    // console.log('hijos?', hijos);
   }, []);
 
   const handleSetEvent = (response) => {
@@ -138,14 +139,14 @@ export default function EventDetails() {
     setEvent(response);
   };
 
-  const handleCreateAttendance = (price) => {
-    console.log('Creating attendance');
+  const handleCreateAttendance = () => {
+    console.log('Creating attendance. price:', event.price);
     const data = {
       attendance: {
         userId: childId,
         eventId: event.id,
         createdBy: currentUser.id,
-        paymentAccepted: price === 0
+        paymentAccepted: event.price === 0 || event.price === null || event.price === 0.0
       }
     };
     const params = {
@@ -160,12 +161,14 @@ export default function EventDetails() {
       .then((json) => {
         console.log('Created attendance', json);
         if (json.status === 'ok') {
-          const { assignment } = json;
-          setPreferenceId(assignment.preferenceId);
-          redirectToMercadoPago(preferenceId);
+          const { attendance } = json;
+          if (attendance.preferenceId) {
+            setPreferenceId(attendance.preferenceId);
+            return redirectToMercadoPago(preferenceId);
+          }
+          return navigate('/homeschooling/events', { replace: true });
         }
-        // TODO: redirect to attendances page
-        setFlashMsg(json);
+        // setFlashMsg(json);
       })
       .catch((error) => {
         console.error(error);
@@ -221,8 +224,10 @@ export default function EventDetails() {
                       labelId="child-id-selector"
                       id="child-id-select"
                       value={childId}
+                      defaultValue=""
+                      displayEmpty
                       label="Seleccionar hijo"
-                      onChange={handleChildSelect}
+                      onChange={(e) => setChildId(e.target.value)}
                     >
                       {hijos &&
                         hijos.map((child) => (
@@ -235,11 +240,7 @@ export default function EventDetails() {
                 </Box>
                 <Box sx={{ pt: 2 }}>
                   {childId && (
-                    <AttendanceButton
-                      to="#"
-                      onClick={handleCreateAttendance(event.price)}
-                      price={event.price}
-                    />
+                    <AttendanceButton to="#" onClick={handleCreateAttendance} price={event.price} />
                   )}
                   {!childId && <AttendanceButton to="#" price={event.price} disabled />}
                 </Box>
