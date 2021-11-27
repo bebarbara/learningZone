@@ -38,14 +38,16 @@ export default function AccountProfile() {
   const { currentUser } = useCurrentUser();
 
   useEffect(() => {
-    console.log('useEffect', user);
-    console.log('LZ Token ', currentUser.token);
+    // console.log('useEffect', user);
+    // console.log('LZ Token ', currentUser.token);
     getUser(handleUser, currentUser.id, currentUser.token);
   }, []);
+
   const handleUser = (response) => {
     console.log('set user', response);
     setUser(response.user);
   };
+
   return (
     <Page title="User | Learning-Zone">
       <Container index>
@@ -59,20 +61,33 @@ export default function AccountProfile() {
               }}
             >
               <Avatar
-                src={user.avatar}
+                src={user.avatarUrl}
                 sx={{
                   height: 100,
                   width: 100
                 }}
               />
               <Typography color="textPrimary" gutterBottom variant="h3">
-                {user.username}
+                {user.fullName}
               </Typography>
               <Typography color="textSecondary" variant="body1">
-                {`${user.type} ${user.fullName}`}
+                {user.type === 'parent' && 'Padre'}
+                {user.type === 'educator' && 'Educador'}
+                {user.type === 'institute' && 'Instituto'}
               </Typography>
-              <Typography color="textSecondary" variant="body1">
-                {`${moment().format('hh:mm A')} ${user.timezone}`}
+              <Typography color="textSecondary" variant="body2">
+                {`Usuario: ${user.username}`}
+                {/* {`${moment().format('hh:mm A')} ${user.timezone}`} */}
+              </Typography>
+              <Typography color="textSecondary" variant="body2">
+                {`Email: ${user.email}`}
+                {/* {`${moment().format('hh:mm A')} ${user.timezone}`} */}
+              </Typography>
+              <Typography color="textSecondary" variant="body2">
+                {`Seguidores: ${user.followersCount}`}
+              </Typography>
+              <Typography color="textSecondary" variant="body2">
+                {`Siguiendo: ${user.followingCount}`}
               </Typography>
             </Box>
           </CardContent>
