@@ -12,8 +12,8 @@ import useCurrentUser from '../utils/useCurrentUser';
 // ----------------------------------------------------------------------
 const prodUrl = 'https://learning-zone-poc.herokuapp.com';
 
-const getPostsFollowed = (setPosts) =>
-  fetch('https://learning-zone-poc.herokuapp.com/api/v1/posts')
+const getPostsFollowed = (setPosts, id) =>
+  fetch(`${prodUrl}/api/v1/users/${id}/posts?following=true`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Posts1 response json', json);
@@ -52,7 +52,7 @@ export default function Home() {
 
   useEffect(() => {
     console.log('useEffect', postsFollowed);
-    getPostsFollowed(handlePostsFollowed);
+    getPostsFollowed(handlePostsFollowed, currentUser.id);
   }, []);
 
   const handlePostsFollowed = (response) => {
@@ -61,7 +61,7 @@ export default function Home() {
   };
   const handleAllPosts = (response) => {
     console.log('set All Posts', response);
-    setAllPosts([]);
+    setAllPosts(response.posts);
   };
   const handleMyPosts = (response) => {
     console.log('set My Posts', response);
@@ -69,7 +69,7 @@ export default function Home() {
   };
   const handleTabChange = (post, newValue) => {
     if (newValue === 'one') {
-      getPostsFollowed(handlePostsFollowed);
+      getPostsFollowed(handlePostsFollowed, currentUser.id);
     }
     if (newValue === 'two') {
       getAllPosts(handleAllPosts);
