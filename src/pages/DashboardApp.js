@@ -30,8 +30,12 @@ import { UsersFollowing, UsersFollowers } from '../components/_dashboard/user';
 
 // ----------------------------------------------------------------------
 const prodUrl = 'https://learning-zone-poc.herokuapp.com';
-const getUsersFollowing = (setPosts, id) =>
-  fetch(`${prodUrl}/api/v1/users/following?id=${id}`)
+const getUsersFollowing = (setPosts, id, token) =>
+  fetch(`${prodUrl}/api/v1/users/following?id=${id}`, {
+    headers: new Headers({
+      Authorization: `Bearer ${token}`
+    })
+  })
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Posts1 response json', json);
@@ -40,8 +44,12 @@ const getUsersFollowing = (setPosts, id) =>
     .catch((error) => {
       console.error(error);
     });
-const getUsersFollers = (setPosts) =>
-  fetch('https://learning-zone-poc.herokuapp.com/api/v1/users/followers?id=5')
+const getUsersFollers = (setPosts, id, token) =>
+  fetch(`${prodUrl}/api/v1/users/followers?id=${id}`, {
+    headers: new Headers({
+      Authorization: `Bearer ${token}`
+    })
+  })
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Posts2 response json', json);
@@ -98,23 +106,23 @@ export default function DashboardApp() {
   };
   useEffect(() => {
     console.log('useEffect', usersFollowing);
-    getUsersFollowing(handleUsersFollowing, currentUser.id);
+    getUsersFollowing(handleUsersFollowing, currentUser.id, currentUser.token);
   }, []);
 
   const handleUsersFollowing = (response) => {
     console.log('set Users Followed', response);
-    getUsersFollowing(response.following);
+    setUsersFollowing(response.following);
   };
   const handleUsersFollers = (response) => {
     console.log('set Users Follers', response);
-    setUsersFollers([]);
+    setUsersFollers(response.followers);
   };
   const handleTabChange = (post, newValue) => {
     if (newValue === 'one') {
-      getUsersFollowing(handleUsersFollowing);
+      getUsersFollowing(handleUsersFollowing, currentUser.id, currentUser.token);
     }
     if (newValue === 'two') {
-      getUsersFollers(handleUsersFollers);
+      getUsersFollers(handleUsersFollers, currentUser.id, currentUser.token);
     }
     setTabValue(newValue);
   };

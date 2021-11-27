@@ -129,7 +129,7 @@ export default function TestDetails() {
   useEffect(() => {
     console.log('test details', id);
     getTestDetails(id, handleSetTest);
-    getFamily(id, setChildren);
+    getFamily(currentUser.id, setChildren);
     console.log('hijos?', children);
   }, []);
 

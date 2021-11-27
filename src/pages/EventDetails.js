@@ -129,7 +129,7 @@ export default function EventDetails() {
   useEffect(() => {
     console.log('event details', id);
     getEventDetails(id, handleSetEvent);
-    getFamily(id, currentUser.token, setHijos);
+    getFamily(currentUser.id, currentUser.token, setHijos);
     console.log('hijos?', hijos);
   }, []);
 
