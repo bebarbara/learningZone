@@ -109,7 +109,7 @@ function AssignmentButton(props) {
   const priceText = `($ ${price})`;
   return (
     <Button variant="contained" startIcon={<Icon icon={plusFill} />} sx={{ mr: 3 }} {...props}>
-      {`Asignar ${!price || price === 0 ? '' : priceText}`}
+      {`Asignar ${!price || price === 0 ? '($ 0.0)' : priceText}`}
     </Button>
   );
 }
@@ -135,7 +135,7 @@ export default function TestDetails() {
   }, []);
 
   const handleSetTest = (response) => {
-    console.log('set Test', response);
+    // console.log('set Test', response);
     setTest(response.test);
   };
 
@@ -174,14 +174,6 @@ export default function TestDetails() {
         console.error(error);
       });
   };
-
-  // const handleChildSelect = (event) => {
-  //   // event.preventDefault();
-  //   const { value } = event.target;
-  //   console.log('select', value);
-  //   setChildId(value);
-  //   // event.stopPropagation();
-  // };
 
   return (
     <Page title="Detalles de examen | Learning Zone">

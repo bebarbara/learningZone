@@ -109,7 +109,7 @@ function AttendanceButton(props) {
   const priceText = `($ ${price})`;
   return (
     <Button variant="contained" startIcon={<Icon icon={plusFill} />} sx={{ mr: 3 }} {...props}>
-      {`Asignar ${!price || price === 0 ? '' : priceText}`}
+      {`Asignar ${!price || price === 0 ? '($ 0.0)' : priceText}`}
     </Button>
   );
 }
@@ -135,12 +135,12 @@ export default function EventDetails() {
   }, []);
 
   const handleSetEvent = (response) => {
-    console.log('set event');
+    // console.log('set event');
     setEvent(response);
   };
 
   const handleCreateAttendance = () => {
-    console.log('Creating attendance. price:', event.price);
+    // console.log('Creating attendance. price:', event.price);
     const data = {
       attendance: {
         userId: childId,
@@ -173,10 +173,6 @@ export default function EventDetails() {
       .catch((error) => {
         console.error(error);
       });
-  };
-
-  const handleChildSelect = (event) => {
-    setChildId(event.target.value);
   };
 
   return (
