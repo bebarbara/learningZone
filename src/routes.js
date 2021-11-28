@@ -27,6 +27,7 @@ import Events from './pages/Events';
 import Profile from './pages/Profile';
 import TestDetails from './pages/TestDetails';
 import EventDetails from './pages/EventDetails';
+import PostDetails from './pages/PostDetails';
 import PaymentRegistration from './pages/PaymentRegistration';
 import CreateEvent from './pages/CreateEvent';
 import CreateTest from './pages/CreateTest';
@@ -68,7 +69,8 @@ export default function Router() {
         { path: 'tests', element: <Tests /> },
         { path: 'tests/:id', element: <TestDetails /> },
         { path: 'tests/create', element: <CreateTest /> },
-        { path: ':resouce/:resourceId/:paymentStatus', element: <PaymentRegistration /> }
+        { path: ':resouce/:resourceId/:paymentStatus', element: <PaymentRegistration /> },
+        { path: 'posts/:id', element: <PostDetails /> }
       ]
     },
     {
