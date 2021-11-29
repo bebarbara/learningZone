@@ -235,7 +235,7 @@ export default function PostDetails() {
                 }}
               />
               <AvatarStyle
-                alt={post.author.name}
+                alt={post.name}
                 src={post.createdAt}
                 sx={{ top: 355, left: 24, width: 40, height: 40 }}
               />
