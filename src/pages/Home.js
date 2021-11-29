@@ -97,16 +97,16 @@ export default function Home() {
             to="/dashboard/toassingtest"
             startIcon={<Icon icon={plusFill} />}
           >
-            Nuevo Post
+            Nuevo publicación 
           </Button>
         </Stack>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 0, borderColor: 'divider' }}>
               <Tabs value={tabValue} onChange={handleTabChange} aria-label="tab de posts">
-                <Tab value="one" label="Post de mis seguidos" />
-                <Tab value="two" label="Post de la comunidad" />
-                <Tab value="three" label="Mis post" />
+                <Tab value="one" label="Siguiendo" />
+                <Tab value="two" label="Comunidad" />
+                <Tab value="three" label="Mis publicaciones" />
                 <Tab value="four" label="Usuarios" />
               </Tabs>
             </Box>
