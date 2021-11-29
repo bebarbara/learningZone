@@ -26,7 +26,7 @@ ShopEventCard.propTypes = {
 };
 
 export default function ShopEventCard({ event }) {
-  const { title, cover, price, status, priceSale } = event;
+  const { title, imageUrl, price, status, priceSale } = event;
   const { pathname } = useLocation();
 
   return (
@@ -47,7 +47,7 @@ export default function ShopEventCard({ event }) {
             {status}
           </Label>
         )}
-        <EventImgStyle alt={title} src={cover} />
+        <EventImgStyle alt={title} src={imageUrl} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
