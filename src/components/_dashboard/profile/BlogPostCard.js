@@ -106,7 +106,7 @@ export default function BlogPostCard({ post, index }) {
           </Typography>
 
           <TitleStyle
-            to="#"
+            to="#bb"
             color="inherit"
             variant="subtitle2"
             underline="hover"

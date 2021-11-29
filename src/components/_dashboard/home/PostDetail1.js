@@ -56,20 +56,15 @@ const ImageUrlImgStyle = styled('img')({
 
 // ----------------------------------------------------------------------
 
-BlogPostCard.propTypes = {
+PostDetail1.propTypes = {
   post: PropTypes.object.isRequired,
   index: PropTypes.number
 };
 // -- cambiar posicines 0 1 y2
-export default function BlogPostCard({ post, index }) {
+export default function PostDetail1({ post, index }) {
   const { imageUrl, title, view, comments, author, createdAt } = post;
   const latestPostLarge = index === 8;
   const latestPost = index === 9 || index === 10;
-
-  const POST_INFO = [
-    { number: comments.length, icon: messageCircleFill },
-    { number: view, icon: heartFill }
-  ];
 
   return (
     <Grid>
@@ -95,6 +90,32 @@ export default function BlogPostCard({ post, index }) {
             })
           }}
         >
+          <SvgIconStyle
+            color="paper"
+            src="/static/icons/shape-avatar.svg"
+            sx={{
+              width: 80,
+              height: 36,
+              zIndex: 9,
+              bottom: -15,
+              position: 'absolute',
+              ...((latestPostLarge || latestPost) && { display: 'none' })
+            }}
+          />
+          <AvatarStyle
+            alt={author.name}
+            src={author.avatarUrl}
+            sx={{
+              ...((latestPostLarge || latestPost) && {
+                zIndex: 9,
+                top: 24,
+                left: 24,
+                width: 40,
+                height: 40
+              })
+            }}
+          />
+
           <ImageUrlImgStyle alt={title} src={imageUrl} />
         </CardMediaStyle>
 
@@ -117,7 +138,7 @@ export default function BlogPostCard({ post, index }) {
           </Typography>
 
           <TitleStyle
-            to="barbara"
+            to="#b"
             color="inherit"
             variant="subtitle2"
             underline="hover"
@@ -131,25 +152,6 @@ export default function BlogPostCard({ post, index }) {
           >
             {title}
           </TitleStyle>
-
-          <InfoStyle>
-            {POST_INFO.map((info, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  ml: index === 0 ? 0 : 1.5,
-                  ...((latestPostLarge || latestPost) && {
-                    color: 'grey.500'
-                  })
-                }}
-              >
-                <Box component={Icon} icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
-              </Box>
-            ))}
-          </InfoStyle>
         </CardContent>
       </Card>
     </Grid>

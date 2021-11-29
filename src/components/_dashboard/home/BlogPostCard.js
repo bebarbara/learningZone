@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
+
 import shareFill from '@iconify/icons-eva/share-fill';
 import heartFill from '@iconify/icons-eva/heart-fill';
 import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
@@ -62,14 +63,17 @@ BlogPostCard.propTypes = {
 };
 // -- cambiar posicines 0 1 y2
 export default function BlogPostCard({ post, index }) {
+  console.log('barbara post 1 ', post);
   const { imageUrl, title, view, comments, author, createdAt } = post;
   const latestPostLarge = index === 8;
   const latestPost = index === 9 || index === 10;
+  const { pathname } = useLocation();
 
   const POST_INFO = [
     { number: comments.length, icon: messageCircleFill },
     { number: view, icon: heartFill }
   ];
+  console.log('barbaralog');
 
   return (
     <Grid>
@@ -142,21 +146,16 @@ export default function BlogPostCard({ post, index }) {
             {fDate(createdAt)}
           </Typography>
 
-          <TitleStyle
-            to="#"
+          <Link
+            to={`/homeschooling/posts//${post.id}`}
             color="inherit"
-            variant="subtitle2"
             underline="hover"
             component={RouterLink}
-            sx={{
-              ...(latestPostLarge && { typography: 'h5', height: 60 }),
-              ...((latestPostLarge || latestPost) && {
-                color: 'common.white'
-              })
-            }}
           >
-            {title}
-          </TitleStyle>
+            <Typography variant="subtitle2" noWrap>
+              {title}
+            </Typography>
+          </Link>
 
           <InfoStyle>
             {POST_INFO.map((info, index) => (
