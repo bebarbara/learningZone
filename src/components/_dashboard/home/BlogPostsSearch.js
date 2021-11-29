@@ -48,7 +48,7 @@ export default function BlogPostsSearch({ posts }) {
         disablePortal
         popupIcon={null}
         options={posts}
-        getOptionLabel={(post) => post.title}
+        getOptionLabel={(posts) => posts.title}
         renderInput={(params) => (
           <TextField
             {...params}

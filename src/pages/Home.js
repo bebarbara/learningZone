@@ -104,14 +104,14 @@ export default function Home() {
           <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 0, borderColor: 'divider' }}>
               <Tabs value={tabValue} onChange={handleTabChange} aria-label="tab de posts">
-                <Tab value="one" label="Siguiendo" />
-                <Tab value="two" label="Comunidad" />
+                <Tab value="one" label="Comunidad" />
+                <Tab value="two" label="Siguiendo" />
                 <Tab value="three" label="Mis publicaciones" />
                 <Tab value="four" label="Usuarios" />
               </Tabs>
             </Box>
-            {tabValue === 'one' && <PostsList posts={postsFollowed} wxs={12} wmd={6} />}
-            {tabValue === 'two' && <PostsList posts={allPosts} wxs={12} wmd={4} />}
+            {tabValue === 'one' && <PostsList posts={allPosts} wxs={12} wmd={6} />}
+            {tabValue === 'two' && <PostsList posts={postsFollowed} wxs={12} wmd={4} />}
             {tabValue === 'three' && <MyPostsList posts={myPosts} wxs={12} wmd={4} />}
             {tabValue === 'four' && <Users posts={myPosts} wxs={12} wmd={4} />}
           </Box>
