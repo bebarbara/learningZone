@@ -97,7 +97,7 @@ export default function Home() {
             to="/dashboard/toassingtest"
             startIcon={<Icon icon={plusFill} />}
           >
-            Nuevo publicación 
+            Nuevo publicación
           </Button>
         </Stack>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
