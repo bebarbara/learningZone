@@ -52,7 +52,7 @@ export default function Home() {
 
   useEffect(() => {
     console.log('useEffect', postsFollowed);
-    getPostsFollowed(handlePostsFollowed, currentUser.id);
+    getAllPosts(handleAllPosts);
   }, []);
 
   const handlePostsFollowed = (response) => {
@@ -69,10 +69,10 @@ export default function Home() {
   };
   const handleTabChange = (post, newValue) => {
     if (newValue === 'one') {
-      getPostsFollowed(handlePostsFollowed, currentUser.id);
+      getAllPosts(handleAllPosts);
     }
     if (newValue === 'two') {
-      getAllPosts(handleAllPosts);
+      getPostsFollowed(handlePostsFollowed, currentUser.id);
     }
     if (newValue === 'three') {
       getMyPosts(handleMyPosts, currentUser.id);
