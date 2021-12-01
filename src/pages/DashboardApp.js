@@ -128,7 +128,7 @@ export default function DashboardApp() {
   };
 
   return (
-    <Page title="Test | Learning-Zone">
+    <Page title="Perfil | Learning Zone Argentina">
       <MHidden width="mdDown">
         <AccountProfile />
       </MHidden>

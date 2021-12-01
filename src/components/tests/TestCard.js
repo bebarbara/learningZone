@@ -21,6 +21,7 @@ import {
 import Scrollbar from '../Scrollbar';
 import SearchNotFound from '../SearchNotFound';
 import { TestListHead, TestListToolbar, TestMoreMenu } from '.';
+import Label from '../Label';
 
 // ----------------------------------------------------------------------
 
@@ -29,8 +30,8 @@ const TABLE_HEAD = [
   { id: 'grade', label: 'Grado', alignRight: false },
   { id: 'authorFullName', label: 'Creado por', alignRight: false },
   { id: 'price', label: 'Precio', alignRight: false },
-  { id: 'isPublic', label: 'Es público', alignRight: false },
-  { id: 'done', label: 'Resuelto', alignRight: false },
+  { id: 'isPublic', label: 'Privacidad', alignRight: false },
+  // { id: 'done', label: 'Resuelto', alignRight: false },
   { id: '' }
 ];
 
@@ -163,7 +164,7 @@ export default function TestCard({ tests, managedByMe }) {
               {filteredTests
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
-                  const { id, subject, grade, authorFullName, price, isPublic, done } = row;
+                  const { id, subject, grade, author, price, isPublic, done } = row;
                   const isItemSelected = selected.indexOf(subject) !== -1;
 
                   return (
@@ -192,11 +193,15 @@ export default function TestCard({ tests, managedByMe }) {
                         </Stack>
                       </TableCell>
                       <TableCell align="left">{grade}</TableCell>
-                      <TableCell align="left">{authorFullName}</TableCell>
-                      <TableCell align="left">{price}</TableCell>
-                      <TableCell align="left">{isPublic}</TableCell>
+                      <TableCell align="left">{author.fullName}</TableCell>
+                      <TableCell align="left">{price || '0.0'}</TableCell>
                       <TableCell align="left">
-                        {/* <Label
+                        <Label variant="ghost" color={(isPublic && 'success') || 'warning'}>
+                          {isPublic ? 'Público' : 'Privado'}
+                        </Label>
+                      </TableCell>
+                      {/* <TableCell align="left"> */}
+                      {/* <Label
                           variant="ghost"
                           color={
                             (status === 'Insuficiente' && 'error') ||
@@ -207,8 +212,8 @@ export default function TestCard({ tests, managedByMe }) {
                         >
                           {sentenceCase(status)}
                         </Label> */}
-                        {done}
-                      </TableCell>
+                      {/* {done}
+                      </TableCell> */}
                       <TableCell align="right">
                         <Button
                           variant="outlined"

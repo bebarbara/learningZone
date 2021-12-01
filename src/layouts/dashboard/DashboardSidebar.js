@@ -84,24 +84,24 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
-        <Link underline="none" component={RouterLink} to="/homeschooling/app">
-          <AccountStyle>
-            <Avatar src={currentUser.avatarUrl} alt="photoURL" />
-            <Box sx={{ ml: 2 }}>
+        <AccountStyle>
+          <Avatar src={currentUser.avatarUrl} alt="photoURL" />
+          <Box sx={{ ml: 2 }}>
+            <Link underline="none" component={RouterLink} to="/homeschooling/app">
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                 {currentUser.fullName}
               </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {currentUser.type === 'parent' && 'Padre'}
-                {currentUser.type === 'educator' && 'Educador'}
-                {currentUser.type === 'institute' && 'Instituto'}
-              </Typography>
-            </Box>
-            <IconButton style={{ marginLeft: '10px' }} onClick={handleLogout}>
-              <Icon style={{ flex: 1, alignSelf: 'end', color: 'red' }} icon={logOutOutline} />
-            </IconButton>
-          </AccountStyle>
-        </Link>
+            </Link>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              {currentUser.type === 'parent' && 'Padre'}
+              {currentUser.type === 'educator' && 'Educador'}
+              {currentUser.type === 'institute' && 'Instituto'}
+            </Typography>
+          </Box>
+          <IconButton style={{ marginLeft: '10px' }} onClick={handleLogout}>
+            <Icon style={{ flex: 1, alignSelf: 'end', color: 'red' }} icon={logOutOutline} />
+          </IconButton>
+        </AccountStyle>
       </Box>
 
       <NavSection navConfig={sidebarConfig} />

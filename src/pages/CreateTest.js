@@ -62,7 +62,7 @@ export default function CreateTest() {
     price: 0
   });
   const [questionsFields, setQuestionsFields] = useState([
-    { name: uuidv4(), label: '', type: '', options: [], value: [], answers: [] }
+    { name: uuidv4(), label: '', type: 'radio-group', options: [], value: [], answers: [] }
   ]);
   const questionsTypes = [
     { option: 'radio-group', description: 'Una respuesta' },
@@ -72,8 +72,8 @@ export default function CreateTest() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    formValues.questions = questionsFields;
-    // console.log('sending test', formValues);
+    formValues.questions = JSON.stringify(questionsFields);
+    console.log('sending test', formValues);
     // console.log('InputFields', questionsFields);
     createTest(formValues, handleResponse);
   };
@@ -107,8 +107,10 @@ export default function CreateTest() {
 
     const newInputFields = questionsFields.map((i) => {
       if (id === i.name) {
-        if (i.name === 'options' || i.name === 'answers') {
+        // console.log('es options o answers 1', i[name], i.name);
+        if (name === 'options' || name === 'answers') {
           i[name] = value.split(',').map((val) => val.trim());
+          // console.log('es options o answers ', i[name]);
         } else {
           i[name] = value;
         }
@@ -121,7 +123,7 @@ export default function CreateTest() {
   const handleAddFields = () => {
     setQuestionsFields([
       ...questionsFields,
-      { name: uuidv4(), label: '', type: '', options: [], value: '', answers: [] }
+      { name: uuidv4(), label: '', type: 'radio-group', options: [], value: '', answers: [] }
     ]);
   };
 

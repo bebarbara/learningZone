@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-// import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -16,6 +16,7 @@ import {
   // FormControlLabel
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
+import useCurrentUser from '../../../utils/useCurrentUser';
 
 // ----------------------------------------------------------------------
 
@@ -34,8 +35,9 @@ async function loginUser(credentials) {
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm({ setCurrentUser }) {
-  // const navigate = useNavigate();
+export default function LoginForm() {
+  const navigate = useNavigate();
+  const { setCurrentUser } = useCurrentUser();
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -57,7 +59,8 @@ export default function LoginForm({ setCurrentUser }) {
     }
   });
 
-  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const { errors, touched, isSubmitting, setErrors, setSubmitting, handleSubmit, getFieldProps } =
+    formik;
 
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
@@ -67,7 +70,17 @@ export default function LoginForm({ setCurrentUser }) {
     // console.log('llega handler user', values);
     const response = await loginUser({ user: { email: values.email, password: values.password } });
     // console.log('LZ Login response json', response);
-    setCurrentUser(response.user);
+    if (response.user) {
+      // console.log('login', response.user);
+      setCurrentUser(response.user);
+      return navigate('/homeschooling/home', { replace: true });
+    }
+    // console.log('entra a errores', response);
+    setErrors({
+      email: 'Error en las credenciales, verificá tus datos y volvé a intentar',
+      password: 'Error en las credenciales, verificá tus datos y volvé a intentar'
+    });
+    setSubmitting(false);
   };
 
   return (

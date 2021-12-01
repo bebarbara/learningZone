@@ -26,7 +26,7 @@ const getAllTests = (setTests) =>
     });
 
 const getAllMyAssignments = (userId, setAssignments) =>
-  fetch(`${prodUrl}/api/v1/users/${userId}/assignments`)
+  fetch(`${prodUrl}/api/v1/users/${userId}/tests?assignments=true`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Assignments response json', json);
@@ -66,7 +66,7 @@ export default function Tests() {
 
   const handleSetAssignments = (response) => {
     console.log('set Assignments', response);
-    setTests([]);
+    setTests(response.tests);
   };
 
   const handleSetMyTests = (response) => {

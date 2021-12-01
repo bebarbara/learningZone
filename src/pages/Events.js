@@ -34,7 +34,7 @@ const getAllEvents = (setEvents) =>
     });
 
 const getAllMyAttendings = (userId, setAttendings) =>
-  fetch(`${prodUrl}/api/v1/users/${userId}/attendances`)
+  fetch(`${prodUrl}/api/v1/users/${userId}/events?attendances=true`)
     .then((response) => response.json())
     .then((json) => {
       console.log('LZ Attendings response json', json);
@@ -77,12 +77,12 @@ export default function EcommerceShop() {
 
   const handleSetAttendings = (response) => {
     console.log('set Attendings', response);
-    setAttendingsEvents([]);
+    setAttendingsEvents(response.events);
   };
 
   const handleSetMyEvents = (response) => {
     console.log('set My Events', response);
-    setMyEvents([]);
+    setMyEvents(response.events);
   };
 
   const formik = useFormik({
@@ -127,7 +127,7 @@ export default function EcommerceShop() {
   };
 
   return (
-    <Page title="Learningz Zone - Eventos">
+    <Page title="Eventos -  Learning Zone Argentina">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" sx={{ mb: 5 }}>

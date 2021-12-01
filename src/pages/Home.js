@@ -84,7 +84,7 @@ export default function Home() {
   };
 
   return (
-    <Page title="Home | Learning-Zone">
+    <Page title="Comunidad | Learning Zone Argentina">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
