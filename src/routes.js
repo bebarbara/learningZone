@@ -39,7 +39,7 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { path: '/', element: <Navigate to="/homeschooling/app" replace /> },
+        { path: '/', element: <Navigate to="/homeschooling/home" replace /> },
         { path: 'app', element: <DashboardApp /> },
         { path: 'other', element: <DashboardAppother /> },
         { path: 'user', element: <User /> },
@@ -59,7 +59,7 @@ export default function Router() {
       path: '/homeschooling',
       element: <DashboardLayout />,
       children: [
-        { path: '/', element: <Navigate to="/homeschooling/app" replace /> },
+        { path: '/', element: <Navigate to="/homeschooling/home" replace /> },
         { path: 'app', element: <DashboardApp /> },
         { path: 'family', element: <Families /> },
         { path: 'home', element: <Home /> },
