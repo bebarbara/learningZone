@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import {
   Button,
+  ButtonBase,
   Container,
   FormControl,
   FormLabel,
@@ -23,10 +25,10 @@ const createEvent = async (dataContent, handleResponse) => {
   };
   const params = {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
+    // headers: {
+    //   'Content-Type': 'multipart/form-data'
+    // },
+    body: dataContent
   };
   return fetch(`${prodUrl}/api/v1/events`, params)
     .then((response) => response.json())
@@ -43,6 +45,7 @@ const createEvent = async (dataContent, handleResponse) => {
 // Main component
 
 export default function CreateEvent() {
+  const navigate = useNavigate();
   const { currentUser } = useCurrentUser();
   const [formValues, setFormValues] = useState({
     title: '',
@@ -50,18 +53,26 @@ export default function CreateEvent() {
     time: '',
     address: '',
     userId: currentUser.id,
-    // TODO: add image
+    image: null,
     price: 0
   });
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formValues);
-    createEvent(formValues, handleResponse);
+    // console.log('formValues', formValues);
+    const data = new FormData();
+    const preData = Object.keys(formValues).map((key) => [key, formValues[key]]);
+    preData.forEach((d) => {
+      data.append(`event[${d[0]}]`, d[1]);
+    });
+    // console.log('data to send', data);
+    createEvent(data, handleResponse);
   };
 
   const handleResponse = (response) => {
     console.log('Created event response', response);
+    // TODO: manage flash message
+    navigate('/homeschooling/events', { replace: true });
   };
 
   const handleInputChange = (e) => {
@@ -70,6 +81,15 @@ export default function CreateEvent() {
     setFormValues({
       ...formValues,
       [name]: value
+    });
+  };
+
+  const handleSetImage = (e) => {
+    const { files } = e.target;
+    // console.log('change file', files);
+    setFormValues({
+      ...formValues,
+      image: files[0]
     });
   };
 
@@ -121,6 +141,23 @@ export default function CreateEvent() {
                 onChange={handleInputChange}
                 required
               />
+            </FormControl>
+            <FormControl style={{ margin: 15 }}>
+              <FormLabel htmlFor="image">Imagen del evento</FormLabel>
+              <TextField
+                name="image"
+                type="file"
+                defaultValue={formValues.image}
+                onChange={handleSetImage}
+                required
+              />
+              {/* <ButtonBase
+                className={classes.button}
+                component="label"
+                onKeyDown={(e) => e.keyCode === 32 && ref.current?.click()}
+              >
+                <input ref={ref} type="file" accept="image/*" hidden onChange={handleChange} />
+              </ButtonBase> */}
             </FormControl>
             <FormControl style={{ margin: 15 }}>
               <FormLabel htmlFor="price">Price</FormLabel>
