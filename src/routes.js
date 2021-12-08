@@ -30,6 +30,7 @@ import EventDetails from './pages/EventDetails';
 import PostDetails from './pages/PostDetails';
 import PaymentRegistration from './pages/PaymentRegistration';
 import CreateEvent from './pages/CreateEvent';
+import CreatePost from './pages/CreatePost';
 import CreateTest from './pages/CreateTest';
 // ----------------------------------------------------------------------
 
@@ -66,6 +67,7 @@ export default function Router() {
         { path: 'events', element: <Events /> },
         { path: 'events/:id', element: <EventDetails /> },
         { path: 'events/create', element: <CreateEvent /> },
+        { path: 'post/create', element: <CreatePost /> },
         { path: 'tests', element: <Tests /> },
         { path: 'tests/:id', element: <TestDetails /> },
         { path: 'tests/create', element: <CreateTest /> },

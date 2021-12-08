@@ -94,7 +94,7 @@ export default function Home() {
           <Button
             variant="contained"
             component={RouterLink}
-            to="/dashboard/toassingtest"
+            to="/homeschooling/post/create"
             startIcon={<Icon icon={plusFill} />}
           >
             Nuevo publicación
