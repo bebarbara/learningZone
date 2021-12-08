@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import {
   Button,
-  ButtonBase,
+  Checkbox,
+  FormControlLabel,
   Container,
   FormControl,
   FormLabel,
@@ -19,7 +20,7 @@ import Page from '../components/Page';
 const localUrl = 'http://localhost:3001';
 const prodUrl = 'https://learning-zone-poc.herokuapp.com';
 
-const createEvent = async (dataContent, handleResponse) => {
+const createPost = async (dataContent, handleResponse) => {
   const data = {
     event: dataContent
   };
@@ -30,10 +31,10 @@ const createEvent = async (dataContent, handleResponse) => {
     // },
     body: dataContent
   };
-  return fetch(`${prodUrl}/api/v1/events`, params)
+  return fetch(`${prodUrl}/api/v1/posts`, params)
     .then((response) => response.json())
     .then((json) => {
-      console.log('LZ Events creation json', json);
+      console.log('LZ Posts creation json', json);
       handleResponse(json);
     })
     .catch((error) => {
@@ -49,30 +50,27 @@ export default function CreatePost() {
   const { currentUser } = useCurrentUser();
   const [formValues, setFormValues] = useState({
     title: '',
-    description: '',
-    time: '',
-    address: '',
+    content: '',
     userId: currentUser.id,
-    image: null,
-    price: 0
+    image: null
   });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // console.log('formValues', formValues);
+  const handleSubmit = (post) => {
+    post.preventDefault();
+    console.log('formValues', formValues);
     const data = new FormData();
     const preData = Object.keys(formValues).map((key) => [key, formValues[key]]);
     preData.forEach((d) => {
-      data.append(`event[${d[0]}]`, d[1]);
+      data.append(`post[${d[0]}]`, d[1]);
     });
-    // console.log('data to send', data);
-    createEvent(data, handleResponse);
+    console.log('data to send', data);
+    createPost(data, handleResponse);
   };
 
   const handleResponse = (response) => {
-    console.log('Created event response', response);
+    console.log('Created post response', response);
     // TODO: manage flash message
-    navigate('/homeschooling/events', { replace: true });
+    navigate('/homeschooling/home', { replace: true });
   };
 
   const handleInputChange = (e) => {
@@ -92,13 +90,21 @@ export default function CreatePost() {
       image: files[0]
     });
   };
+  const handleCheckChange = (e) => {
+    const { name, checked } = e.target;
+    // console.log('name and value', { name, checked });
+    setFormValues({
+      ...formValues,
+      [name]: checked
+    });
+  };
 
   return (
     <Page title="Crear un post | Learning Zone">
       <Container sx={{ width: '100%' }}>
         <Stack direction="column" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" align="center" gutterBottom>
-            Crear post
+            Crear publicación
           </Typography>
         </Stack>
         <form onSubmit={handleSubmit}>
@@ -109,41 +115,22 @@ export default function CreatePost() {
                 name="title"
                 type="text"
                 defaultValue={formValues.title}
-                helperText="Hacé que el título de tu evento sea divertido."
+                helperText="Hacé que el título sea descriptivo."
                 onChange={handleInputChange}
                 required
               />
             </FormControl>
             <FormControl style={{ margin: 10 }}>
-              <FormLabel htmlFor="description">Descripción</FormLabel>
+              <FormLabel htmlFor="content">Descripción</FormLabel>
               <TextField
-                name="description"
-                defaultValue={formValues.description}
+                name="content"
+                defaultValue={formValues.content}
                 onChange={handleInputChange}
               />
             </FormControl>
-            <FormControl style={{ margin: 10 }}>
-              <FormLabel htmlFor="time">Fecha y hora del evento</FormLabel>
-              <TextField
-                name="time"
-                type="datetime-local"
-                defaultValue={formValues.time}
-                onChange={handleInputChange}
-                required
-              />
-            </FormControl>
-            <FormControl style={{ margin: 10 }}>
-              <FormLabel htmlFor="address">Lugar del encuentro</FormLabel>
-              <TextField
-                name="address"
-                defaultValue={formValues.address}
-                helperText="Recordá que el lugar puede ser físico o virtual, así que puedes dejar aquí el link a tu evento."
-                onChange={handleInputChange}
-                required
-              />
-            </FormControl>
+
             <FormControl style={{ margin: 15 }}>
-              <FormLabel htmlFor="image">Imagen del evento</FormLabel>
+              <FormLabel htmlFor="image">Imagen de la publicación</FormLabel>
               <TextField
                 name="image"
                 type="file"
@@ -159,18 +146,12 @@ export default function CreatePost() {
                 <input ref={ref} type="file" accept="image/*" hidden onChange={handleChange} />
               </ButtonBase> */}
             </FormControl>
-            <FormControl style={{ margin: 15 }}>
-              <FormLabel htmlFor="price">Price</FormLabel>
-              <TextField
-                name="price"
-                type="number"
-                defaultValue={formValues.price}
-                helperText="Si tu evento es gratuito el valor es 0 (cero)."
-                min="0"
-                onChange={handleInputChange}
-                required
-              />
-            </FormControl>
+
+            <FormControlLabel
+              style={{ margin: 15 }}
+              control={<Checkbox name="public" defaultChecked onChange={handleCheckChange} />}
+              label="Público"
+            />
           </Grid>
           <Button
             style={{ margin: 10 }}
@@ -179,7 +160,7 @@ export default function CreatePost() {
             type="submit"
             // onClick={handleSubmit}
           >
-            Crear evento
+            Crear publicación
           </Button>
         </form>
       </Container>
