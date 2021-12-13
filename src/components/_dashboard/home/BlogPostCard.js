@@ -63,7 +63,6 @@ BlogPostCard.propTypes = {
 };
 // -- cambiar posicines 0 1 y2
 export default function BlogPostCard({ post, index }) {
-  console.log('barbara post 1 ', post);
   const { imageUrl, title, view, comments, author, createdAt } = post;
   const latestPostLarge = index === 8;
   const latestPost = index === 9 || index === 10;
@@ -73,7 +72,6 @@ export default function BlogPostCard({ post, index }) {
     { number: comments.length, icon: messageCircleFill },
     { number: view, icon: heartFill }
   ];
-  console.log('barbaralog');
 
   return (
     <Grid>

@@ -23,6 +23,8 @@ import {
   MenuItem,
   Link,
   Avatar,
+  FormLabel,
+  TextField,
   CardContent
 } from '@material-ui/core';
 // utils
@@ -32,18 +34,40 @@ import { fShortenNumber } from '../utils/formatNumber';
 import useCurrentUser from '../utils/useCurrentUser';
 import Page from '../components/Page';
 import SvgIconStyle from '../components/SvgIconStyle';
+import { CommentsPostCard } from '../components/_dashboard/home';
 
 // ----------------------------------------------------------------------
 // Controller functions
 
 const localUrl = 'http://localhost:3001';
 const prodUrl = 'https://learning-zone-poc.herokuapp.com';
+const createComent = async (dataContent, handleResponse) => {
+  const data = {
+    event: dataContent
+  };
+  const params = {
+    method: 'POST',
+    // headers: {
+    //   'Content-Type': 'multipart/form-data'
+    // },
+    body: dataContent
+  };
+  return fetch(`${prodUrl}/api/v1/comments`, params)
+    .then((response) => response.json())
+    .then((json) => {
+      console.log('LZ comments creation json1', json);
+      handleResponse(json);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
 
 const getPostDetails = (postId, setPost) =>
   fetch(`${prodUrl}/api/v1/posts/${postId}`)
     .then((response) => response.json())
     .then((json) => {
-      console.log('LZ Post  id response json', json);
+      console.log('LZ Post auhor id response json', json);
       setPost(json);
       console.log('LZ Post  id response json', json.post);
     })
@@ -51,6 +75,17 @@ const getPostDetails = (postId, setPost) =>
       console.error(error);
     });
 
+const getPostComments = (postId, setComments) =>
+  fetch(`${prodUrl}/api/v1/posts/${postId}/comments`)
+    .then((response) => response.json())
+    .then((json) => {
+      console.log('LZ Post  comments  response json', json);
+      setComments(json);
+      console.log('LZ Post  id response json', json.comments);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 // ----------------------------------------------------------------------
 // Helper Components
 const CardMediaStyle = styled('div')({
@@ -153,56 +188,62 @@ export default function PostDetails() {
   const { currentUser } = useCurrentUser();
   const { id } = useParams();
   const [post, setPost] = useState([]);
+  const [comments, setComments] = useState([]);
   const [hijos, setHijos] = useState([]);
   const [flashMsg, setFlashMsg] = useState('');
   const [childId, setChildId] = useState('');
   const [preferenceId, setPreferenceId] = useState('');
+  const [formValues, setFormValues] = useState({
+    comment: '',
+    userId: currentUser.id,
+    postId: id
+  });
+  const { author } = post;
 
   useEffect(() => {
     // console.log('Post details', id);
     getPostDetails(id, handleSetPost);
+    getPostComments(id, handleSetComments);
   }, []);
 
   const handleSetPost = (response) => {
     // console.log('set Post', response);
     setPost(response.post);
   };
+  const handleSetComments = (response) => {
+    // console.log('set Post', response);
+    setComments(response.comments);
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    // console.log('name and value', { name, value });
+    setFormValues({
+      ...formValues,
+      [name]: value
+    });
+  };
 
-  const handleCreateAttendance = () => {
-    // console.log('Creating attendance. price:', Post.price);
-    const data = {
-      attendance: {
-        userId: childId,
-        postId: post.id,
-        createdBy: currentUser.id,
-        paymentAccepted: post.price === 0 || post.price === null || post.price === 0.0
-      }
-    };
-    const params = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    };
-    fetch(`${prodUrl}/api/v1/attendances`, params)
-      .then((response) => response.json())
-      .then((json) => {
-        console.log('Created attendance', json);
-        if (json.status === 'ok') {
-          const { attendance } = json;
-
-          return navigate('/homeschooling/posts', { replace: true });
-        }
-        // setFlashMsg(json);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  const handleSubmit = (post) => {
+    post.preventDefault();
+    console.log('formValues bar', formValues);
+    const data = new FormData();
+    const preData = Object.keys(formValues).map((key) => [key, formValues[key]]);
+    preData.forEach((d) => {
+      data.append(`comment[${d[0]}]`, d[1]);
+    });
+    console.log('data to send', data);
+    createComent(data, handleResponse);
+  };
+  const handleResponse = (response) => {
+    console.log('Created post response', response);
+    // TODO: manage flash message
+    navigate('/homeschooling/home', { replace: true });
   };
 
   return (
     <Page title="Detalles del Post | Learning Zone">
+      {post && console.log('Ver1 post.author', post.author)}
+      {post && console.log('Ver2 post.author', post)}
       {post && (
         <Container>
           <Stack direction="column" alignItems="center" justifyContent="space-between" mb={5}>
@@ -234,31 +275,37 @@ export default function PostDetails() {
                   position: 'absolute'
                 }}
               />
-              <AvatarStyle
-                alt={post.name}
-                src={post.createdAt}
-                sx={{ top: 355, left: 24, width: 40, height: 40 }}
-              />
+              {post.author && (
+                <AvatarStyle
+                  alt={post.author.name}
+                  src={post.author.avatarUrl}
+                  sx={{ top: 395, left: 20, width: 40, height: 40 }}
+                />
+              )}
 
               <ImageUrlImgStyle src={post.imageUrl} />
             </CardMediaStyle>
 
             <Box sx={{ p: 3, pb: 1 }} dir="ltr" style={{ marginBottom: 10 }}>
-              <Typography
-                gutterBottom
-                variant="caption"
-                sx={{ color: 'text.disabled', display: 'block' }}
-              >
-                {fDate('2021-01-01')}
-              </Typography>
+              {post.author && (
+                <Typography
+                  gutterBottom
+                  variant="caption"
+                  sx={{ color: 'text.disabled', display: 'block' }}
+                >
+                  {fDate(post.createdAt)}
+                </Typography>
+              )}
               <Box
                 component={Icon}
                 icon={messageCircleFill}
                 sx={{ width: 16, height: 16, mr: 0.5, color: 'text.disabled' }}
               />
-              <Typography variant="caption" color="text.disabled">
-                {fShortenNumber(post.comments)}
-              </Typography>
+              {post.author && (
+                <Typography variant="caption" color="text.disabled">
+                  {fShortenNumber(post.comments)}
+                </Typography>
+              )}
               <Box
                 component={Icon}
                 icon={heartFill}
@@ -269,7 +316,42 @@ export default function PostDetails() {
               </Typography>
               <Typography variant="body1">{post.content}</Typography>
             </Box>
+            <form onSubmit={handleSubmit}>
+              <FormControl style={{ margin: 10, width: '98%' }}>
+                <FormLabel htmlFor="comment">Comentario</FormLabel>
+                <TextField
+                  name="comment"
+                  defaultValue={formValues.comment}
+                  onChange={handleInputChange}
+                />
+              </FormControl>
+              <Button
+                style={{ margin: 10 }}
+                variant="contained"
+                color="primary"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Agregar comentario
+              </Button>
+            </form>
           </Card>
+          {comments && (
+            <Grid container spacing={1} sx={{ pb: 10, p: 1 }}>
+              {console.log('Ver2 comments.author', comments)}
+              {comments.length === 0 && (
+                <Box sx={{ marginLeft: 5 }}>
+                  En estos momentos no hay publicaciones para mostrar.
+                </Box>
+              )}
+              {comments.length > 0 &&
+                comments.map((comment) => (
+                  <Grid key={comment.id} item xs={10} sm={50} md={20}>
+                    <CommentsPostCard comment={comment.comment} />
+                  </Grid>
+                ))}
+            </Grid>
+          )}
         </Container>
       )}
     </Page>

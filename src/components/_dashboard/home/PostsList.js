@@ -45,7 +45,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function PostsList({ posts, wxs, wmd, ...other }) {
-  console.log('barbara post 1 28-11 ', posts);
+  // console.log('barbara post 1 28-11 ', posts);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
