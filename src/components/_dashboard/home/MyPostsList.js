@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // material
 import { Grid, Stack, Box } from '@material-ui/core';
-import { BlogMyPostCard, BlogPostsSort, BlogPostsSearch } from '.';
+import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '.';
 
 // ----------------------------------------------------------------------
 const SORT_OPTIONS = [
@@ -31,7 +31,7 @@ export default function MyPostsList({ posts, wxs, wmd, ...other }) {
         {posts.length > 0 &&
           posts.map((post) => (
             <Grid key={post.id} item xs={wxs} sm={5} md={wmd}>
-              <BlogMyPostCard post={post} />
+              <BlogPostCard post={post} />
             </Grid>
           ))}
       </Grid>

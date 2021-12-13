@@ -303,7 +303,8 @@ export default function PostDetails() {
               />
               {post.author && (
                 <Typography variant="caption" color="text.disabled">
-                  {fShortenNumber(post.comments)}
+                  {console.log('numer comments:', post)}
+                  {fShortenNumber(post.comments.length)}
                 </Typography>
               )}
               <Box
@@ -340,14 +341,18 @@ export default function PostDetails() {
             <Grid container spacing={1} sx={{ pb: 10, p: 1 }}>
               {console.log('Ver2 comments.author', comments)}
               {comments.length === 0 && (
-                <Box sx={{ marginLeft: 5 }}>
-                  En estos momentos no hay publicaciones para mostrar.
-                </Box>
+                <Box sx={{ marginLeft: 1 }}>Sin mensajes para mostrar.</Box>
               )}
               {comments.length > 0 &&
                 comments.map((comment) => (
                   <Grid key={comment.id} item xs={10} sm={50} md={20}>
-                    <CommentsPostCard comment={comment.comment} />
+                    <Card sx={{ position: 'relative' }}>
+                      <CardContent>
+                        <Typography variant="subtitle2" noWrap>
+                          {comment.user.fullName}: {comment.comment}
+                        </Typography>
+                      </CardContent>
+                    </Card>
                   </Grid>
                 ))}
             </Grid>
